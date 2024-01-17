@@ -11,7 +11,7 @@ const navLinks = [
 	{
 		href: '/blog',
 		name: 'blog',
-		title: "Visit Abhushan's Engineering blog page",
+		title: "Visit Abhushan's blog page",
 		active: currentPath.includes('/blog')
 	}
 ];
@@ -28,7 +28,7 @@ const navLinks = [
 						href={navLink.href}
 						title={navLink.title}
 						data-active-link={navLink.active}
-						class="text-text-neutral-lc decoration-ui-seperator-neutral-lc underline-offset-8 hover:text-text-neutral-hc data-[active-link]:text-text-neutral-hc data-[active-link]:underline"
+						class="rounded-sm text-text-neutral-lc decoration-ui-seperator-neutral-lc underline-offset-8 hover:text-text-neutral-hc focus-visible:ring-2 focus-visible:ring-ui-neutral-focus-ring focus-visible:ring-offset-2 data-[active-link]:text-text-neutral-hc data-[active-link]:underline"
 					>
 						{navLink.name}
 					</a>
