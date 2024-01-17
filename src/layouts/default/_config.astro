@@ -12,10 +12,11 @@
 
 		--page-top: 80px;
 		--page-height: 100vh;
+		--page-footer-height: 50px;
 	}
 
 	main {
-		min-height: calc(var(--page-height) - var(--page-top));
+		min-height: calc(var(--page-height) - var(--page-top) - var(--page-footer-height));
 		padding-left: var(--body-space-left);
 		padding-right: var(--body-space-right);
 	}

@@ -1,6 +1,7 @@
 ---
-import Theme from '@/layouts/default/_theme.astro';
-import Config from '@/layouts/default/_config.astro';
+import Theme from './_theme.astro';
+import Config from './_config.astro';
+import Footer from './_footer.astro';
 ---
 
 <!doctype html>
@@ -19,5 +20,6 @@ import Config from '@/layouts/default/_config.astro';
 		<slot>
 			<p>This is fallback content for slots, please pass something as children into the layout</p>
 		</slot>
+		<Footer />
 	</body>
 </html>
