@@ -1,9 +1,12 @@
 ---
 import Message from '@/components/react/message.tsx';
 import SeoMeta from '@/components/astro/seo-meta/index.astro';
+import DefaultLayout from '@/layouts/default/index.astro';
 ---
 
-<SeoMeta title="Home Page" description="Test description" ogImage="" path="/" ogImageAlt="" />
-<main>
-	<Message />
-</main>
+<DefaultLayout>
+	<SeoMeta title="Home Page" description="Test description" ogImage="" path="/" ogImageAlt="" slot="head" />
+	<main>
+		<Message />
+	</main>
+</DefaultLayout>
