@@ -1,0 +1,17 @@
+<div aria-hidden="true" data-name="blur-segment"></div>
+
+<style>
+	div[data-name='blur-segment'] {
+		pointer-events: none;
+		user-select: none;
+		height: var(--page-blur-segment-height);
+		--gradient-blur: linear-gradient(to bottom, var(--app-bg), transparent);
+		mask-image: var(--gradient-blur);
+		background-image: var(--gradient-blur);
+		opacity: 0.95;
+		position: sticky;
+		top: 0;
+		z-index: 1;
+		backdrop-filter: blur(12px);
+	}
+</style>
