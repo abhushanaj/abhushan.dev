@@ -1,0 +1,17 @@
+<style is:global>
+	:root {
+		--body-default-space: 20px;
+
+		/* https://developer.mozilla.org/en-US/docs/Web/CSS/env */
+		--body-space-left: max(var(--body-default-space), env(safe-area-inset-left));
+		--body-space-right: max(var(--body-default-space), env(safe-area-inset-right));
+		--body-space-bottom: max(var(--body-default-space), env(safe-area-inset-bottom));
+		--body-space-top: max(var(--body-default-space), env(safe-area-inset-top));
+
+		--page-height: 100vh;
+	}
+
+	main {
+		min-height: var(--page-height);
+	}
+</style>
