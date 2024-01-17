@@ -3,6 +3,13 @@
 	"extends": "astro/tsconfigs/strictest",
 	"compilerOptions": {
 		"verbatimModuleSyntax": true,
-		"noPropertyAccessFromIndexSignature": true
+		"noPropertyAccessFromIndexSignature": true,
+		"jsx": "react-jsx",
+		"jsxImportSource": "react",
+
+		"baseUrl": ".",
+		"paths": {
+			"@/*": ["src/*"]
+		}
 	}
 }
