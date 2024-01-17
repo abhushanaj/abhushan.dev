@@ -1,11 +1,55 @@
 ---
-import SeoMeta from '@/components/astro/seo-meta/index.astro';
 import DefaultLayout from '@/layouts/default/index.astro';
+
+import SeoMeta from '@/components/astro/seo-meta/index.astro';
+import ReachOutListing from '@/components/astro/reach-out-listing/index.astro';
 ---
 
 <DefaultLayout>
-	<SeoMeta title="Home Page" description="Test description" ogImage="" path="/" ogImageAlt="" slot="head" />
-	<main>
-		<h2>Hello World</h2>
+	<SeoMeta
+		slot="head"
+		title="Abhushan Adhikari Joshi | Frontend Engineer"
+		description="Explore Abhushan's Frontend Engineering Portfolio - Showcasing expertise in Web Ecosystem."
+		ogImage=""
+		ogImageAlt=""
+		path="/"
+	/>
+	<main class="mt-[var(--page-top)]">
+		<article class="flex w-full md:grid md:grid-cols-[1fr_var(--primary-content-width)_1fr]">
+			<!-- About Me Section -->
+			<section class="mb-8 md:col-start-2 md:col-end-3">
+				<header class="mb-8">
+					<h1 class="text-3xl font-semibold md:text-4xl">hey, I'm abhushan 👋</h1>
+					<em class="text-sm italic text-text-neutral-lc">आभूषण - Derived from Devanagari</em>
+				</header>
+
+				<p class="mb-6">
+					I'm a <strong class="font-medium text-text-neutral-hc">Frontend Engineer</strong> with a passion for crafting web
+					products that make a difference. My journey into the world of web development began as a self-taught enthusiast,
+					and I've been hooked ever since.
+				</p>
+
+				<p class="mb-6">
+					Over the past 3 years, I've also had the remarkable opportunity to serve as a
+					<strong class="font-medium text-text-neutral-hc">Founding Frontend Engineer</strong> at two startups. These roles
+					allowed me to be a part of something truly transformative, as I worked alongside visionary founders to turn their
+					ideas into digital realities. These experiences have shaped me into a better developer and a more responsible professional.
+				</p>
+
+				<p class="mb-6">
+					Consider this as my digital playground where I will share what I'm learning about, insights from shipping
+					great products, becoming a better developer and growing a career in tech.
+				</p>
+
+				<p class="mb-10">
+					If you're looking to collaborate, learn, or share your insights, feel free to connect with me. Let's explore
+					the ever-evolving world of web development together.
+				</p>
+
+				<ReachOutListing />
+			</section>
+
+			<!-- Listing Section -->
+		</article>
 	</main>
 </DefaultLayout>

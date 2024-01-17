@@ -8,10 +8,15 @@
 		--body-space-bottom: max(var(--body-default-space), env(safe-area-inset-bottom));
 		--body-space-top: max(var(--body-default-space), env(safe-area-inset-top));
 
+		--primary-content-width: 678px;
+
+		--page-top: 80px;
 		--page-height: 100vh;
 	}
 
 	main {
-		min-height: var(--page-height);
+		min-height: calc(var(--page-height) - var(--page-top));
+		padding-left: var(--body-space-left);
+		padding-right: var(--body-space-right);
 	}
 </style>
