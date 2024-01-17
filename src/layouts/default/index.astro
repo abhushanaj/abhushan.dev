@@ -3,6 +3,7 @@ import Theme from './_theme.astro';
 import Config from './_config.astro';
 import Footer from './_footer.astro';
 import BlurSegment from './_blur-segment.astro';
+import Navbar from './_navbar.astro';
 ---
 
 <!doctype html>
@@ -19,6 +20,7 @@ import BlurSegment from './_blur-segment.astro';
 	</head>
 	<body class="min-h-full w-full antialiased">
 		<BlurSegment />
+		<Navbar />
 		<slot>
 			<p>This is fallback content for slots, please pass something as children into the layout</p>
 		</slot>

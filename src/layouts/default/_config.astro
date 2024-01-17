@@ -11,8 +11,9 @@
 		--primary-content-width: 678px;
 		--page-height: 100vh;
 		--page-footer-height: 50px;
+		--page-navbar-height: 30px;
 		--page-blur-segment-height: 60px;
-		--page-top: 40px;
+		--page-top: 60px;
 	}
 
 	main {
@@ -20,7 +21,8 @@
 		padding-right: var(--body-space-right);
 		margin-top: var(--page-top);
 		min-height: calc(
-			var(--page-height) - var(--page-top) - var(--page-footer-height) - var(--page-blur-segment-height)
+			var(--page-height) - var(--page-footer-height) - var(--page-blur-segment-height) - var(--page-navbar-height) -
+				var(--page-blur-segment-height)
 		);
 	}
 </style>

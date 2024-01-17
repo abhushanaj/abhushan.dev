@@ -1,0 +1,39 @@
+---
+const currentPath = Astro.url.pathname;
+
+const navLinks = [
+	{
+		href: '/',
+		name: 'home',
+		title: "Visit Abhushan's home page",
+		active: currentPath === '/'
+	},
+	{
+		href: '/blog',
+		name: 'blog',
+		title: "Visit Abhushan's Engineering blog page",
+		active: currentPath.includes('/blog')
+	}
+];
+---
+
+<nav
+	class="mx-auto flex h-[var(--page-navbar-height)] max-w-[var(--primary-content-width)] items-center px-[var(--body-space-left)]"
+>
+	<ul class="flex items-center gap-4">
+		{
+			navLinks.map((navLink) => (
+				<li>
+					<a
+						href={navLink.href}
+						title={navLink.title}
+						data-active-link={navLink.active}
+						class="text-text-neutral-lc decoration-ui-seperator-neutral-lc underline-offset-8 hover:text-text-neutral-hc data-[active-link]:text-text-neutral-hc data-[active-link]:underline"
+					>
+						{navLink.name}
+					</a>
+				</li>
+			))
+		}
+	</ul>
+</nav>
