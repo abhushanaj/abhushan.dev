@@ -1,10 +1,19 @@
+---
+import Theme from '@/layouts/default/_theme.astro';
+import Config from '@/layouts/default/_config.astro';
+---
+
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 		<slot name="head" />
+		<!-- Layout Theme Styles -->
+		<Theme />
+		<!-- Layout Config -->
+		<Config />
 	</head>
 	<body>
 		<slot>
