@@ -1,54 +1,19 @@
-# Astro Starter Kit: Basics
+# [abhushan.dev](https://abhushan.dev)
 
-```sh
-npm create astro@latest -- --template basics
-```
+My personal website, digital playground and blogging space.
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/basics)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/basics)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/basics/devcontainer.json)
+The project is created using the following technologies:
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+1. [**Astro**](https://astro.build/) as the framework with [React](https://react.dev/) as UI library integration.
+2. [**tailwindcss**](https://tailwindcss.com/) as the styling framework.
+3. [**Cloudflare**](https://www.cloudflare.com/) for the deplyment through [Cloudflare Pages](https://pages.cloudflare.com/).
+4. [**Radix Colors**](https://www.radix-ui.com/colors) for the pallete composition using [CSS Variables](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties).
+5. [**Radix UI Primitives**](https://www.radix-ui.com/primitives) as the base layer for build components with accessibility in mind.
 
-![just-the-basics](https://github.com/withastro/astro/assets/2244813/a0a5533c-a856-4198-8470-2d67b1d7c554)
+## Motivation
 
-## 🚀 Project Structure
+So, why did I decide to create my own website?
 
-Inside of your Astro project, you'll see the following folders and files:
+Well, I figured it's about time to have a cozy corner on the internet to spill the beans on my coding adventures, share what I've learned in my years as a Frontend Developer, and probably crack a tech joke or two. It's all about connecting, learning, and having a good time while we navigate the ever-changing world of code.
 
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src/
-│   ├── components/
-│   │   └── Card.astro
-│   ├── layouts/
-│   │   └── Layout.astro
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
-
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
-
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+So, buckle up for the ride!
