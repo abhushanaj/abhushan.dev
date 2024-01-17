@@ -1,0 +1,52 @@
+---
+const reachMeSocials = [
+	{
+		name: 'twitter',
+		link: 'https://twitter.com/abhushanaj',
+		title: 'Connect with Abhushan on X (Formerly Twitter)'
+	},
+	{
+		name: 'linkedin',
+		link: 'https://www.linkedin.com/in/abhushanaj/',
+		title: 'Connect with Abhushan on LinkedIn'
+	},
+	{
+		name: 'email',
+		link: 'mailto:abhushanadhikarijoshi@gmail.com?body=Hello Abhushan, I am reaching out for ..',
+		title: 'Connect with Abhushan over email at abhushanadhikarijoshi@gmail.com'
+	}
+];
+---
+
+<nav data-name="reach-out-listings">
+	<ul class="flex w-fit gap-4">
+		{
+			reachMeSocials.map((social) => (
+				<li class="text-text-neutral-lc">
+					<a
+						href={social.link}
+						title={social.title}
+						class="text-inherit decoration-ui-seperator-neutral-lc focus-visible:ring-ui-neutral-focus-ring inline-flex items-center gap-1 rounded-sm underline underline-offset-4 outline-none hover:text-text-neutral-hc focus-visible:ring-2 focus-visible:ring-offset-2"
+					>
+						<svg
+							class="stroke-current  h-[1em] w-[1em]"
+							viewBox="0 0 20 20"
+							xmlns="http://www.w3.org/2000/svg"
+							fill="none"
+						>
+							<path
+								class="stroke-current"
+								stroke="currentColor"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								stroke-width="2"
+								d="M7 17L17 7M17 7H8M17 7V16"
+							/>
+						</svg>
+						<span class="text-inherit">{social.name}</span>
+					</a>
+				</li>
+			))
+		}
+	</ul>
+</nav>
