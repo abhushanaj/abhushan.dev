@@ -1,6 +1,7 @@
 /** @type {import("prettier").Config} */
 export default {
-	plugins: ['prettier-plugin-astro'],
+	// due to pnpm issues, plugin does not read from her for astro and needs to be passed as CLI option
+	plugins: ['prettier-plugin-astro', 'prettier-plugin-tailwindcss'],
 
 	// General
 	singleQuote: true,
@@ -16,6 +17,10 @@ export default {
 	// jsx specific
 	quoteProps: 'as-needed',
 	jsxSingleQuote: false,
+
+	// tailwind specific
+	tailwindAttributes: ['class:list'],
+	tailwindFunctions: ['cn', 'clsx', 'cls'],
 
 	// Astro specific
 	astroAllowShorthand: false,
