@@ -1,4 +1,19 @@
-# [abhushan.dev](https://abhushan.dev)
+<div align="center">
+  <a href="https://abhushan.dev">
+    <img
+      width="700"
+      alt="Abhushan Adhikari Joshi | Frontend Engineer Website"
+      src="./public/open-graph/abhushan.dev.png"
+    />
+  </a>
+
+</div>
+
+<hr />
+
+# Personal Website
+
+> The webiste is still Work in Progress (WIP), I expect to complete all essentials and do a soft release by Jan'24 or Feb first week
 
 My personal website, digital playground and blogging space.
 
