@@ -1,12 +1,12 @@
 <div align="center">
   <a href="https://abhushan.dev">
     <img
-      width="1230"
+      width="700"
       alt="Abhushan Adhikari Joshi | Frontend Engineer Website"
       src="./public/open-graph/abhushan.dev.png"
     />
   </a>
-	<a href="https://abhushan.dev">abhushan.dev</a>
+
 </div>
 
 <hr />
