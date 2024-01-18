@@ -9,8 +9,9 @@ const config = {
 		'plugin:@typescript-eslint/recommended-type-checked',
 		'plugin:react/recommended',
 		'plugin:react-hooks/recommended',
-		'prettier',
-		'plugin:react/jsx-runtime'
+		'plugin:react/jsx-runtime',
+		'plugin:jsx-a11y/strict',
+		'prettier'
 	],
 	parserOptions: {
 		sourceType: 'module',
