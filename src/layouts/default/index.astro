@@ -1,6 +1,9 @@
 ---
-import Theme from '@/layouts/default/_theme.astro';
-import Config from '@/layouts/default/_config.astro';
+import Theme from './_theme.astro';
+import Config from './_config.astro';
+import Footer from './_footer.astro';
+import BlurSegment from './_blur-segment.astro';
+import Navbar from './_navbar.astro';
 ---
 
 <!doctype html>
@@ -15,9 +18,12 @@ import Config from '@/layouts/default/_config.astro';
 		<!-- Layout Config -->
 		<Config />
 	</head>
-	<body class="antialiased">
+	<body class="min-h-full w-full antialiased">
+		<BlurSegment />
+		<Navbar />
 		<slot>
 			<p>This is fallback content for slots, please pass something as children into the layout</p>
 		</slot>
+		<Footer />
 	</body>
 </html>

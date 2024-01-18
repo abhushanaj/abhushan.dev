@@ -9,14 +9,20 @@
 		--body-space-top: max(var(--body-default-space), env(safe-area-inset-top));
 
 		--primary-content-width: 678px;
-
-		--page-top: 80px;
 		--page-height: 100vh;
+		--page-footer-height: 50px;
+		--page-navbar-height: 30px;
+		--page-blur-segment-height: 60px;
+		--page-top: 60px;
 	}
 
 	main {
-		min-height: calc(var(--page-height) - var(--page-top));
 		padding-left: var(--body-space-left);
 		padding-right: var(--body-space-right);
+		margin-top: var(--page-top);
+		min-height: calc(
+			var(--page-height) - var(--page-footer-height) - var(--page-blur-segment-height) - var(--page-navbar-height) -
+				var(--page-blur-segment-height)
+		);
 	}
 </style>
