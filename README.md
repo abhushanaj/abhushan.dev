@@ -13,6 +13,8 @@
 
 # Personal Website
 
+> The webiste is still Work in Progress (WIP), I expect to complete all essentials and do a soft release by Jan'24 or Feb first week
+
 My personal website, digital playground and blogging space.
 
 The project is created using the following technologies:
