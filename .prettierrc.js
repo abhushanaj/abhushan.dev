@@ -1,7 +1,7 @@
-/** @type {import("prettier").Config} */
+/** @type {import("@ianvs/prettier-plugin-sort-imports").PrettierConfig} */
 export default {
 	// due to pnpm issues, plugin does not read from her for astro and needs to be passed as CLI option
-	plugins: ['prettier-plugin-astro', 'prettier-plugin-tailwindcss'],
+	plugins: ['@ianvs/prettier-plugin-sort-imports', 'prettier-plugin-astro', 'prettier-plugin-tailwindcss'],
 
 	// General
 	singleQuote: true,
@@ -31,5 +31,25 @@ export default {
 				parser: 'astro'
 			}
 		}
-	]
+	],
+
+	// sort import plugin options
+	importOrder: [
+		'<BUILTIN_MODULES>',
+		'<THIRD_PARTY_MODULES>',
+		'',
+		'<TYPES>',
+		'<TYPES>^[.]',
+		'',
+		'^@/layouts/(.*)$',
+		'',
+		'^@/components/astro/(.*)$',
+		'^@/components/react/(.*)$',
+		'',
+		'^@/schemas/(.*)$',
+		'',
+		'^[./]' // relative imports
+	],
+	importOrderParserPlugins: ['typescript', 'jsx'],
+	importOrderTypeScriptVersion: '5.3.3'
 };

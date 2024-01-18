@@ -1,5 +1,6 @@
-import type { ComponentProps } from 'react';
 import { ArrowUpRight } from 'lucide-react';
+
+import type { ComponentProps } from 'react';
 
 import { InternalLink } from './internal.tsx';
 
@@ -12,7 +13,7 @@ export function ExternalLink({ children, href, title, ...otherProps }: Props) {
 
 	return (
 		<InternalLink href={href} title={title} target="_blank" rel="nopener noreferrer" {...otherProps}>
-			<ArrowUpRight className="w-[1.2em] h-[1.2em] mt-[1px]" />
+			<ArrowUpRight className="mt-[1px] h-[1.2em] w-[1.2em]" />
 			<span className="text-inherit">{children}</span>
 		</InternalLink>
 	);
