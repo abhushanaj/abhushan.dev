@@ -3,6 +3,10 @@ const { getTokenSourceMapRange } = require('typescript');
 /** @type {import('eslint').Linter.Config} */
 const config = {
 	root: true,
+	env: {
+		browser: true,
+		node: true
+	},
 	parser: '@typescript-eslint/parser',
 	extends: [
 		'eslint:recommended',
@@ -23,11 +27,6 @@ const config = {
 		tsconfigRootDir: __dirname
 	},
 	plugins: ['@typescript-eslint', 'react'],
-
-	env: {
-		browser: true,
-		node: true
-	},
 	rules: {
 		'no-unused-vars': 'off',
 		'@typescript-eslint/no-unused-vars': [
