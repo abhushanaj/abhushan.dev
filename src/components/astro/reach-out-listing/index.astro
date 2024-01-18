@@ -1,4 +1,6 @@
 ---
+import { ExternalLink } from '@/components/react/link/external.tsx';
+
 const reachMeSocials = [
 	{
 		name: 'github',
@@ -23,28 +25,9 @@ const reachMeSocials = [
 		{
 			reachMeSocials.map((social) => (
 				<li class="text-text-neutral-lc">
-					<a
-						href={social.link}
-						title={social.title}
-						class="text-inherit inline-flex items-center gap-1 rounded-sm underline decoration-ui-seperator-neutral-lc underline-offset-4 hover:text-text-neutral-hc focus-visible:ring-2 focus-visible:ring-ui-neutral-focus-ring focus-visible:ring-offset-2"
-					>
-						<svg
-							class="stroke-current  h-[1em] w-[1em]"
-							viewBox="0 0 20 20"
-							xmlns="http://www.w3.org/2000/svg"
-							fill="none"
-						>
-							<path
-								class="stroke-current"
-								stroke="currentColor"
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								stroke-width="2"
-								d="M7 17L17 7M17 7H8M17 7V16"
-							/>
-						</svg>
-						<span class="text-inherit">{social.name}</span>
-					</a>
+					<ExternalLink href={social.link} title={social.title}>
+						{social.name}
+					</ExternalLink>
 				</li>
 			))
 		}

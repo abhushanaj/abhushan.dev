@@ -1,7 +1,9 @@
 ---
-import DefaultLayout from '@/layouts/default/index.astro';
+import { ArrowLeft } from 'lucide-react';
 
+import DefaultLayout from '@/layouts/default/index.astro';
 import SeoMeta from '@/components/astro/seo-meta/index.astro';
+import { InternalLink } from '@/components/react/link/internal';
 ---
 
 <DefaultLayout>
@@ -24,6 +26,11 @@ import SeoMeta from '@/components/astro/seo-meta/index.astro';
 					It looks like you found a broken link or the page has been removed permanently recently.
 				</p>
 				<p class="mb-12 text-center">No worries! let's checkout the home page until then</p>
+
+				<InternalLink href="/" title="Back to home page">
+					<ArrowLeft className="h-[1em] w-[1em]" />
+					<span>back to home</span>
+				</InternalLink>
 			</div>
 		</section>
 	</main>
