@@ -1,0 +1,38 @@
+---
+import { ArrowLeft } from 'lucide-react';
+
+import DefaultLayout from '@/layouts/default/index.astro';
+
+import SeoMeta from '@/components/astro/seo-meta/index.astro';
+import { InternalLink } from '@/components/react/link/internal';
+---
+
+<DefaultLayout>
+	<SeoMeta
+		slot="head"
+		title="abhushan.dev • page not found"
+		description="Oops! Looks like you found a broken link."
+		ogImage="/open-graph/abhushan.dev"
+		ogImageAlt="Abhushan Adhikari Joshi | Frontend Engineer"
+		path="/404"
+		robots="noindex, nofollow"
+	/>
+
+	<main class="flex w-full items-center md:grid md:grid-cols-[1fr_var(--primary-content-width)_1fr]">
+		<section class="mb-8 md:col-start-2 md:col-end-3">
+			<div class="flex flex-col items-center justify-center">
+				<h1 class="mb-4 text-center text-4xl font-semibold">Oops! 404 Not Found</h1>
+				<h2 class="mb-6 text-center text-2xl font-semibold">You seem lost 😅</h2>
+				<p class="my-2 text-center">
+					It looks like you found a broken link or the page has been removed permanently recently.
+				</p>
+				<p class="mb-12 text-center">No worries! let's checkout the home page until then</p>
+
+				<InternalLink href="/" title="Back to home page">
+					<ArrowLeft className="h-[1em] w-[1em]" />
+					<span>back to home</span>
+				</InternalLink>
+			</div>
+		</section>
+	</main>
+</DefaultLayout>

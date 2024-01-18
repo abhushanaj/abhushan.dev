@@ -1,0 +1,77 @@
+<style is:global>
+	:root {
+		--gray-a1: #00000003;
+		--gray-a2: #00000006;
+		--gray-a3: #0000000f;
+		--gray-a4: #00000017;
+		--gray-a5: #0000001f;
+		--gray-a6: #00000026;
+		--gray-a7: #00000031;
+		--gray-a8: #00000044;
+		--gray-a9: #00000072;
+		--gray-a10: #0000007c;
+
+		--gray-11: #646464;
+		--gray-12: #202020;
+
+		--solid-white: #fff;
+		--solid-black: #000;
+
+		--font-light: 300;
+		--font-regular: 400;
+		--font-medium: 500;
+		--font-semibold: 600;
+		--font-bold: 700;
+
+		/* ===== Pallete Composition ====== */
+
+		/* App Background */
+		--app-bg: var(--solid-white);
+
+		/* Text */
+		--text-neutral-hc: var(--gray-12);
+		--text-neutral-lc: var(--gray-11);
+
+		/* Seperators/Borders */
+		--ui-seperator-neutral-lc: var(--gray-a6);
+		--ui-seperator-neutral-hc: var(--gray-a7);
+
+		/* UI */
+		--ui-neutral-bg: var(--gray-a3);
+		--ui-neutral-hovered-bg: var(--gray-a4);
+		--ui-neutral-active-bg: var(--gray-a5);
+		--ui-neutral-focus-ring: var(--gray-a7);
+		--ui-neutral-border: var(--gray-a7);
+		--ui-neutral-hovered-border: var(--gray-a8);
+	}
+
+	html {
+		scroll-behavior: smooth;
+	}
+
+	body {
+		background-color: var(--app-bg);
+		color: var(--text-neutral-lc);
+		font-weight: var(--font-regular);
+	}
+
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		color: var(--text-neutral-hc);
+	}
+
+	span,
+	a {
+		color: currentColor;
+		outline: none;
+	}
+
+	::selection {
+		background-color: var(--ui-neutral-active-bg);
+		color: var(--text-neutral-hc);
+	}
+</style>
