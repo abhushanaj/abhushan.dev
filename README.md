@@ -1,4 +1,17 @@
-# [abhushan.dev](https://abhushan.dev)
+<div align="center">
+  <a href="https://abhushan.dev">
+    <img
+      width="1230"
+      alt="Abhushan Adhikari Joshi | Frontend Engineer Website"
+      src="./public/open-graph/abhushan.dev.png"
+    />
+  </a>
+	<a href="https://abhushan.dev">abhushan.dev</a>
+</div>
+
+<hr />
+
+# Personal Website
 
 My personal website, digital playground and blogging space.
 
