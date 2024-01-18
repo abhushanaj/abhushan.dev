@@ -8,6 +8,7 @@ export function InternalLink({ href, children, title, className, ...otherProps }
 	if (!title || !title.trim().length) {
 		throw new Error('Add a title attribute on the <InternalLink title="" />');
 	}
+
 	return (
 		<a
 			href={href}
