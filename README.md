@@ -3,7 +3,7 @@
     <img
       width="700"
       alt="Abhushan Adhikari Joshi | Frontend Engineer Website"
-      src="./public/open-graph/abhushan.dev.png"
+      src="https://github.com/abhu-A-J/abhushan.dev/assets/49617450/43c5dd6c-5b89-4ec0-b810-33c7b97442e3"
     />
   </a>
 
