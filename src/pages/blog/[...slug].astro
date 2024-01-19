@@ -3,6 +3,7 @@ import type { GetStaticPaths } from 'astro';
 
 import DefaultLayout from '@/layouts/default/index.astro';
 
+import BlogHeader from '@/components/astro/blog/blog-header/index.astro';
 import SeoMeta from '@/components/astro/seo-meta/index.astro';
 
 export const getStaticPaths = (() => {
@@ -25,5 +26,15 @@ export const getStaticPaths = (() => {
 		ogImageAlt=""
 		path="/blog-path-todo"
 	/>
-	<h1>Blog Details Page</h1>
+	<main class="flex w-full md:grid md:grid-cols-[1fr_var(--primary-content-width)_1fr]">
+		<article class="mb-8 md:col-start-2 md:col-end-3">
+			<BlogHeader title="Understanding Executin Context" publishedDate={new Date()} views={20_200} />
+		</article>
+	</main>
 </DefaultLayout>
+
+<style>
+	:root {
+		--page-top: 40px;
+	}
+</style>
