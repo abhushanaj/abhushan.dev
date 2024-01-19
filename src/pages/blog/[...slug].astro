@@ -8,7 +8,7 @@ import DefaultLayout from '@/layouts/default/index.astro';
 import BackAction from '@/components/astro/blog/back-action/index.astro';
 import BlogHeader from '@/components/astro/blog/blog-header/index.astro';
 import SeoMeta from '@/components/astro/seo-meta/index.astro';
-import { InternalLink } from '@/components/react/link/internal';
+import { components } from '@/components/react/blog/content-blocks';
 
 export const getStaticPaths = (async () => {
 	const allBlogs = await getCollection('blog');
@@ -26,8 +26,11 @@ const blog = await getEntry('blog', slug);
 
 const {
 	data: { seoMetaData, title, publishedDate },
-	collection
+	collection,
+	render
 } = blog;
+
+const { Content } = await render();
 ---
 
 <DefaultLayout>
@@ -39,60 +42,8 @@ const {
 			<!-- Blog Header -->
 			<BlogHeader title={title} publishedDate={publishedDate} views={20_200} />
 
-			<p class="mb-4">
-				Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse odio minima sapiente delectus molestias eos quasi!
-				Praesentium, id magni. Perspiciatis!
-			</p>
-
-			<p class="mb-4">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Culpa, expedita.</p>
-
-			<p class="mb-4">
-				Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio sint aliquam iste fugiat iure pariatur fugit
-				inventore alias, ut totam distinctio, illum magni magnam modi.
-			</p>
-
-			<p class="mb-4">
-				Lorem ipsum dolor sit <strong class="font-medium text-text-neutral-hc">bold</strong> consectetur adipisicing elit.
-				Odio sint aliquam iste fugiat <em>iure pariatur fugit inventore alias</em> , ut totam distinctio, illum magni magnam
-				modi.
-			</p>
-
-			<ul class="mb-6 flex list-outside list-disc flex-col gap-2 pl-6">
-				<li>List Item 1</li>
-				<li>List Item 2</li>
-				<li>List Item 3</li>
-			</ul>
-
-			<ol class="mb-6 flex list-outside list-decimal flex-col gap-2 pl-6">
-				<li>List Item 1</li>
-				<li>List Item 2</li>
-				<li>List Item 3</li>
-			</ol>
-
-			<p class="mb-6">
-				You can easily install things like react using <code
-					class="rounded-sm bg-ui-neutral-bg px-[8px] py-[2px] font-medium text-text-neutral-hc">pnpm add react</code
-				>
-
-				or you can you the shortcut like <kbd
-					class="rounded-sm bg-ui-neutral-bg px-[8px] py-[2px] font-medium text-text-neutral-hc shadow-md shadow-ui-neutral-border"
-					>Ctrl + C</kbd
-				>
-			</p>
-
-			<p class="mb-6">
-				Then we also have links like these <InternalLink href="/" title="G to home sir">Go to home</InternalLink>
-			</p>
-
-			<blockquote
-				cite="https://en.wikipedia.org/wiki/JavaScript"
-				class="border-l-4 border-ui-neutral-border px-4 pb-1 pt-6"
-			>
-				<p class='before:text-2xl before:content-["‘‘"]'>
-					Words can be like X-rays, if you use them properly—they’ll go through anything. You read and you’re pierced
-				</p>
-				<footer class="mt-6 text-sm italic">— Aldous Huxley, <cite>Brave New World</cite></footer>
-			</blockquote>
+			<!-- Blog Content -->
+			<Content components={components} />
 		</article>
 
 		<aside class="hidden w-[30ch] pl-[100px] md:block">
