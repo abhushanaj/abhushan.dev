@@ -6,10 +6,12 @@ import { InternalLink } from '@/components/react/link/internal';
 import { BlockQuote, BlockQuoteError } from './block-quote';
 import { Heading } from './heading';
 import { InlineCode } from './inline-code';
+import { List } from './list';
 import { Paragraph } from './paragraph';
 import { Strong } from './strong';
 
 type PolymorphicHeadingProps = Omit<ComponentProps<typeof Heading>, 'as'>;
+type PolymorphicListProps = Omit<ComponentProps<typeof List>, 'as'>;
 
 export const components = {
 	h2: (props: PolymorphicHeadingProps) => <Heading as="h2" {...props} />,
@@ -24,5 +26,7 @@ export const components = {
 	a: InternalLink,
 	InternalLink,
 	ExternalLink,
-	InlineCode
+	InlineCode,
+	ul: (props: PolymorphicListProps) => <List as="ul" {...props} />,
+	ol: (props: PolymorphicListProps) => <List as="ol" {...props} />
 };
