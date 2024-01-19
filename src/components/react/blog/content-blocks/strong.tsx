@@ -1,6 +1,6 @@
-import type { ComponentProps } from 'react';
+import type { ComponentPropsWithoutRef } from 'react';
 
-type Props = ComponentProps<'strong'>;
+type Props = ComponentPropsWithoutRef<'strong'>;
 
 export function Strong({ children, ...otherProps }: Props) {
 	return (

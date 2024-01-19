@@ -1,6 +1,6 @@
-import type { ComponentProps } from 'react';
+import type { ComponentPropsWithoutRef } from 'react';
 
-type Props = ComponentProps<'p'>;
+type Props = ComponentPropsWithoutRef<'p'>;
 
 export function Paragraph({ children, ...otherProps }: Props) {
 	return (
