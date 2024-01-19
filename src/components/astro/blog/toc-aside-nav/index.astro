@@ -1,0 +1,25 @@
+---
+import type { MarkdownHeading } from 'astro';
+
+import { NavLink } from '@/components/react/link/navigation.tsx';
+
+type Props = {
+	tocContents: Array<MarkdownHeading>;
+};
+
+const { tocContents } = Astro.props;
+---
+
+<nav class="text-sm">
+	<ul class="flex flex-col gap-2">
+		{
+			tocContents.map((toc) => (
+				<li style={`--depth:${toc.depth - 2}`} class="ml-[calc(var(--depth)*var(--aside-nav-space-left))]">
+					<NavLink href={`#${toc.slug}`} title="Memory Creation Phase">
+						{toc.text}
+					</NavLink>
+				</li>
+			))
+		}
+	</ul>
+</nav>
