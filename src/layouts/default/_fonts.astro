@@ -1,0 +1,135 @@
+<!-- https://github.com/pixel-point/fontpie -->
+<style is:global>
+	/* Gest Sans Light */
+	@font-face {
+		font-family: 'Geist';
+		src: url('/fonts/Geist-Light.woff2') format('woff2');
+		font-weight: 300;
+		font-style: normal;
+		font-display: swap;
+	}
+
+	@font-face {
+		font-family: 'Geist Fallback';
+		font-style: normal;
+		font-weight: 300;
+		src: local('Arial');
+		ascent-override: 87.26%;
+		descent-override: 20.87%;
+		line-gap-override: 9.48%;
+		size-adjust: 105.43%;
+	}
+
+	/* Gest Sans Medium */
+	@font-face {
+		font-family: 'Geist';
+		src: url('/fonts/Geist-Medium.woff2') format('woff2');
+		font-weight: 500;
+		font-style: normal;
+		font-display: swap;
+	}
+
+	@font-face {
+		font-family: 'Geist Fallback';
+		font-style: normal;
+		font-weight: 500;
+		src: local('Arial');
+		ascent-override: 83.78%;
+		descent-override: 20.03%;
+		line-gap-override: 9.11%;
+		size-adjust: 109.82%;
+	}
+
+	/* Geist Sans Bold */
+	@font-face {
+		font-family: 'Geist';
+		src: url('/fonts/Geist-Bold.woff2') format('woff2');
+		font-weight: 700;
+		font-style: normal;
+		font-display: swap;
+	}
+
+	@font-face {
+		font-family: 'Geist Fallback';
+		font-style: normal;
+		font-weight: 700;
+		src: local('Arial Bold');
+		ascent-override: 86.69%;
+		descent-override: 20.73%;
+		line-gap-override: 9.42%;
+		size-adjust: 106.13%;
+	}
+
+	/* ======== Mono Space fonts for code blocks ======= */
+	/* Geist Mono Light */
+	@font-face {
+		font-family: 'Geist Mono';
+		src: url('/fonts/GeistMono-Light.woff2') format('woff2');
+		font-weight: 300;
+		font-style: normal;
+		font-display: swap;
+	}
+
+	@font-face {
+		font-family: 'Geist Mono Fallback';
+		font-style: normal;
+		font-weight: 300;
+		src: local('Courier New');
+		ascent-override: 92.01%;
+		descent-override: 22%;
+		line-gap-override: 10%;
+		size-adjust: 99.98%;
+	}
+
+	/* Geist Mono Medium */
+	@font-face {
+		font-family: 'Geist Mono';
+		src: url('/fonts/GeistMono-Medium.woff2') format('woff2');
+		font-weight: 500;
+		font-style: normal;
+		font-display: swap;
+	}
+
+	@font-face {
+		font-family: 'Geist Mono Fallback';
+		font-style: normal;
+		font-weight: 500;
+		src: local('Courier New');
+		ascent-override: 92.01%;
+		descent-override: 22%;
+		line-gap-override: 10%;
+		size-adjust: 99.98%;
+	}
+
+	:root {
+		--font-light: 300;
+		--font-regular: 400;
+		--font-medium: 500;
+		--font-semibold: 600;
+		--font-bold: 700;
+
+		--font-sans: 'Geist';
+		--font-sans-fallback: 'Geist Fallback';
+
+		--font-mono: 'Geist Mono';
+		--font-mono-fallback: 'Geist Mono Fallback';
+	}
+
+	html,
+	body {
+		font-family: var(--font-sans), var(--font-sans-fallback);
+		font-weight: var(--font-light);
+	}
+
+	h1,
+	h2,
+	h3 {
+		font-weight: var(--font-bold);
+	}
+
+	h4,
+	h5,
+	h6 {
+		font-weight: var(--font-medium);
+	}
+</style>
