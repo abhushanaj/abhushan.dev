@@ -8,6 +8,7 @@ import DefaultLayout from '@/layouts/default/index.astro';
 import BackAction from '@/components/astro/blog/back-action/index.astro';
 import BlogHeader from '@/components/astro/blog/blog-header/index.astro';
 import SeoMeta from '@/components/astro/seo-meta/index.astro';
+import { components } from '@/components/react/blog/content-blocks';
 import { InternalLink } from '@/components/react/link/internal';
 
 export const getStaticPaths = (async () => {
@@ -26,8 +27,11 @@ const blog = await getEntry('blog', slug);
 
 const {
 	data: { seoMetaData, title, publishedDate },
-	collection
+	collection,
+	render
 } = blog;
+
+const { Content } = await render();
 ---
 
 <DefaultLayout>
@@ -38,6 +42,9 @@ const {
 			<BackAction href={`/${collection}`} title="Go back to blogs page">go to blog</BackAction>
 			<!-- Blog Header -->
 			<BlogHeader title={title} publishedDate={publishedDate} views={20_200} />
+
+			<!-- Blog Content -->
+			<Content components={components} />
 
 			<p class="mb-4">
 				Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse odio minima sapiente delectus molestias eos quasi!
