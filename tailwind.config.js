@@ -23,7 +23,10 @@ const config = {
 		fontWeight: {
 			light: 'var(--font-light)',
 			medium: 'var(--font-medium)',
-			bold: 'var(--font-bold)'
+			bold: 'var(--font-bold)',
+
+			'mono-light': 'var(--font-light)',
+			'mono-medium': 'var(--font-medium)'
 		},
 		fontFamily: {
 			sans: ['var(--font-sans)', 'var(--font-sans-fallback)', ...defaultTheme.fontFamily.sans],
