@@ -28,10 +28,10 @@ export const getStaticPaths = (() => {
 		ogImageAlt=""
 		path="/blog-path-todo"
 	/>
-	<main class="flex w-full md:grid md:grid-cols-[1fr_var(--primary-content-width)_1fr]">
+	<main class="mb-8 flex w-full md:grid md:grid-cols-[1fr_var(--primary-content-width)_1fr]">
 		<article class="mb-8 md:col-start-2 md:col-end-3">
 			<!-- Back Action -->
-			<BackAction href="/" title="Go back to blogs page">go to blog</BackAction>
+			<BackAction href="/blog" title="Go back to blogs page">go to blog</BackAction>
 			<!-- Blog Header -->
 			<BlogHeader title="Understanding Execution Context" publishedDate={new Date()} views={20_200} />
 
@@ -79,6 +79,16 @@ export const getStaticPaths = (() => {
 			<p class="mb-6">
 				Then we also have links like these <InternalLink href="/" title="G to home sir">Go to home</InternalLink>
 			</p>
+
+			<blockquote
+				cite="https://en.wikipedia.org/wiki/JavaScript"
+				class="border-l-4 border-ui-neutral-border px-4 pb-1 pt-6"
+			>
+				<p class='before:text-2xl before:content-["‘‘"]'>
+					Words can be like X-rays, if you use them properly—they’ll go through anything. You read and you’re pierced
+				</p>
+				<footer class="mt-6 text-sm italic">— Aldous Huxley, <cite>Brave New World</cite></footer>
+			</blockquote>
 		</article>
 	</main>
 </DefaultLayout>
