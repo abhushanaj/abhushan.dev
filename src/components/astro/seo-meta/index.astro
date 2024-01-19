@@ -1,10 +1,12 @@
 ---
+import type { SeoMetaData } from '@/schemas/seo-meta';
+
 type Props = {
-	title: string;
-	description: string;
-	ogImage: string;
-	ogImageAlt: string;
-	robots?: 'index, follow' | 'noindex, nofollow' | 'noindex, follow';
+	title: SeoMetaData['title'];
+	description: SeoMetaData['description'];
+	ogImage: SeoMetaData['ogImage'];
+	ogImageAlt: SeoMetaData['ogImageAlt'];
+	robots?: SeoMetaData['robots'];
 	path: `/${string}`;
 };
 
