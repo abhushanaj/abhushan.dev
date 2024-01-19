@@ -35,7 +35,7 @@ const {
 	<main class="mb-8 flex w-full md:grid md:grid-cols-[1fr_var(--primary-content-width)_1fr]">
 		<article class="mb-8 md:col-start-2 md:col-end-3">
 			<!-- Back Action -->
-			<BackAction href="/blog" title="Go back to blogs page">go to blog</BackAction>
+			<BackAction href={`/${collection}`} title="Go back to blogs page">go to blog</BackAction>
 			<!-- Blog Header -->
 			<BlogHeader title={title} publishedDate={publishedDate} views={20_200} />
 
