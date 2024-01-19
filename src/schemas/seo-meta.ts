@@ -2,6 +2,10 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 
+/**
+ * CHORE: Not sure how to get rid of these linter waning while using zod
+ */
+
 import { z } from 'astro:content';
 
 export const seoMetaDataSchema = z.object({
