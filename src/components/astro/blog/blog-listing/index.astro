@@ -1,4 +1,6 @@
 ---
+import { InternalLink } from '@/components/react/link/internal';
+
 type BlogListing = {
 	title: string;
 	uri: `/${string}`;
@@ -15,12 +17,9 @@ const { listings } = Astro.props;
 	{
 		listings.map((listing) => (
 			<li>
-				<a
-					href={listing.uri}
-					class="rounded-sm text-text-neutral-hc underline decoration-ui-seperator-neutral-lc underline-offset-4 hover:decoration-ui-seperator-neutral-hc focus-visible:ring-2 focus-visible:ring-ui-neutral-focus-ring focus-visible:ring-offset-2"
-				>
+				<InternalLink href={listing.uri} title="View the series" variant="highContrast">
 					{listing.title}
-				</a>
+				</InternalLink>
 				<p class="mt-1 flex flex-wrap items-center gap-2 text-sm">
 					<time datetime={listing.publishedDate.toISOString()}>{listing.publishedDate.toDateString()}</time>
 					{listing.seriesLength && <span>- ({listing.seriesLength} part series)</span>}
