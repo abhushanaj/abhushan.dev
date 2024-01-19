@@ -5,6 +5,7 @@ import { InternalLink } from '@/components/react/link/internal';
 
 import { BlockQuote, BlockQuoteError } from './block-quote';
 import { Heading } from './heading';
+import { InlineCode } from './inline-code';
 import { Paragraph } from './paragraph';
 import { Strong } from './strong';
 
@@ -22,5 +23,6 @@ export const components = {
 	BlockQuote,
 	a: InternalLink,
 	InternalLink,
-	ExternalLink
+	ExternalLink,
+	InlineCode
 };
