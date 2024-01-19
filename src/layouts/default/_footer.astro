@@ -1,8 +1,15 @@
-<footer
-	class="flex h-[var(--page-footer-height)] items-center border-t border-ui-seperator-neutral-lc px-[var(--body-space-left)]"
->
+<footer class="flex h-[var(--page-footer-height)] items-center border-t border-ui-seperator-neutral-lc">
 	<div class="mx-auto flex w-full max-w-[var(--primary-content-width)] flex-wrap items-center justify-between gap-2">
 		<p class="text-xs text-text-neutral-hc sm:text-sm">Abhushan Adhikari Joshi.</p>
 		<p class="text-xs text-text-neutral-hc sm:text-sm">Sending Love from India 💓.</p>
 	</div>
 </footer>
+
+<style>
+	footer {
+		/* Add spaces to width to accompany padding from body to take full width */
+		width: calc(100% + var(--body-space-left) + var(--body-space-right));
+		/* Shift by negative space from left to align and prevent overlfow */
+		margin-left: calc(-1 * var(--body-space-left));
+	}
+</style>
