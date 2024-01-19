@@ -7,9 +7,9 @@ import DefaultLayout from '@/layouts/default/index.astro';
 
 import BackAction from '@/components/astro/blog/back-action/index.astro';
 import BlogHeader from '@/components/astro/blog/blog-header/index.astro';
+import TocAsideNav from '@/components/astro/blog/toc-aside-nav/index.astro';
 import SeoMeta from '@/components/astro/seo-meta/index.astro';
 import { components } from '@/components/react/blog/content-blocks';
-import { NavLink } from '@/components/react/link/navigation';
 
 export const getStaticPaths = (async () => {
 	const allBlogs = await getCollection('blog');
@@ -31,12 +31,12 @@ const {
 	render
 } = blog;
 
-const { Content } = await render();
+const { Content, headings } = await render();
 ---
 
 <DefaultLayout>
 	<SeoMeta slot="head" {...seoMetaData} path={`/${collection}/${slug}`} />
-	<main class="mb-8 flex w-full md:grid md:grid-cols-[1fr_var(--primary-content-width)_1fr]">
+	<main class="relative mb-8 flex w-full md:grid md:grid-cols-[1fr_var(--primary-content-width)_1fr]">
 		<article class="mb-8 md:col-start-2 md:col-end-3">
 			<!-- Back Action -->
 			<BackAction href={`/${collection}`} title="Go back to blogs page">go to blog</BackAction>
@@ -48,20 +48,10 @@ const { Content } = await render();
 		</article>
 
 		<aside class="hidden w-[30ch] pl-[100px] md:block">
-			<h4 class="text-md mb-4">On this page</h4>
-			<nav class="text-sm">
-				<ul class="flex flex-col gap-2">
-					<li>
-						<NavLink href="/" title="Memory Creation Phase" active>Memory Creation Phase</NavLink>
-					</li>
-					<li>
-						<NavLink href="/" title="Memory Creation Phase">Code Execution Phase</NavLink>
-					</li>
-					<li>
-						<NavLink href="/" title="Memory Creation Phase">Hositing during Memory Creation</NavLink>
-					</li>
-				</ul>
-			</nav>
+			<div class="sticky top-[var(--page-blur-segment-height)]">
+				<h4 class="text-md mb-4">On this page</h4>
+				<TocAsideNav tocContents={headings} />
+			</div>
 		</aside>
 	</main>
 </DefaultLayout>
@@ -69,5 +59,6 @@ const { Content } = await render();
 <style>
 	:root {
 		--page-top: 40px;
+		--aside-nav-space-left: 10px;
 	}
 </style>
