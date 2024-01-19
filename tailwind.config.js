@@ -1,5 +1,7 @@
+import defaultTheme from 'tailwindcss/defaultTheme';
+
 /** @type {import('tailwindcss').Config} */
-export default {
+const config = {
 	content: ['./src/**/*.{astro,html,md,mdx,ts,tsx}'],
 	theme: {
 		colors: {
@@ -20,11 +22,15 @@ export default {
 		},
 		fontWeight: {
 			light: 'var(--font-light)',
-			regular: 'var(--font-regular)',
 			medium: 'var(--font-medium)',
-			semibold: 'var(--font-semibold)',
 			bold: 'var(--font-bold)'
+		},
+		fontFamily: {
+			sans: ['var(--font-sans)', 'var(--font-sans-fallback)', ...defaultTheme.fontFamily.sans],
+			mono: ['var(--font-mono)', 'var(--font-mono-fallback)', ...defaultTheme.fontFamily.mono]
 		}
 	},
 	plugins: []
 };
+
+export default config;

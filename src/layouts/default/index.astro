@@ -1,9 +1,10 @@
 ---
-import Theme from './_theme.astro';
-import Config from './_config.astro';
-import Footer from './_footer.astro';
 import BlurSegment from './_blur-segment.astro';
+import Config from './_config.astro';
+import Fonts from './_fonts.astro';
+import Footer from './_footer.astro';
 import Navbar from './_navbar.astro';
+import Theme from './_theme.astro';
 ---
 
 <!doctype html>
@@ -12,7 +13,11 @@ import Navbar from './_navbar.astro';
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
 		<slot name="head" />
+
+		<!-- Custom Fonts And Fallbacks -->
+		<Fonts />
 		<!-- Layout Theme Styles -->
 		<Theme />
 		<!-- Layout Config -->
