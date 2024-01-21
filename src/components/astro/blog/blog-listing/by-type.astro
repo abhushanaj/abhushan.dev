@@ -1,0 +1,33 @@
+---
+import { getCollection } from 'astro:content';
+
+import type { CollectionEntry } from 'astro:content';
+import type { ComponentProps } from 'react';
+
+import { getUriFromCollectionAndSlug } from '@/lib/url';
+
+import BlogListing from './index.astro';
+
+type Props = {
+	type: CollectionEntry<'blog'>['data']['type'];
+};
+
+const { type } = Astro.props;
+
+const listingByType = await getCollection('blog', (entry) => entry.data.type === type);
+
+const listingDetails = listingByType.map((blog) => ({
+	title: blog.data.title,
+	publishedDate: blog.data.publishedDate,
+	uri: getUriFromCollectionAndSlug(blog.collection, blog.slug)
+})) satisfies ComponentProps<typeof BlogListing>['listings'];
+---
+
+{
+	listingByType.length > 0 ? (
+		<section class="mb-6">
+			<h1 class="mb-4 text-2xl">latest series</h1>
+			<BlogListing listings={listingDetails} />
+		</section>
+	) : null
+}

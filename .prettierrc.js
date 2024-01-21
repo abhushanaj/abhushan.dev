@@ -48,6 +48,8 @@ export default {
 		'',
 		'^@/schemas/(.*)$',
 		'',
+		'^@/lib/(.*)$',
+		'',
 		'^[./]' // relative imports
 	],
 	importOrderParserPlugins: ['typescript', 'jsx'],
