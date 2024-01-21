@@ -44,6 +44,11 @@ const config = {
 	settings: {
 		react: {
 			version: 'detect'
+		},
+		'import/resolver': {
+			node: {
+				extensions: ['.ts', '.tsx']
+			}
 		}
 	}
 };
