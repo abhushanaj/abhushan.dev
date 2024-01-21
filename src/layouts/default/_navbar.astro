@@ -1,4 +1,6 @@
 ---
+import { NavLink } from '@/components/react/link/navigation';
+
 const currentPath = Astro.url.pathname;
 
 const navLinks = [
@@ -22,14 +24,9 @@ const navLinks = [
 		{
 			navLinks.map((navLink) => (
 				<li>
-					<a
-						href={navLink.href}
-						title={navLink.title}
-						data-active-link={navLink.active}
-						class="rounded-sm text-text-neutral-lc decoration-ui-seperator-neutral-lc underline-offset-8 hover:text-text-neutral-hc focus-visible:ring-2 focus-visible:ring-ui-neutral-focus-ring focus-visible:ring-offset-2 data-[active-link]:text-text-neutral-hc data-[active-link]:underline"
-					>
+					<NavLink href={navLink.href} title={navLink.title} active={navLink.active}>
 						{navLink.name}
-					</a>
+					</NavLink>
 				</li>
 			))
 		}

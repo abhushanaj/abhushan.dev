@@ -1,0 +1,60 @@
+---
+import DefaultLayout from '@/layouts/default/index.astro';
+
+import BlogListing from '@/components/astro/blog/blog-listing/index.astro';
+import SeoMeta from '@/components/astro/seo-meta/index.astro';
+---
+
+<DefaultLayout>
+	<SeoMeta
+		slot="head"
+		title="Blog | Abhushan Adhikari Joshi"
+		description="Explore Abhushan's Blog - Showcasing expertise in Frontend Engineering"
+		ogImage=""
+		ogImageAlt=""
+		path="/blog"
+	/>
+	<main class="flex w-full md:grid md:grid-cols-[1fr_var(--primary-content-width)_1fr]">
+		<article class="mb-8 md:col-start-2 md:col-end-3">
+			<section class="mb-6">
+				<h1 class="mb-4 text-3xl md:text-4xl">blog</h1>
+
+				<p class="mb-6">
+					Welcome to my digital space where I share insights, tips, and discoveries in the dynamic realm of frontend
+					engineering and web development.
+				</p>
+
+				<p class="mb-6">
+					This blog is not just a space for code; it's a platform where I document my learning adventures, share my
+					thoughts on cutting-edge technologies, and sprinkle in some valuable tips and tricks I've picked up along the
+					way.
+				</p>
+			</section>
+
+			<section class="mb-6">
+				<h1 class="mb-4 text-2xl">latest blogs</h1>
+				<BlogListing
+					listings={[
+						{
+							title: 'Understanding Event Delegation',
+							publishedDate: new Date(),
+							uri: '/blog',
+							seriesLength: 10
+						},
+						{
+							title: 'Understanding Event Bubbling and Propagation',
+							publishedDate: new Date(),
+							uri: '/blog'
+						},
+						{
+							title: 'Headless Wordpress as a CMS',
+							publishedDate: new Date(),
+							uri: '/blog',
+							seriesLength: 10
+						}
+					]}
+				/>
+			</section>
+		</article>
+	</main>
+</DefaultLayout>
