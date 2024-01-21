@@ -1,8 +1,21 @@
 ---
+import { getUriFromCollectionAndSlug } from '@/lib/url';
+import { getCollection } from 'astro:content';
+
+import type { ComponentProps } from 'react';
+
 import DefaultLayout from '@/layouts/default/index.astro';
 
 import BlogListing from '@/components/astro/blog/blog-listing/index.astro';
 import SeoMeta from '@/components/astro/seo-meta/index.astro';
+
+const recentlyPublishedBlogs = await getCollection('blog');
+
+const recentBlogListing = recentlyPublishedBlogs.map((blog) => ({
+	title: blog.data.title,
+	publishedDate: blog.data.publishedDate,
+	uri: getUriFromCollectionAndSlug(blog.collection, blog.slug)
+})) satisfies ComponentProps<typeof BlogListing>['listings'];
 ---
 
 <DefaultLayout>
@@ -33,27 +46,7 @@ import SeoMeta from '@/components/astro/seo-meta/index.astro';
 
 			<section class="mb-6">
 				<h1 class="mb-4 text-2xl">latest blogs</h1>
-				<BlogListing
-					listings={[
-						{
-							title: 'Understanding Event Delegation',
-							publishedDate: new Date(),
-							uri: '/blog',
-							seriesLength: 10
-						},
-						{
-							title: 'Understanding Event Bubbling and Propagation',
-							publishedDate: new Date(),
-							uri: '/blog'
-						},
-						{
-							title: 'Headless Wordpress as a CMS',
-							publishedDate: new Date(),
-							uri: '/blog',
-							seriesLength: 10
-						}
-					]}
-				/>
+				<BlogListing listings={recentBlogListing} />
 			</section>
 		</article>
 	</main>
