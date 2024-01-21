@@ -1,30 +1,34 @@
 ---
-import { InternalLink } from '@/components/react/link/internal';
+import { getCollection } from 'astro:content';
 
-type BlogListing = {
-	title: string;
-	uri: `/${string}`;
-	seriesLength?: number;
-	publishedDate: Date;
+import type { CollectionEntry } from 'astro:content';
+import type { ComponentProps } from 'react';
+
+import { getUriFromCollectionAndSlug } from '@/lib/url';
+
+import Listing from './listing.astro';
+
+type Props = {
+	type: CollectionEntry<'blog'>['data']['type'];
+	heading: string;
 };
 
-type Props = { listings: Array<BlogListing> };
+const { type, heading } = Astro.props;
 
-const { listings } = Astro.props;
+const listingByType = await getCollection('blog', (entry) => entry.data.type === type);
+
+const listingDetails = listingByType.map((blog) => ({
+	title: blog.data.title,
+	publishedDate: blog.data.publishedDate,
+	uri: getUriFromCollectionAndSlug(blog.collection, blog.slug)
+})) satisfies ComponentProps<typeof Listing>['listings'];
 ---
 
-<ul class="flex flex-col gap-5">
-	{
-		listings.map((listing) => (
-			<li>
-				<InternalLink href={listing.uri} title="View the series" variant="highContrast">
-					{listing.title}
-				</InternalLink>
-				<p class="mt-1 flex flex-wrap items-center gap-2 text-sm">
-					<time datetime={listing.publishedDate.toISOString()}>{listing.publishedDate.toDateString()}</time>
-					{listing.seriesLength && <span>- ({listing.seriesLength} part series)</span>}
-				</p>
-			</li>
-		))
-	}
-</ul>
+{
+	listingByType.length > 0 ? (
+		<>
+			<h2 class="mb-4 text-2xl">{heading}</h2>
+			<Listing listings={listingDetails} />
+		</>
+	) : null
+}

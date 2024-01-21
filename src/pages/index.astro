@@ -1,6 +1,7 @@
 ---
 import DefaultLayout from '@/layouts/default/index.astro';
 
+import BlogListing from '@/components/astro/blog/blog-listing/index.astro';
 import ReachOutListing from '@/components/astro/reach-out-listing/index.astro';
 import SeoMeta from '@/components/astro/seo-meta/index.astro';
 ---
@@ -14,10 +15,10 @@ import SeoMeta from '@/components/astro/seo-meta/index.astro';
 		ogImageAlt="Abhushan Adhikari Joshi | Frontend Engineer"
 		path="/"
 	/>
-	<main>
-		<article class="flex w-full md:grid md:grid-cols-[1fr_var(--primary-content-width)_1fr]">
+	<main class="flex w-full md:grid md:grid-cols-[1fr_var(--primary-content-width)_1fr]">
+		<article class="md:col-start-2 md:col-end-3">
 			<!-- About Me Section -->
-			<section class="mb-8 md:col-start-2 md:col-end-3">
+			<section class="mb-8">
 				<header class="mb-8">
 					<h1 class="font-semibold text-3xl md:text-4xl">hey, I'm abhushan👋</h1>
 					<em class="text-sm italic text-text-neutral-lc">आभूषण - Derived from Devanagari</em>
@@ -46,6 +47,11 @@ import SeoMeta from '@/components/astro/seo-meta/index.astro';
 					the ever-evolving world of web development together.
 				</p>
 				<ReachOutListing />
+			</section>
+
+			<!-- Series Blogs Listings Section -->
+			<section class="mb-8">
+				<BlogListing type="series" heading="latest series" />
 			</section>
 		</article>
 	</main>

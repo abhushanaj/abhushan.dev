@@ -1,7 +1,7 @@
 ---
 import DefaultLayout from '@/layouts/default/index.astro';
 
-import BlogListingByType from '@/components/astro/blog/blog-listing/by-type.astro';
+import BlogListing from '@/components/astro/blog/blog-listing/index.astro';
 import SeoMeta from '@/components/astro/seo-meta/index.astro';
 ---
 
@@ -16,7 +16,7 @@ import SeoMeta from '@/components/astro/seo-meta/index.astro';
 	/>
 	<main class="flex w-full md:grid md:grid-cols-[1fr_var(--primary-content-width)_1fr]">
 		<article class="mb-8 md:col-start-2 md:col-end-3">
-			<section class="mb-6">
+			<section class="mb-8">
 				<h1 class="mb-4 text-3xl md:text-4xl">blog</h1>
 
 				<p class="mb-6">
@@ -31,9 +31,10 @@ import SeoMeta from '@/components/astro/seo-meta/index.astro';
 				</p>
 			</section>
 
-			<BlogListingByType listingType="standalone" />
-
-			<BlogListingByType listingType="series" />
+			<!-- Latest Blog Series Listing -->
+			<section class="mb-8">
+				<BlogListing type="series" heading="latest blogs" />
+			</section>
 		</article>
 	</main>
 </DefaultLayout>
