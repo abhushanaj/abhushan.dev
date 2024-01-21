@@ -13,7 +13,7 @@
 		"prettier:check": "pnpm exec prettier . --check --plugin=prettier-plugin-astro",
 		"prepare": "husky install",
 		"eslint": "eslint --fix . ",
-		"eslint:check": "esllint .",
+		"eslint:check": "eslint .",
 		"lint": "npm-run-all eslint prettier:format",
 		"lint:check": "npm-run-all typecheck eslint:check prettier:check"
 	},
