@@ -12,7 +12,6 @@ const config = {
 		'plugin:react/recommended',
 		'plugin:react-hooks/recommended',
 		'plugin:jsx-a11y/strict',
-		'plugin:import/recommended',
 		'plugin:react/jsx-runtime',
 		'prettier'
 	],
@@ -43,11 +42,6 @@ const config = {
 	settings: {
 		react: {
 			version: 'detect'
-		},
-		'import/resolver': {
-			node: {
-				extensions: ['.ts', '.tsx']
-			}
 		}
 	}
 };
