@@ -1,6 +1,6 @@
 ---
+import ThemeToogle from '@/components/astro/theme-toggle/index.astro';
 import { NavLink } from '@/components/react/link/navigation';
-import { ThemeToogle } from '@/components/react/theme-toggle';
 
 const currentPath = Astro.url.pathname;
 
@@ -35,5 +35,5 @@ const navLinks = [
 		}
 	</ul>
 
-	<ThemeToogle client:load />
+	<ThemeToogle />
 </nav>

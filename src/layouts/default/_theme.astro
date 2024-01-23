@@ -84,3 +84,13 @@
 		color: var(--text-neutral-hc);
 	}
 </style>
+
+<script is:inline>
+	try {
+		const theme = localStorage.getItem('theme') || 'light';
+		const htmlDoc = document.documentElement;
+		htmlDoc.setAttribute('data-theme', theme);
+	} catch (error) {
+		console.error('Error setting initial theme', error);
+	}
+</script>
