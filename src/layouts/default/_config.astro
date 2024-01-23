@@ -8,8 +8,9 @@
 		--body-space-bottom: max(var(--body-default-space), env(safe-area-inset-bottom));
 		--body-space-top: max(var(--body-default-space), env(safe-area-inset-top));
 
-		--primary-content-width: 48rem;
 		--page-height: 100vh;
+		--page-content-width: 48rem;
+		--primary-content-width: 48rem;
 		--page-footer-height: 50px;
 		--page-navbar-height: 50px;
 		--page-blur-segment-height: 60px;
@@ -27,5 +28,9 @@
 			var(--page-height) - var(--page-blur-segment-height) - var(--page-navbar-height) - var(--page-top) -
 				var(--page-footer-height)
 		);
+
+		max-width: var(--page-content-width);
+		margin-left: auto;
+		margin-right: auto;
 	}
 </style>

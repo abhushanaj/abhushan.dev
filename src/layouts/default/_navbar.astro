@@ -20,20 +20,22 @@ const navLinks = [
 ];
 ---
 
-<nav
-	class="mx-auto flex h-[var(--page-navbar-height)] max-w-[var(--primary-content-width)] items-center justify-between gap-4"
->
-	<ul class="flex items-center gap-4">
-		{
-			navLinks.map((navLink) => (
-				<li>
-					<NavLink href={navLink.href} title={navLink.title} active={navLink.active}>
-						{navLink.name}
-					</NavLink>
-				</li>
-			))
-		}
-	</ul>
+<header class="mx-auto max-w-[var(--page-content-width)]">
+	<nav
+		class="mx-auto flex h-[var(--page-navbar-height)] w-full max-w-[var(--primary-content-width)] items-center justify-between gap-4"
+	>
+		<ul class="flex items-center gap-4">
+			{
+				navLinks.map((navLink) => (
+					<li>
+						<NavLink href={navLink.href} title={navLink.title} active={navLink.active}>
+							{navLink.name}
+						</NavLink>
+					</li>
+				))
+			}
+		</ul>
 
-	<ThemeToogle />
-</nav>
+		<ThemeToogle />
+	</nav>
+</header>
