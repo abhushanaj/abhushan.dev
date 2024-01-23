@@ -10,11 +10,9 @@ import { Sun } from 'lucide-react';
 </button>
 
 <script>
-	import { MouseEvent } from 'react';
-
 	const themeTogglerBtn = document.querySelector('#theme-toggle') as HTMLButtonElement | undefined;
 
-	function setThemeTo(theme) {
+	function setThemeTo(theme: string) {
 		const htmlDoc = document.documentElement;
 
 		htmlDoc.setAttribute('data-theme', theme);
