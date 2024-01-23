@@ -7,6 +7,8 @@ const config = {
 		colors: {
 			currentColor: 'currentColor',
 			transparent: 'transparent',
+			'app-bg': 'var(--app-bg)',
+
 			'text-neutral-lc': 'var(--text-neutral-lc)',
 			'text-neutral-hc': 'var(--text-neutral-hc)',
 

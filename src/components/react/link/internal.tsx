@@ -9,9 +9,9 @@ type Props = ComponentPropsWithoutRef<'a'> & {
 
 const linkVariantClassMap: Record<LinkVariants, string> = {
 	lowContrast:
-		'text-text-neutral-lc hover:text-text-neutral-hc underline underline-offset-4 decoration-ui-seperator-neutral-lc',
+		'text-text-neutral-lc hover:text-text-neutral-hc underline underline-offset-4 decoration-ui-seperator-neutral-lc ring-offset-app-bg',
 	highContrast:
-		'text-text-neutral-hc underline underline-offset-4 decoration-ui-seperator-neutral-lc hover:decoration-ui-seperator-neutral-hc'
+		'text-text-neutral-hc underline underline-offset-4 decoration-ui-seperator-neutral-lc hover:decoration-ui-seperator-neutral-hc ring-offset-app-bg'
 };
 
 export function InternalLink({ href, children, title, variant = 'lowContrast', className = '', ...otherProps }: Props) {
@@ -25,7 +25,7 @@ export function InternalLink({ href, children, title, variant = 'lowContrast', c
 		<a
 			href={href}
 			title={title}
-			className={`text-inherit inline-flex items-center gap-1 focus-visible:ring-2 focus-visible:ring-ui-neutral-focus-ring focus-visible:ring-offset-2 ${variantClassNames} ${className}`}
+			className={`text-inherit inline-flex items-center gap-1 outline-none focus-visible:ring-2 focus-visible:ring-ui-neutral-focus-ring focus-visible:ring-offset-2 ${variantClassNames} ${className}`}
 			{...otherProps}
 		>
 			{children}
