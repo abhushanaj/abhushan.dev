@@ -1,6 +1,8 @@
 ---
 import { InternalLink } from '@/components/react/link/internal';
 
+import { formatPublishedDate } from '@/lib/date-time';
+
 type BlogListing = {
 	title: string;
 	uri: `/${string}`;
@@ -21,7 +23,7 @@ const { listings } = Astro.props;
 					{listing.title}
 				</InternalLink>
 				<p class="mt-1 flex flex-wrap items-center gap-2 text-sm">
-					<time datetime={listing.publishedDate.toISOString()}>{listing.publishedDate.toDateString()}</time>
+					<time datetime={listing.publishedDate.toISOString()}>{formatPublishedDate(listing.publishedDate)}</time>
 					{listing.seriesLength && <span>- ({listing.seriesLength} part series)</span>}
 				</p>
 			</li>
