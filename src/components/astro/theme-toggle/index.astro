@@ -1,0 +1,43 @@
+---
+import { Sun } from 'lucide-react';
+---
+
+<button
+	id="theme-toggle"
+	class="ring-offset-app-bg inline-flex items-center justify-center rounded-md bg-ui-neutral-bg px-2 py-2 outline-none ring-ui-neutral-focus-ring hover:bg-ui-neutral-hovered-bg focus-visible:bg-ui-neutral-focus-ring focus-visible:ring-2 focus-visible:ring-offset-2 active:bg-ui-neutral-active-bg"
+>
+	<Sun className="h-[1em] w-[1em]" />
+</button>
+
+<script>
+	const themeTogglerBtn = document.querySelector('#theme-toggle') as HTMLButtonElement | undefined;
+
+	function setThemeTo(theme: string) {
+		const htmlDoc = document.documentElement;
+
+		htmlDoc.setAttribute('data-theme', theme);
+		localStorage.setItem('theme', theme);
+	}
+
+	function getCurrentTheme() {
+		return localStorage.getItem('theme');
+	}
+
+	function toggleTheme() {
+		try {
+			const theme = getCurrentTheme();
+
+			if (!theme) {
+				setThemeTo('light');
+			} else {
+				setThemeTo(theme === 'light' ? 'dark' : 'light');
+			}
+		} catch (error) {
+			console.error('Error changing theme', error);
+		}
+	}
+
+	if (themeTogglerBtn) {
+		themeTogglerBtn.addEventListener('click', toggleTheme);
+	}
+</script>

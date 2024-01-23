@@ -1,16 +1,15 @@
 <style is:global>
 	:root {
-		--gray-a1: #00000003;
-		--gray-a2: #00000006;
-		--gray-a3: #0000000f;
-		--gray-a4: #00000017;
-		--gray-a5: #0000001f;
-		--gray-a6: #00000026;
-		--gray-a7: #00000031;
-		--gray-a8: #00000044;
-		--gray-a9: #00000072;
-		--gray-a10: #0000007c;
-
+		--gray-1: #fcfcfc;
+		--gray-2: #f9f9f9;
+		--gray-3: #f0f0f0;
+		--gray-4: #e8e8e8;
+		--gray-5: #e0e0e0;
+		--gray-6: #d9d9d9;
+		--gray-7: #cecece;
+		--gray-8: #bbbbbb;
+		--gray-9: #8d8d8d;
+		--gray-10: #838383;
 		--gray-11: #646464;
 		--gray-12: #202020;
 
@@ -27,16 +26,33 @@
 		--text-neutral-lc: var(--gray-11);
 
 		/* Seperators/Borders */
-		--ui-seperator-neutral-lc: var(--gray-a6);
-		--ui-seperator-neutral-hc: var(--gray-a7);
+		--ui-seperator-neutral-lc: var(--gray-6);
+		--ui-seperator-neutral-hc: var(--gray-7);
 
 		/* UI */
-		--ui-neutral-bg: var(--gray-a3);
-		--ui-neutral-hovered-bg: var(--gray-a4);
-		--ui-neutral-active-bg: var(--gray-a5);
-		--ui-neutral-focus-ring: var(--gray-a7);
-		--ui-neutral-border: var(--gray-a7);
-		--ui-neutral-hovered-border: var(--gray-a8);
+		--ui-neutral-bg: var(--gray-3);
+		--ui-neutral-hovered-bg: var(--gray-4);
+		--ui-neutral-active-bg: var(--gray-5);
+		--ui-neutral-focus-ring: var(--gray-7);
+		--ui-neutral-border: var(--gray-7);
+		--ui-neutral-hovered-border: var(--gray-8);
+	}
+
+	[data-theme='dark'] {
+		--gray-1: #111111;
+		--gray-2: #191919;
+		--gray-3: #222222;
+		--gray-4: #2a2a2a;
+		--gray-5: #313131;
+		--gray-6: #3a3a3a;
+		--gray-7: #484848;
+		--gray-8: #606060;
+		--gray-9: #6e6e6e;
+		--gray-10: #7b7b7b;
+		--gray-11: #b4b4b4;
+		--gray-12: #eeeeee;
+
+		--app-bg: var(--gray-1);
 	}
 
 	html {
@@ -68,3 +84,13 @@
 		color: var(--text-neutral-hc);
 	}
 </style>
+
+<script is:inline>
+	try {
+		const theme = localStorage.getItem('theme') || 'light';
+		const htmlDoc = document.documentElement;
+		htmlDoc.setAttribute('data-theme', theme);
+	} catch (error) {
+		console.error('Error setting initial theme', error);
+	}
+</script>

@@ -1,4 +1,6 @@
 ---
+import { formatPublishedDate } from '@/lib/date-time';
+
 type Props = {
 	title: string;
 	publishedDate: Date;
@@ -6,7 +8,7 @@ type Props = {
 };
 
 const { title, publishedDate, views = 0 } = Astro.props;
-const dateString = publishedDate.toDateString();
+const dateString = formatPublishedDate(publishedDate);
 const dateIso = publishedDate.toISOString();
 const formattedViews = views > 0 ? `${views} views` : null;
 ---
