@@ -16,7 +16,7 @@ import SeoMeta from '@/components/astro/seo-meta/index.astro';
 	/>
 	<main class="flex w-full md:grid md:grid-cols-[1fr_var(--primary-content-width)_1fr]">
 		<article class="mb-8 md:col-start-2 md:col-end-3">
-			<section class="mb-6">
+			<section class="mb-8">
 				<h1 class="mb-4 text-3xl md:text-4xl">blog</h1>
 
 				<p class="mb-6">
@@ -31,29 +31,9 @@ import SeoMeta from '@/components/astro/seo-meta/index.astro';
 				</p>
 			</section>
 
-			<section class="mb-6">
-				<h1 class="mb-4 text-2xl">latest blogs</h1>
-				<BlogListing
-					listings={[
-						{
-							title: 'Understanding Event Delegation',
-							publishedDate: new Date(),
-							uri: '/blog',
-							seriesLength: 10
-						},
-						{
-							title: 'Understanding Event Bubbling and Propagation',
-							publishedDate: new Date(),
-							uri: '/blog'
-						},
-						{
-							title: 'Headless Wordpress as a CMS',
-							publishedDate: new Date(),
-							uri: '/blog',
-							seriesLength: 10
-						}
-					]}
-				/>
+			<!-- Latest Blog Series Listing -->
+			<section class="mb-8">
+				<BlogListing type="series" heading="latest blogs" />
 			</section>
 		</article>
 	</main>
