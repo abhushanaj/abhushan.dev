@@ -87,7 +87,7 @@
 
 <script is:inline>
 	try {
-		const theme = localStorage.getItem('theme') || 'light';
+		const theme = localStorage.getItem('theme') || 'dark';
 		const htmlDoc = document.documentElement;
 		htmlDoc.setAttribute('data-theme', theme);
 	} catch (error) {

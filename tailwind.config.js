@@ -33,6 +33,19 @@ const config = {
 		fontFamily: {
 			sans: ['var(--font-sans)', 'var(--font-sans-fallback)', ...defaultTheme.fontFamily.sans],
 			mono: ['var(--font-mono)', 'var(--font-mono-fallback)', ...defaultTheme.fontFamily.mono]
+		},
+		extend: {
+			spacing: {
+				'page-content-width': 'var(--page-content-width)',
+				'primary-content-width': 'var(--primary-content-width)',
+				'page-top': 'var(--page-top)',
+				'body-space-left': 'var(--body-space-left)',
+				'body-space-right': 'var(--body-space-right)'
+			},
+			height: {
+				footer: 'var(--page-footer-height)',
+				navbar: 'var(--page-navbar-height)'
+			}
 		}
 	},
 	plugins: []

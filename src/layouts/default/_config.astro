@@ -1,6 +1,6 @@
 <style is:global>
 	:root {
-		--body-default-space: 20px;
+		--body-default-space: 1.2em;
 
 		/* https://developer.mozilla.org/en-US/docs/Web/CSS/env */
 		--body-space-left: max(var(--body-default-space), env(safe-area-inset-left));
@@ -8,17 +8,25 @@
 		--body-space-bottom: max(var(--body-default-space), env(safe-area-inset-bottom));
 		--body-space-top: max(var(--body-default-space), env(safe-area-inset-top));
 
-		--primary-content-width: 678px;
 		--page-height: 100vh;
+		--page-content-width: 48rem;
+		--primary-content-width: 48rem;
 		--page-footer-height: 50px;
 		--page-navbar-height: 50px;
 		--page-blur-segment-height: 60px;
-		--page-top: 60px;
+		--page-top: 50px;
 	}
 
 	body {
 		padding-left: var(--body-space-left);
 		padding-right: var(--body-space-right);
+	}
+
+	@screen lg {
+		body {
+			--body-space-left: 0;
+			--body-space-right: 0;
+		}
 	}
 
 	main {
@@ -27,5 +35,9 @@
 			var(--page-height) - var(--page-blur-segment-height) - var(--page-navbar-height) - var(--page-top) -
 				var(--page-footer-height)
 		);
+
+		max-width: var(--page-content-width);
+		margin-left: auto;
+		margin-right: auto;
 	}
 </style>

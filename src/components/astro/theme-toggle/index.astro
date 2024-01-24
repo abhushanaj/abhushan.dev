@@ -1,43 +1,66 @@
 ---
-import { Sun } from 'lucide-react';
+import { MoonStar, Sun } from 'lucide-react';
 ---
 
 <button
+	hidden
 	id="theme-toggle"
-	class="ring-offset-app-bg inline-flex items-center justify-center rounded-md bg-ui-neutral-bg px-2 py-2 outline-none ring-ui-neutral-focus-ring hover:bg-ui-neutral-hovered-bg focus-visible:bg-ui-neutral-focus-ring focus-visible:ring-2 focus-visible:ring-offset-2 active:bg-ui-neutral-active-bg"
+	class="inline-flex items-center justify-center rounded-md bg-ui-neutral-bg p-2 text-text-neutral-hc outline-none ring-ui-neutral-focus-ring ring-offset-app-bg hover:bg-ui-neutral-hovered-bg focus-visible:bg-ui-neutral-focus-ring focus-visible:ring-2 focus-visible:ring-offset-2 active:bg-ui-neutral-active-bg"
 >
-	<Sun className="h-[1em] w-[1em]" />
+	<Sun className="size-[1em]" id="sun-icon" />
+	<MoonStar className="size-[1em]" id="moon-icon" />
 </button>
 
+<style is:inline>
+	html[data-theme='light'] #sun-icon {
+		display: block;
+	}
+
+	html[data-theme='light'] #moon-icon {
+		display: none;
+	}
+
+	html[data-theme='dark'] #sun-icon {
+		display: none;
+	}
+
+	html[data-theme='dark'] #moon-icon {
+		display: block;
+	}
+</style>
+
 <script>
-	const themeTogglerBtn = document.querySelector('#theme-toggle') as HTMLButtonElement | undefined;
+	try {
+		const themeTogglerBtn = document.querySelector('#theme-toggle') as HTMLButtonElement;
 
-	function setThemeTo(theme: string) {
-		const htmlDoc = document.documentElement;
+		function setThemeTo(theme: string) {
+			const htmlDoc = document.documentElement;
 
-		htmlDoc.setAttribute('data-theme', theme);
-		localStorage.setItem('theme', theme);
-	}
+			htmlDoc.setAttribute('data-theme', theme);
 
-	function getCurrentTheme() {
-		return localStorage.getItem('theme');
-	}
-
-	function toggleTheme() {
-		try {
-			const theme = getCurrentTheme();
-
-			if (!theme) {
-				setThemeTo('light');
-			} else {
-				setThemeTo(theme === 'light' ? 'dark' : 'light');
-			}
-		} catch (error) {
-			console.error('Error changing theme', error);
+			localStorage.setItem('theme', theme);
 		}
-	}
 
-	if (themeTogglerBtn) {
+		function getCurrentTheme() {
+			return localStorage.getItem('theme');
+		}
+
+		function toggleTheme() {
+			try {
+				const theme = getCurrentTheme();
+
+				if (!theme) {
+					setThemeTo('dark');
+				} else {
+					setThemeTo(theme === 'light' ? 'dark' : 'light');
+				}
+			} catch (error) {
+				console.error('Error changing theme', error);
+			}
+		}
+
 		themeTogglerBtn.addEventListener('click', toggleTheme);
+	} catch (error) {
+		console.error(error);
 	}
 </script>

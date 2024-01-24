@@ -36,29 +36,36 @@ const { Content, headings } = await render();
 
 <DefaultLayout>
 	<SeoMeta slot="head" {...seoMetaData} path={`/${collection}/${slug}`} />
-	<main class="relative mb-8 flex w-full md:grid md:grid-cols-[1fr_var(--primary-content-width)_1fr]">
-		<article class="mb-8 md:col-start-2 md:col-end-3">
-			<!-- Back Action -->
-			<BlogBackAction href={`/${collection}`} title="Go back to blogs page">go to blog</BlogBackAction>
-			<!-- Blog Header -->
-			<BlogHeader title={title} publishedDate={publishedDate} views={0} />
+	<main class="relative">
+		<div class="gap-10 xl:grid xl:grid-cols-[var(--primary-content-width)_1fr]">
+			<article class="xl:max-w-unset w-full max-w-[var(--primary-content-width)]">
+				<!-- Back Action -->
+				<BlogBackAction href={`/${collection}`} title="Go back to blogs page">go to blog</BlogBackAction>
+				<!-- Blog Header -->
+				<BlogHeader title={title} publishedDate={publishedDate} views={0} />
 
-			<!-- Blog Content -->
-			<Content components={components} />
-		</article>
+				<!-- Blog Content -->
+				<Content components={components} />
+			</article>
 
-		<aside class="hidden w-[30ch] pl-[100px] md:block">
-			<div class="sticky top-[var(--page-blur-segment-height)]">
-				<h4 class="text-md mb-4">On this page</h4>
-				<TocAsideNav tocContents={headings} />
-			</div>
-		</aside>
+			<aside class="hidden xl:block">
+				<div class="sticky top-[var(--page-blur-segment-height)] w-[var(--aside-toc-content)]">
+					<h4 class="text-md mb-4">On this page</h4>
+					<TocAsideNav tocContents={headings} />
+				</div>
+			</aside>
+		</div>
 	</main>
-</DefaultLayout>
 
-<style>
-	:root {
-		--page-top: 40px;
-		--aside-nav-space-left: 10px;
-	}
-</style>
+	<style>
+		:root {
+			--aside-toc-size: 25ch;
+		}
+
+		@screen xl {
+			:root {
+				--page-content-width: 62.8rem;
+			}
+		}
+	</style>
+</DefaultLayout>
