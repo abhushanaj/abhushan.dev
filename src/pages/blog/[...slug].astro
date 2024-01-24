@@ -38,7 +38,7 @@ const { Content, headings } = await render();
 	<SeoMeta slot="head" {...seoMetaData} path={`/${collection}/${slug}`} />
 	<main class="relative">
 		<div class="gap-10 xl:grid xl:grid-cols-[var(--primary-content-width)_1fr]">
-			<article class="xl:max-w-unset mx-auto max-w-[var(--primary-content-width)]">
+			<article class="xl:max-w-unset w-full max-w-[var(--primary-content-width)]">
 				<!-- Back Action -->
 				<BlogBackAction href={`/${collection}`} title="Go back to blogs page">go to blog</BlogBackAction>
 				<!-- Blog Header -->
@@ -60,7 +60,12 @@ const { Content, headings } = await render();
 	<style>
 		:root {
 			--aside-toc-size: 25ch;
-			--page-content-width: 62.8rem;
+		}
+
+		@media only screen and (min-width: 1280px) {
+			:root {
+				--page-content-width: 62.8rem;
+			}
 		}
 	</style>
 </DefaultLayout>
