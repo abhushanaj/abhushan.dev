@@ -7,6 +7,8 @@ Host: https://abhushan.dev
 
 # Sitemaps:
 Sitemap: https://abhushan.dev/sitemap.xml
+Sitemap: https://abhushan.dev/sitemap/blogs.xml
+
 
 
 
