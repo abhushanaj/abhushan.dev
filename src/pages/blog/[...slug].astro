@@ -32,6 +32,7 @@ const {
 } = blog;
 
 const { Content, headings } = await render();
+const showToc = headings.length > 0;
 ---
 
 <DefaultLayout>
@@ -48,18 +49,23 @@ const { Content, headings } = await render();
 				<Content components={components} />
 			</article>
 
-			<aside class="hidden xl:block">
-				<div class="sticky top-[var(--page-blur-segment-height)] w-[var(--aside-toc-content)]">
-					<h4 class="text-md mb-4">On this page</h4>
-					<TocAsideNav tocContents={headings} />
-				</div>
-			</aside>
+			{
+				showToc && (
+					<aside class="hidden xl:block">
+						<div class="sticky top-[var(--page-blur-segment-height)] w-[var(--aside-toc-content)]">
+							<h4 class="text-md mb-4">On this page</h4>
+							<TocAsideNav tocContents={headings} />
+						</div>
+					</aside>
+				)
+			}
 		</div>
 	</main>
 
 	<style>
 		:root {
 			--aside-toc-size: 25ch;
+			--aside-nav-space-left: 0.8em;
 		}
 
 		@screen xl {
