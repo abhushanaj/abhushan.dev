@@ -6,7 +6,7 @@ Host: https://abhushan.dev
 
 
 # Sitemaps:
-Sitemap: https://alippo.com/sitemap.xml
+Sitemap: https://abhushan.dev/sitemap.xml
 
 
 
