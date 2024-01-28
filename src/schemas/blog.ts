@@ -15,5 +15,5 @@ export const blogSchema = z.object({
 	title: z.string(),
 	publishedDate: z.date(),
 	inProgress: z.boolean().optional().default(false),
-	type: z.enum(['series', 'standalone']).default('standalone')
+	type: z.enum(['series', 'standalone']).optional().default('standalone')
 });

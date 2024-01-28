@@ -12,9 +12,9 @@ export function Heading({ as, id, children, ...otherProps }: Props) {
 	const Comp = as;
 
 	const headingStylesMap: Record<HeadingLevels, string> = {
-		h2: 'text-2xl',
-		h3: 'text-xl',
-		h4: 'text-lg',
+		h2: 'text-3xl',
+		h3: 'text-2xl',
+		h4: 'text-xl',
 		h5: 'text-base'
 	};
 
@@ -27,7 +27,7 @@ export function Heading({ as, id, children, ...otherProps }: Props) {
 			<a href={`#${id}`} className="inline-flex items-center gap-1">
 				{children}
 
-				<Link className="mt-1 h-[18px] w-[18px] text-text-neutral-lc opacity-0 group-hover:opacity-100" />
+				<Link className="mt-1 size-[0.6em] text-text-neutral-lc opacity-0 group-hover:opacity-100" />
 			</a>
 		</Comp>
 	);
