@@ -63,6 +63,9 @@ devDependencies:
   eslint-plugin-react-hooks:
     specifier: ^4.6.0
     version: 4.6.0(eslint@8.56.0)
+  globby:
+    specifier: ^14.0.0
+    version: 14.0.0
   husky:
     specifier: ^8.0.0
     version: 8.0.0
@@ -1105,6 +1108,12 @@ packages:
     requiresBuild: true
     dev: false
     optional: true
+
+  /@sindresorhus/merge-streams@1.0.0:
+    resolution:
+      { integrity: sha512-rUV5WyJrJLoloD4NDN1V1+LDMDWOa4OTsT4yYJwQNpTU6FWxkxHpL7eu4w+DmiH8x/EAM1otkPE1+LaspIbplw== }
+    engines: { node: '>=18' }
+    dev: true
 
   /@types/acorn@4.0.6:
     resolution:
@@ -3080,6 +3089,19 @@ packages:
       ignore: 5.3.0
       merge2: 1.4.1
       slash: 3.0.0
+    dev: true
+
+  /globby@14.0.0:
+    resolution:
+      { integrity: sha512-/1WM/LNHRAOH9lZta77uGbq0dAEQM+XjNesWwhlERDVenqothRbnzTrL3/LrIoEPPjeUHC3vrS6TwoyxeHs7MQ== }
+    engines: { node: '>=18' }
+    dependencies:
+      '@sindresorhus/merge-streams': 1.0.0
+      fast-glob: 3.3.2
+      ignore: 5.3.0
+      path-type: 5.0.0
+      slash: 5.1.0
+      unicorn-magic: 0.1.0
     dev: true
 
   /gopd@1.0.1:
@@ -5070,6 +5092,12 @@ packages:
     engines: { node: '>=8' }
     dev: true
 
+  /path-type@5.0.0:
+    resolution:
+      { integrity: sha512-5HviZNaZcfqP95rwpv+1HDgUamezbqdSYTyzjTvwtJSnIH+3vnbmWsItli8OFEndS984VT55M3jduxZbX351gg== }
+    engines: { node: '>=12' }
+    dev: true
+
   /periscopic@3.1.0:
     resolution:
       { integrity: sha512-vKiQ8RRtkl9P+r/+oefh25C3fhybptkHKCZSPlcXiJux2tJF55GnEj3BVn4A5gKfq9NWWXXrxkHBwVPUfH0opw== }
@@ -5918,6 +5946,12 @@ packages:
     engines: { node: '>=8' }
     dev: true
 
+  /slash@5.1.0:
+    resolution:
+      { integrity: sha512-ZA6oR3T/pEyuqwMgAKT0/hAv8oAXckzbkmR0UkUosQ+Mc4RxGoJkRmwHgHufaenlyAgE1Mxgpdcrf75y6XcnDg== }
+    engines: { node: '>=14.16' }
+    dev: true
+
   /source-map-js@1.0.2:
     resolution:
       { integrity: sha512-R0XvVJ9WusLiqTCEiGCmICCMplcCkIwwR11mOSD9CR5u+IXYdiseeEuXCVAjS54zqwkLcPNnmU4OeJ6tUrWhDw== }
@@ -6449,6 +6483,12 @@ packages:
     resolution:
       { integrity: sha512-akOOQ/Yln8a2sgcLj4U0Jmx0R5jpIg2IUyRrWOzmEbjBtGzBdHtSeFKgoEcoH4KYIG/Pb8GQ/BwtYm0GCq1Sqg== }
     dev: false
+
+  /unicorn-magic@0.1.0:
+    resolution:
+      { integrity: sha512-lRfVq8fE8gz6QMBuDM6a+LO3IAzTi05H6gCVaUpir2E1Rwpo4ZUog45KpNXKC/Mn3Yb9UDuHumeFTo9iV/D9FQ== }
+    engines: { node: '>=18' }
+    dev: true
 
   /unified@10.1.2:
     resolution:

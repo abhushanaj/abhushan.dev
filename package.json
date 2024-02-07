@@ -5,7 +5,7 @@
 	"scripts": {
 		"dev": "pnpm run lint && astro dev",
 		"start": "astro dev",
-		"build": "pnpm run lint && astro build",
+		"build": "pnpm run lint &&  pnpm run generate:seo:essentials && astro build",
 		"preview": "astro preview",
 		"astro": "astro",
 		"typecheck": "astro check",
@@ -15,7 +15,10 @@
 		"eslint": "eslint --fix . ",
 		"eslint:check": "eslint .",
 		"lint": "npm-run-all eslint prettier:format",
-		"lint:check": "npm-run-all typecheck eslint:check prettier:check"
+		"lint:check": "npm-run-all typecheck eslint:check prettier:check",
+		"generate:robots": "node src/scripts/generate-robots.mjs",
+		"generate:root-sitemap": "node src/scripts/generate-root-sitemap.mjs",
+		"generate:seo:essentials": "npm-run-all generate:robots generate:root-sitemap"
 	},
 	"dependencies": {
 		"@astrojs/check": "^0.4.1",
@@ -40,6 +43,7 @@
 		"eslint-plugin-jsx-a11y": "^6.8.0",
 		"eslint-plugin-react": "^7.33.2",
 		"eslint-plugin-react-hooks": "^4.6.0",
+		"globby": "^14.0.0",
 		"husky": "^8.0.0",
 		"npm-run-all": "^4.1.5",
 		"prettier": "3.2.3",

@@ -5,6 +5,8 @@
 		"noPropertyAccessFromIndexSignature": true,
 		"jsxImportSource": "react",
 		"jsx": "react-jsx",
+		"checkJs": true,
+		"allowJs": true,
 		"baseUrl": ".",
 		"paths": {
 			"@/*": ["src/*"]
