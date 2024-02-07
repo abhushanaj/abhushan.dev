@@ -5,7 +5,7 @@
 	"scripts": {
 		"dev": "pnpm run lint && astro dev",
 		"start": "astro dev",
-		"build": "pnpm run lint &&  pnpm run generate:seo:essentials && astro build",
+		"build": "pnpm run lint:check && pnpm run generate:seo:essentials && astro build",
 		"preview": "astro preview",
 		"astro": "astro",
 		"typecheck": "astro check",
