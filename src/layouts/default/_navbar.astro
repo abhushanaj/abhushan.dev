@@ -1,5 +1,5 @@
 ---
-import ThemeToogle from '@/components/astro/theme-toggle/index.astro';
+// import ThemeToogle from '@/components/astro/theme-toggle/index.astro';
 import { NavLink } from '@/components/react/link/navigation';
 
 const currentPath = Astro.url.pathname;
@@ -20,8 +20,8 @@ const navLinks = [
 ];
 ---
 
-<header class="max-w-page-content-width mx-auto">
-	<nav class="max-w-primary-content-width h-navbar flex w-full items-center justify-between gap-4">
+<header class="mx-auto max-w-page-content-width">
+	<nav class="flex h-navbar w-full max-w-primary-content-width items-center justify-between gap-4">
 		<ul class="flex items-center gap-4">
 			{
 				navLinks.map((navLink) => (
@@ -34,6 +34,6 @@ const navLinks = [
 			}
 		</ul>
 
-		<ThemeToogle />
+		<!-- <ThemeToogle /> -->
 	</nav>
 </header>
