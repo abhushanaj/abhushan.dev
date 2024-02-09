@@ -19,7 +19,7 @@
 		"lint:check": "npm-run-all typecheck eslint:check prettier:check"
 	},
 	"dependencies": {
-		"@astrojs/check": "^0.4.1",
+		"@astrojs/check": "^0.5.2",
 		"@astrojs/mdx": "^2.0.4",
 		"@astrojs/react": "^3.0.9",
 		"@astrojs/tailwind": "^5.1.0",
