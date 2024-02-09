@@ -1,9 +1,9 @@
 <div align="center">
   <a href="https://abhushan.dev">
     <img
-      width="700"
+      width="1200"
       alt="Abhushan Adhikari Joshi | Frontend Engineer Website"
-      src="https://github.com/abhu-A-J/abhushan.dev/assets/49617450/43c5dd6c-5b89-4ec0-b810-33c7b97442e3"
+      src="./public/open-graph/root.png"
     />
   </a>
 
@@ -11,7 +11,7 @@
 
 # Personal Website
 
-> The webiste is still Work in Progress (WIP), I expect to complete all essentials and do a soft release by Jan'24 or Feb first week
+> The website is still Work in Progress (WIP)
 
 My personal website, digital playground and blogging space.
 
@@ -23,10 +23,10 @@ The project is created using the following technologies:
 4. [**Radix Colors**](https://www.radix-ui.com/colors) for the pallete composition using [CSS Variables](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties).
 5. [**Radix UI Primitives**](https://www.radix-ui.com/primitives) as the base layer for build components with accessibility in mind.
 
+The website is inspired from [Lee Robinson](https://leerob.io/) personal website.
+
 ## Motivation
 
 So, why did I decide to create my own website?
 
 Well, I figured it's about time to have a cozy corner on the internet to spill the beans on my coding adventures, share what I've learned in my years as a Frontend Developer, and probably crack a tech joke or two. It's all about connecting, learning, and having a good time while we navigate the ever-changing world of code.
-
-So, buckle up for the ride!
