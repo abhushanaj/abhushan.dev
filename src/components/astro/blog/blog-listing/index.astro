@@ -20,7 +20,7 @@ const listingByType = await getCollection('blog', (entry) => entry.data.type ===
 const listingDetails = listingByType.map((blog) => ({
 	title: blog.data.title,
 	publishedDate: blog.data.publishedDate,
-	uri: getUriFromCollectionAndSlug(blog.collection, blog.slug)
+	uri: getUriFromCollectionAndSlug({ collection: blog.collection, slug: blog.slug })
 })) satisfies ComponentProps<typeof Listing>['listings'];
 ---
 

@@ -1,6 +1,8 @@
 ---
 import type { SeoMetaData } from '@/schemas/seo-meta';
 
+import { getUrlFromUri } from '@/lib/url';
+
 type Props = {
 	title: SeoMetaData['title'];
 	description: SeoMetaData['description'];
@@ -12,8 +14,7 @@ type Props = {
 
 const { title, description, ogImage, ogImageAlt, robots = 'index, follow', path } = Astro.props;
 
-const site = Astro.site || new URL('https://abhushan.dev');
-const websiteUrl = path === '/' ? site.origin : `${site.origin}${path}`;
+const websiteUrl = getUrlFromUri(path);
 ---
 
 <!-- Site Essentials -->
