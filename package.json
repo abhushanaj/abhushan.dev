@@ -9,6 +9,7 @@
 		"preview": "astro preview",
 		"astro": "astro",
 		"typecheck": "astro check",
+		"sync": "astro sync",
 		"prettier:format": "pnpm exec prettier . --write --plugin=prettier-plugin-astro",
 		"prettier:check": "pnpm exec prettier . --check --plugin=prettier-plugin-astro",
 		"prepare": "husky install",
