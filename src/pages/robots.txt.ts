@@ -31,7 +31,7 @@ const robotsConfig: Record<PossibleEnv, RobotsConfig> = {
 	production: {
 		siteUrl: getUrlFromUri('/'),
 		crawlPolicies: {},
-		additionalSitemaps: ['/sitemap/blogs.xml']
+		additionalSitemaps: ['/sitemap/blog.xml']
 	}
 } as const;
 
