@@ -18,7 +18,7 @@ export const getUrlFromUri = (uri: `/${string}`) => {
 		return `${url.origin}/`;
 	}
 
-	if (uri?.endsWith('/')) {
+	if (uri.endsWith('/')) {
 		return url.href;
 	}
 
