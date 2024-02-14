@@ -11,6 +11,8 @@ import SeoMeta from '@/components/astro/seo-meta/index.astro';
 import { BlogBackAction } from '@/components/react/blog/back-action';
 import { components } from '@/components/react/blog/content-blocks';
 
+import { getUriFromSlug } from '@/lib/url';
+
 export const getStaticPaths = (async () => {
 	const allBlogs = await getCollection('blog');
 
@@ -27,7 +29,6 @@ const blog = await getEntry('blog', slug);
 
 const {
 	data: { seoMetaData, title, publishedDate },
-	collection,
 	render
 } = blog;
 
@@ -36,12 +37,12 @@ const showToc = headings.length > 0;
 ---
 
 <DefaultLayout>
-	<SeoMeta slot="head" {...seoMetaData} path={`/${collection}/${slug}`} />
+	<SeoMeta slot="head" {...seoMetaData} />
 	<main class="relative">
 		<div class="gap-10 xl:grid xl:grid-cols-[var(--primary-content-width)_1fr]">
 			<article class="xl:max-w-unset w-full max-w-[var(--primary-content-width)]">
 				<!-- Back Action -->
-				<BlogBackAction href={`/${collection}`} title="Go back to blogs page">go to blog</BlogBackAction>
+				<BlogBackAction href={getUriFromSlug('blog')} title="Go back to blogs page">go to blog</BlogBackAction>
 				<!-- Blog Header -->
 				<BlogHeader title={title} publishedDate={publishedDate} views={0} />
 

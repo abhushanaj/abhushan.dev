@@ -35,7 +35,7 @@ const robotsConfig: Record<PossibleEnv, RobotsConfig> = {
 				allow: ['/']
 			}
 		},
-		additionalSitemaps: ['/sitemap/blog.xml']
+		additionalSitemaps: ['sitemap/blog.xml']
 	}
 } as const;
 
@@ -77,7 +77,7 @@ export const GET: APIRoute = () => {
 	if (siteUrl) {
 		// Push root sitemap to robots file
 		robotsContent.push(`# Sitemaps:`);
-		robotsContent.push(`Sitemap: ${siteUrl}/sitemap.xml`);
+		robotsContent.push(`Sitemap: ${siteUrl}sitemap.xml`);
 
 		if (additionalSitemaps.length > 0) {
 			robotsContent.push(
