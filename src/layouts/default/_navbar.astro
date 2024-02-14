@@ -2,19 +2,19 @@
 import ThemeToogle from '@/components/astro/theme-toggle/index.astro';
 import { NavLink } from '@/components/react/link/navigation';
 
-import { getUrlFromUri } from '@/lib/url';
+import { getUriFromSlug, getUrlFromUri } from '@/lib/url';
 
 const currentPath = Astro.url.pathname;
 
 const navLinks = [
 	{
-		href: getUrlFromUri('/'),
+		href: getUrlFromUri(getUriFromSlug()),
 		name: 'home',
 		title: "Visit Abhushan's home page",
 		active: currentPath === '/'
 	},
 	{
-		href: getUrlFromUri('/blog'),
+		href: getUrlFromUri(getUriFromSlug('blog')),
 		name: 'blog',
 		title: "Visit Abhushan's blog page",
 		active: currentPath.includes('/blog')

@@ -1,5 +1,5 @@
 ---
-import type { Path } from '@/lib/url';
+import type { Uri } from '@/lib/url';
 import type { SeoMetaData } from '@/schemas/seo-meta';
 
 import { getUrlFromUri } from '@/lib/url';
@@ -14,7 +14,7 @@ type Props = {
 
 const { title, description, ogImage, ogImageAlt, robots = 'index, follow' } = Astro.props;
 
-const websiteUrl = getUrlFromUri(Astro.url.pathname as Path);
+const websiteUrl = getUrlFromUri(Astro.url.pathname as Uri);
 ---
 
 <!-- Site Essentials -->
