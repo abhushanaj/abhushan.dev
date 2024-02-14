@@ -10,12 +10,11 @@ type Props = {
 	ogImage: SeoMetaData['ogImage'];
 	ogImageAlt: SeoMetaData['ogImageAlt'];
 	robots?: SeoMetaData['robots'];
-	path: Path;
 };
 
-const { title, description, ogImage, ogImageAlt, robots = 'index, follow', path } = Astro.props;
+const { title, description, ogImage, ogImageAlt, robots = 'index, follow' } = Astro.props;
 
-const websiteUrl = getUrlFromUri(path);
+const websiteUrl = getUrlFromUri(Astro.url.pathname as Path);
 ---
 
 <!-- Site Essentials -->
