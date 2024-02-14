@@ -1,7 +1,7 @@
 import { getActiveEnv } from './env';
 
 export const getUriFromCollectionAndSlug = ({ collection, slug }: { collection: string; slug: string }) =>
-	`/${collection}/${slug}` as const;
+	`/${collection}/${slug}/` as const;
 
 export const getUrlFromUri = (uri?: `/${string}`) => {
 	const env = getActiveEnv();
@@ -12,5 +12,13 @@ export const getUrlFromUri = (uri?: `/${string}`) => {
 		url.pathname = uri;
 	}
 
-	return uri === '/' ? url.origin : url.href;
+	if (uri === '/') {
+		return url.origin;
+	}
+
+	if (uri?.endsWith('/')) {
+		return url.href;
+	}
+
+	return `${url.href}/`;
 };
