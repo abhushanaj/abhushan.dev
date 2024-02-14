@@ -1,19 +1,21 @@
 import { getActiveEnv } from './env';
 
-export const getUriFromCollectionAndSlug = ({ collection, slug }: { collection: string; slug: string }) =>
-	`/${collection}/${slug}/` as const;
+export type Path = `/${string}/`;
 
-export const getUrlFromUri = (uri?: `/${string}`) => {
+export const getUriFromSlug = (slug: string): Path => `/${slug}/` satisfies Path;
+
+export const getUriFromCollectionAndSlug = ({ collection, slug }: { collection: string; slug: string }): Path =>
+	getUriFromSlug(`${collection}/${slug}`);
+
+export const getUrlFromUri = (uri: `/${string}`) => {
 	const env = getActiveEnv();
 
 	const url = new URL(env === 'production' ? 'https://abhushan.dev' : 'http://localhost:3000');
 
-	if (uri) {
-		url.pathname = uri;
-	}
+	url.pathname = uri;
 
 	if (uri === '/') {
-		return url.origin;
+		return `${url.origin}/`;
 	}
 
 	if (uri?.endsWith('/')) {

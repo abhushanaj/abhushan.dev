@@ -1,4 +1,5 @@
 ---
+import type { Path } from '@/lib/url';
 import type { SeoMetaData } from '@/schemas/seo-meta';
 
 import { getUrlFromUri } from '@/lib/url';
@@ -9,7 +10,7 @@ type Props = {
 	ogImage: SeoMetaData['ogImage'];
 	ogImageAlt: SeoMetaData['ogImageAlt'];
 	robots?: SeoMetaData['robots'];
-	path: `/${string}`;
+	path: Path;
 };
 
 const { title, description, ogImage, ogImageAlt, robots = 'index, follow', path } = Astro.props;
