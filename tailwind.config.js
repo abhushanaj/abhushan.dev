@@ -31,7 +31,7 @@ const config = {
 			'mono-medium': 'var(--font-medium)'
 		},
 		fontFamily: {
-			sans: ['var(--font-sans)', 'var(--font-sans-fallback)', ...defaultTheme.fontFamily.sans],
+			sans: defaultTheme.fontFamily.sans,
 			mono: ['var(--font-mono)', 'var(--font-mono-fallback)', ...defaultTheme.fontFamily.mono]
 		},
 		extend: {
