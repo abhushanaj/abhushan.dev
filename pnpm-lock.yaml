@@ -9,7 +9,7 @@ dependencies:
     version: 2.1.1(astro@4.5.0)
   '@astrojs/react':
     specifier: ^3.0.10
-    version: 3.0.10(@types/react-dom@18.2.19)(@types/react@18.2.58)(react-dom@18.2.0)(react@18.2.0)(vite@5.1.5)
+    version: 3.0.10(@types/react-dom@18.2.21)(@types/react@18.2.64)(react-dom@18.2.0)(react@18.2.0)(vite@5.1.5)
   '@astrojs/tailwind':
     specifier: ^5.1.0
     version: 5.1.0(astro@4.5.0)(tailwindcss@3.4.1)
@@ -18,7 +18,7 @@ dependencies:
     version: 1.3.0(react@18.2.0)
   astro:
     specifier: ^4.5.0
-    version: 4.5.0(@types/node@20.11.20)(typescript@5.3.3)
+    version: 4.5.0(@types/node@20.11.25)(typescript@5.3.3)
   lucide-react:
     specifier: ^0.354.0
     version: 0.354.0(react@18.2.0)
@@ -34,14 +34,14 @@ devDependencies:
     specifier: ^4.1.1
     version: 4.1.1(prettier@3.2.5)
   '@types/node':
-    specifier: ^20.11.20
-    version: 20.11.20
+    specifier: ^20.11.25
+    version: 20.11.25
   '@types/react':
-    specifier: ^18.2.58
-    version: 18.2.58
+    specifier: ^18.2.64
+    version: 18.2.64
   '@types/react-dom':
-    specifier: ^18.2.19
-    version: 18.2.19
+    specifier: ^18.2.21
+    version: 18.2.21
   '@typescript-eslint/eslint-plugin':
     specifier: ^7.0.2
     version: 7.0.2(@typescript-eslint/parser@7.0.2)(eslint@8.57.0)(typescript@5.3.3)
@@ -76,8 +76,8 @@ devDependencies:
     specifier: ^0.13.0
     version: 0.13.0
   prettier-plugin-tailwindcss:
-    specifier: ^0.5.11
-    version: 0.5.11(@ianvs/prettier-plugin-sort-imports@4.1.1)(prettier-plugin-astro@0.13.0)(prettier@3.2.5)
+    specifier: ^0.5.12
+    version: 0.5.12(@ianvs/prettier-plugin-sort-imports@4.1.1)(prettier-plugin-astro@0.13.0)(prettier@3.2.5)
   tailwindcss:
     specifier: ^3.4.1
     version: 3.4.1
@@ -239,7 +239,7 @@ packages:
       '@astrojs/markdown-remark': 4.2.1
       '@mdx-js/mdx': 3.0.0
       acorn: 8.11.3
-      astro: 4.5.0(@types/node@20.11.20)(typescript@5.3.3)
+      astro: 4.5.0(@types/node@20.11.25)(typescript@5.3.3)
       es-module-lexer: 1.4.1
       estree-util-visit: 2.0.0
       github-slugger: 2.0.0
@@ -264,7 +264,7 @@ packages:
       prismjs: 1.29.0
     dev: false
 
-  /@astrojs/react@3.0.10(@types/react-dom@18.2.19)(@types/react@18.2.58)(react-dom@18.2.0)(react@18.2.0)(vite@5.1.5):
+  /@astrojs/react@3.0.10(@types/react-dom@18.2.21)(@types/react@18.2.64)(react-dom@18.2.0)(react@18.2.0)(vite@5.1.5):
     resolution:
       { integrity: sha512-uGRIwKMAn7tva2vxXMyoVIGxWFr0rjZ8ZWIlkTG/vIpnAjD2nM8Cz6B8j7yzj176jvl6gZ6xTbTVPm09aeK0Yw== }
     engines: { node: '>=18.14.1' }
@@ -274,8 +274,8 @@ packages:
       react: ^17.0.2 || ^18.0.0
       react-dom: ^17.0.2 || ^18.0.0
     dependencies:
-      '@types/react': 18.2.58
-      '@types/react-dom': 18.2.19
+      '@types/react': 18.2.64
+      '@types/react-dom': 18.2.21
       '@vitejs/plugin-react': 4.2.1(vite@5.1.5)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
@@ -292,7 +292,7 @@ packages:
       astro: ^3.0.0 || ^4.0.0
       tailwindcss: ^3.0.24
     dependencies:
-      astro: 4.5.0(@types/node@20.11.20)(typescript@5.3.3)
+      astro: 4.5.0(@types/node@20.11.25)(typescript@5.3.3)
       autoprefixer: 10.4.17(postcss@8.4.35)
       postcss: 8.4.35
       postcss-load-config: 4.0.2(postcss@8.4.35)
@@ -1374,9 +1374,9 @@ packages:
       '@types/unist': 2.0.10
     dev: false
 
-  /@types/node@20.11.20:
+  /@types/node@20.11.25:
     resolution:
-      { integrity: sha512-7/rR21OS+fq8IyHTgtLkDK949uzsa6n8BkziAKtPVpugIkO6D+/ooXMvzXxDnZrmtXVfjb1bKQafYpb8s89LOg== }
+      { integrity: sha512-TBHyJxk2b7HceLVGFcpAUjsa5zIdsPWlR6XHfyGzd0SFu+/NFgQgMAl96MSDZgQDvJAvV6BKsFOrt6zIL09JDw== }
     dependencies:
       undici-types: 5.26.5
 
@@ -1384,15 +1384,15 @@ packages:
     resolution:
       { integrity: sha512-ga8y9v9uyeiLdpKddhxYQkxNDrfvuPrlFb0N1qnZZByvcElJaXthF1UhvCh9TLWJBEHeNtdnbysW7Y6Uq8CVng== }
 
-  /@types/react-dom@18.2.19:
+  /@types/react-dom@18.2.21:
     resolution:
-      { integrity: sha512-aZvQL6uUbIJpjZk4U8JZGbau9KDeAwMfmhyWorxgBkqDIEf6ROjRozcmPIicqsUwPUjbkDfHKgGee1Lq65APcA== }
+      { integrity: sha512-gnvBA/21SA4xxqNXEwNiVcP0xSGHh/gi1VhWv9Bl46a0ItbTT5nFY+G9VSQpaG/8N/qdJpJ+vftQ4zflTtnjLw== }
     dependencies:
-      '@types/react': 18.2.58
+      '@types/react': 18.2.64
 
-  /@types/react@18.2.58:
+  /@types/react@18.2.64:
     resolution:
-      { integrity: sha512-TaGvMNhxvG2Q0K0aYxiKfNDS5m5ZsoIBBbtfUorxdH4NGSXIlYvZxLJI+9Dd3KjeB3780bciLyAb7ylO8pLhPw== }
+      { integrity: sha512-MlmPvHgjj2p3vZaxbQgFUQFvD8QiZwACfGqEdDSWou5yISWxDQ4/74nCAwsUiX7UFLKZz3BbVSPj+YxeoGGCfg== }
     dependencies:
       '@types/prop-types': 15.7.11
       '@types/scheduler': 0.16.8
@@ -1573,7 +1573,7 @@ packages:
       '@babel/plugin-transform-react-jsx-source': 7.23.3(@babel/core@7.23.9)
       '@types/babel__core': 7.20.5
       react-refresh: 0.14.0
-      vite: 5.1.5(@types/node@20.11.20)
+      vite: 5.1.5(@types/node@20.11.25)
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -1854,7 +1854,7 @@ packages:
     hasBin: true
     dev: false
 
-  /astro@4.5.0(@types/node@20.11.20)(typescript@5.3.3):
+  /astro@4.5.0(@types/node@20.11.25)(typescript@5.3.3):
     resolution:
       { integrity: sha512-NyBePQs0MqsLLde2hOuZO6eiLY2SzpDDeDQDfx39r2Ho2wmlaRFiWxIvcI5vAw75UNVUQuLWRDe+ZNl29AossQ== }
     engines: { node: '>=18.14.1', npm: '>=6.14.0' }
@@ -1918,7 +1918,7 @@ packages:
       tsconfck: 3.0.3(typescript@5.3.3)
       unist-util-visit: 5.0.0
       vfile: 6.0.1
-      vite: 5.1.5(@types/node@20.11.20)
+      vite: 5.1.5(@types/node@20.11.25)
       vitefu: 0.2.5(vite@5.1.5)
       which-pm: 2.1.1
       yargs-parser: 21.1.1
@@ -5474,9 +5474,9 @@ packages:
       prettier: 3.2.5
       sass-formatter: 0.7.9
 
-  /prettier-plugin-tailwindcss@0.5.11(@ianvs/prettier-plugin-sort-imports@4.1.1)(prettier-plugin-astro@0.13.0)(prettier@3.2.5):
+  /prettier-plugin-tailwindcss@0.5.12(@ianvs/prettier-plugin-sort-imports@4.1.1)(prettier-plugin-astro@0.13.0)(prettier@3.2.5):
     resolution:
-      { integrity: sha512-AvI/DNyMctyyxGOjyePgi/gqj5hJYClZ1avtQvLlqMT3uDZkRbi4HhGUpok3DRzv9z7Lti85Kdj3s3/1CeNI0w== }
+      { integrity: sha512-o74kiDBVE73oHW+pdkFSluHBL3cYEvru5YgEqNkBMFF7Cjv+w1vI565lTlfoJT4VLWDe0FMtZ7FkE/7a4pMXSQ== }
     engines: { node: '>=14.21.3' }
     peerDependencies:
       '@ianvs/prettier-plugin-sort-imports': '*'
@@ -5491,6 +5491,7 @@ packages:
       prettier-plugin-marko: '*'
       prettier-plugin-organize-attributes: '*'
       prettier-plugin-organize-imports: '*'
+      prettier-plugin-sort-imports: '*'
       prettier-plugin-style-order: '*'
       prettier-plugin-svelte: '*'
       prettier-plugin-twig-melody: '*'
@@ -5516,6 +5517,8 @@ packages:
       prettier-plugin-organize-attributes:
         optional: true
       prettier-plugin-organize-imports:
+        optional: true
+      prettier-plugin-sort-imports:
         optional: true
       prettier-plugin-style-order:
         optional: true
@@ -6883,7 +6886,7 @@ packages:
       vfile-message: 4.0.2
     dev: false
 
-  /vite@5.1.5(@types/node@20.11.20):
+  /vite@5.1.5(@types/node@20.11.25):
     resolution:
       { integrity: sha512-BdN1xh0Of/oQafhU+FvopafUp6WaYenLU/NFoL5WyJL++GxkNfieKzBhM24H3HVsPQrlAqB7iJYTHabzaRed5Q== }
     engines: { node: ^18.0.0 || >=20.0.0 }
@@ -6912,7 +6915,7 @@ packages:
       terser:
         optional: true
     dependencies:
-      '@types/node': 20.11.20
+      '@types/node': 20.11.25
       esbuild: 0.19.12
       postcss: 8.4.35
       rollup: 4.12.1
@@ -6929,7 +6932,7 @@ packages:
       vite:
         optional: true
     dependencies:
-      vite: 5.1.5(@types/node@20.11.20)
+      vite: 5.1.5(@types/node@20.11.25)
     dev: false
 
   /volar-service-css@0.0.30(@volar/language-service@2.0.4):
