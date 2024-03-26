@@ -1,0 +1,109 @@
+---
+seoMetaData:
+  title: 'Implement a throttle function'
+  description: 'Implement a throttle function by using Javascript closures.'
+  ogImage: '/open-graph/blogs/implement-a-throttle-function.webp'
+  ogImageAlt: 'Implement a throttle function by using Javascript closures.'
+title: 'Implement a throttle function'
+publishedDate: 2024-03-26
+blogMeta:
+  type: standalone
+---
+
+**Throttling** is a technique used to control how many times we allow a function to be executed over time.
+
+When a JavaScript function is said to be throttled with a wait time of **X milliseconds**, it can only be invoked at most once every X milliseconds.
+
+The callback is invoked immediately and cannot be invoked again for the rest of the wait duration.
+
+{/* Basic Implementation */}
+
+<section>
+
+## 1. Basic throttle implementation
+
+```js title="./src/throttle.js"
+export default function throttle(func, wait) {
+	let timerId = null;
+	let isThrottled = false;
+
+	function throttledFnImpl(...args) {
+		if (isThrottled) {
+			return;
+		}
+
+		func.call(this, ...args);
+		isThrottled = true;
+
+		timerId = setTimeout(() => {
+			timerId = null;
+			isThrottled = false;
+		}, wait);
+	}
+
+	return throttledFnImpl;
+}
+
+// Usage of throttle function
+const throttledFn = throttle(() => {
+	console.log('I am called');
+}, 1000);
+
+const button = document.getElementById('button');
+input.addEventListener('click', throttledFn);
+```
+
+</section>
+
+{/* ======= Immediate Flag Variation */}
+
+<section>
+
+<SubHeading>Variation: With Last Result</SubHeading>
+## 2. Variation with last result
+
+In this variation it is expected that during the throlling period if the function is invoked again, we simply return the last result.
+
+```js title="./src/throttle.js"
+export default function throttle(func, wait) {
+	let timerId = null;
+	let isThrottled = false;
+	let lastResult = undefined;
+
+	function throttledFnImpl(...args) {
+		if (isThrottled) {
+			// return last result instead of undefined
+			return lastResult;
+		}
+
+		// store the result for every invocation
+		lastResult = func.call(this, ...args);
+		isThrottled = true;
+
+		timerId = setTimeout(() => {
+			timerId = null;
+			isThrottled = false;
+		}, wait);
+	}
+
+	return throttledFnImpl;
+}
+
+// Usage of throttle function
+const throttledFn = throttle(() => {
+	console.log('I am called');
+}, 1000);
+
+const button = document.getElementById('button');
+input.addEventListener('click', throttledFn);
+```
+
+</section>
+
+## Further Reading
+
+I strongly encourage you to explore and tackle additional questions in my [Closure Questions for Frontend Interviews](/blog/closure-questions-for-frontend-interviews/ 'Find more question on closures in the closure questions for frontend Interviews blog series') blog series.
+
+By doing so, you can enhance your understanding and proficiency with closures, preparing you to excel in your upcoming frontend interviews.
+
+**_Wishing you best. Happy Interviewing_** 🫡.
