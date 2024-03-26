@@ -1,0 +1,39 @@
+---
+seoMetaData:
+  title: 'Implement a debounce function'
+  description: 'Implement a debounce by using Javascript closures.'
+  ogImage: ''
+  ogImageAlt: 'Implement a debounce by using Javascript closures.'
+title: 'Implement a debounce function'
+publishedDate: 2024-03-26
+blogMeta:
+  type: standalone
+---
+
+## What is debouncing?
+
+**Debouncing** is a technique used to control how many times we allow a function to be executed over time. When a JavaScript function is debounced with a wait time of X milliseconds, it must wait until after X milliseconds have elapsed since the debounced function was last called.
+
+## Basic debouncing function
+
+```js
+export default function debounce(func: Function, wait: number): Function {
+  let timerId: ReturnType<typeof setTimeout> | null =null;
+
+  function debouncedFnImpl(...args: Array<unknown>){
+    const thisArg= this;
+
+    if(timerId){
+      clearTimeout(timerId)
+    }
+
+    timerId=setTimeout(()=>{
+      timerId=null;
+      func.call(thisArg, ...args);
+    }, wait)
+  }
+
+  return debouncedFnImpl;
+}
+
+```
