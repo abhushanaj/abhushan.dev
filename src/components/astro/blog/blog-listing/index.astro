@@ -9,18 +9,19 @@ import { getUriFromCollectionAndSlug } from '@/lib/url';
 import Listing from './listing.astro';
 
 type Props = {
-	type: CollectionEntry<'blog'>['data']['type'];
+	type: CollectionEntry<'blog'>['data']['blogMeta']['type'];
 	heading: string;
 };
 
 const { type, heading } = Astro.props;
 
-const listingByType = await getCollection('blog', (entry) => entry.data.type === type);
+const listingByType = await getCollection('blog', (entry) => entry.data.blogMeta.type === type);
 
 const listingDetails = listingByType.map((blog) => ({
 	title: blog.data.title,
 	publishedDate: blog.data.publishedDate,
-	uri: getUriFromCollectionAndSlug({ collection: blog.collection, slug: blog.slug })
+	uri: getUriFromCollectionAndSlug({ collection: blog.collection, slug: blog.slug }),
+	seriesLength: blog.data.blogMeta.type === 'series' ? blog.data.blogMeta.relatedBlogs.length : 0
 })) satisfies ComponentProps<typeof Listing>['listings'];
 ---
 
