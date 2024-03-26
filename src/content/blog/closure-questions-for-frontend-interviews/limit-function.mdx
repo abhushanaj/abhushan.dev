@@ -20,7 +20,7 @@ This is a generic implemetation of limit utility and can be extended to create o
 
 ## 1. Generic implementation
 
-```js
+```js title="./src/limit.js"
 function limitFnInvocation(fn, limit) {
 	let result = undefined;
 	let invocations = 0;
@@ -58,7 +58,7 @@ limitedFn();
 <SubHeading>Variation: Limit Once</SubHeading>
 ## 2. Variation of limitOnce
 
-```js
+```js title="./src/limitOnce.js"
 // Usage of the generic utility function to create limit once
 const limitOnce = limitFnInvocation(() => {
 	console.log('I am called');
@@ -76,7 +76,7 @@ limitOnce();
 <SubHeading>Variation: Limit Twice</SubHeading>
 ## 3. Variation of limitTwice
 
-```js
+```js title="./src/limitTwice.js"
 // Usage of the generic utility function to create limit twice
 const limitTwice = limitFnInvocation(() => {
 	console.log('I am called');
