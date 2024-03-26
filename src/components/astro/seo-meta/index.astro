@@ -15,11 +15,14 @@ type Props = {
 const { title, description, ogImage, ogImageAlt, robots = 'index, follow' } = Astro.props;
 
 const websiteUrl = getUrlFromUri(Astro.url.pathname as Uri);
+
+const formattedSeoTitle = title.replaceAll('{{year}}', new Date().getFullYear().toString());
+const formattedDescription = description.replaceAll('{{year}}', new Date().getFullYear().toString());
 ---
 
 <!-- Site Essentials -->
-<title>{title}</title>
-<meta name="description" content={description} />
+<title>{formattedSeoTitle}</title>
+<meta name="description" content={formattedDescription} />
 <meta name="robots" content={robots} />
 <link rel="canonical" href={websiteUrl} />
 <link rel="icon" href="/favicon.ico" />
@@ -31,8 +34,8 @@ const websiteUrl = getUrlFromUri(Astro.url.pathname as Uri);
 <meta name="generator" content={Astro.generator} />
 
 <!-- Open Graphs -->
-<meta property="og:title" content={title} />
-<meta property="og:description" content={description} />
+<meta property="og:title" content={formattedSeoTitle} />
+<meta property="og:description" content={formattedDescription} />
 <meta property="og:type" content="website" />
 <meta property="og:url" content={websiteUrl} />
 <meta property="og:image" content={ogImage} />
@@ -43,6 +46,6 @@ const websiteUrl = getUrlFromUri(Astro.url.pathname as Uri);
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:site" content="@abhushanaj" />
 <meta name="twitter:creator" content="@abhushanaj" />
-<meta property="twitter:title" content={title} />
-<meta property="twitter:description" content={description} />
+<meta property="twitter:title" content={formattedSeoTitle} />
+<meta property="twitter:description" content={formattedDescription} />
 <meta property="twitter:image" content={ogImage} />
