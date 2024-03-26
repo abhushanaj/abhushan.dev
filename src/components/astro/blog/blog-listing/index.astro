@@ -4,7 +4,7 @@ import { getCollection } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 import type { ComponentProps } from 'react';
 
-import { getUriFromCollectionAndSlug } from '@/lib/url';
+import { getSlugDepth, getUriFromCollectionAndSlug } from '@/lib/url';
 
 import Listing from './listing.astro';
 
@@ -15,7 +15,19 @@ type Props = {
 
 const { type, heading } = Astro.props;
 
-const listingByType = await getCollection('blog', (entry) => entry.data.blogMeta.type === type);
+const listingByType = await getCollection('blog', (entry) => {
+	const matchingEntry = entry.data.blogMeta.type === type;
+
+	if (matchingEntry && type === 'standalone') {
+		return getSlugDepth(entry.slug) === 1;
+	}
+
+	if (matchingEntry && type === 'series') {
+		return true;
+	}
+
+	return false;
+});
 
 const listingDetails = listingByType.map((blog) => ({
 	title: blog.data.title,
