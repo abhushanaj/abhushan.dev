@@ -16,7 +16,9 @@ When a JavaScript function is said to be throttled with a wait time of **X milli
 
 The callback is invoked immediately and cannot be invoked again for the rest of the wait duration.
 
-{/* Basic Implementation */}
+From my personal experience, the implementation of debouncing with following variations are usally asked:
+
+{/* ======== Basic Implementation ========== */}
 
 <section>
 
@@ -55,7 +57,7 @@ input.addEventListener('click', throttledFn);
 
 </section>
 
-{/* ======= Immediate Flag Variation */}
+{/* ======= Last result variation ========== */}
 
 <section>
 
