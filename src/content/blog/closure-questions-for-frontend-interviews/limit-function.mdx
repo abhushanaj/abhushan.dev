@@ -1,0 +1,99 @@
+---
+seoMetaData:
+  title: 'Implement a limit function'
+  description: 'Implement a limit utility function by using Javascript closures.'
+  ogImage: '/open-graph/blogs/implement-a-limit-function.webp'
+  ogImageAlt: 'Implement a limit utility function by using Javascript closures.'
+title: 'Implement a limit function'
+publishedDate: 2024-03-26
+blogMeta:
+  type: standalone
+---
+
+**Limit** is a higher order utility function which limits the invocation of a function to at most **n** times. After further invocation (after n), it should yield the same last result.
+
+This is a generic implemetation of limit utility and can be extended to create other similar utilities like **limitOnce**, **limitTwice** etc.
+
+{/* ==== Generic Limit Function ====== */}
+
+<section>
+
+## 1. Generic implementation
+
+```js
+function limitFnInvocation(fn, limit) {
+	let result = undefined;
+	let invocations = 0;
+
+	function limitedFnImpl(...args) {
+		// if we have exceeded the limit for invocations, simply return the last result
+		if (invocations >= limit) {
+			return result;
+		}
+
+		result = fn.call(this, ...args);
+		invocations++;
+		return result;
+	}
+
+	return limitedFnImpl;
+}
+
+// Usage of the utility function
+const limitedFn = limitFnInvocation(() => {
+	console.log('I am called');
+}, 3);
+
+limitedFn();
+limitedFn();
+limitedFn();
+// Won't yield any logs from this point on
+limitedFn();
+```
+
+</section>
+
+<section>
+
+<SubHeading>Variation: Limit Once</SubHeading>
+## 2. Variation of limitOnce
+
+```js
+// Usage of the generic utility function to create limit once
+const limitOnce = limitFnInvocation(() => {
+	console.log('I am called');
+}, 1);
+
+limitOnce();
+// Won't yield any logs from this point on
+limitOnce();
+```
+
+</section>
+
+<section>
+
+<SubHeading>Variation: Limit Twice</SubHeading>
+## 3. Variation of limitTwice
+
+```js
+// Usage of the generic utility function to create limit twice
+const limitTwice = limitFnInvocation(() => {
+	console.log('I am called');
+}, 2);
+
+limitTwice();
+limitTwice();
+// Won't yield any logs from this point on
+limitTwice();
+```
+
+</section>
+
+## Further Reading
+
+I strongly encourage you to explore and tackle additional questions in my [Closure Questions for Frontend Interviews](/blog/closure-questions-for-frontend-interviews/ 'Find more question on closures in the closure questions for frontend Interviews blog series') blog series.
+
+By doing so, you can enhance your understanding and proficiency with closures, preparing you to excel in your upcoming frontend interviews.
+
+**_Wishing you best. Happy Interviewing_** 🫡.
