@@ -22,9 +22,9 @@ From my personal experience, the implementation of debouncing with following var
 
 <section>
 
-## 1. Basic debouncing function
+## 1. Basic debounce implementation
 
-```js
+```js title="./src/debounce.js"
 export default function debounce(func, wait) {
 	let timerId = null;
 
@@ -60,11 +60,11 @@ input.addEventListener('change', debouncedFn);
 <section>
 
 <SubHeading>Variation: With Immediate Flag</SubHeading>
-## 2. Debounce Variation with immediate flag
+## 2. Variation with immediate flag
 
-Immediate flag denotes that the function for the first time must be invoked immediately without any delay. For further invocations, it follows same rules as mentioned above (basic implementation).
+**Immediate flag** denotes that the function for the first time must be invoked immediately without any delay. For further invocations, it follows same rules as mentioned above (basic implementation).
 
-```js
+```js title="./src/debounce.js"
 export default function debounce(func, wait, immediate) {
 	let timerId = null;
 	let hasBeenCalledImmediately = false;
@@ -92,6 +92,60 @@ export default function debounce(func, wait, immediate) {
 }
 
 // Usage with immediate flag
+const debouncedFn = debounce(
+	(e) => {
+		console.log(e.target.value);
+	},
+	1000,
+	true
+);
+
+const input = document.getElementById('input');
+input.addEventListener('change', debouncedFn);
+```
+
+</section>
+
+{/* ======= Leading Variation ======= */}
+
+<section>
+
+<SubHeading>Variation: With Leading Flag</SubHeading>
+## 3. Variation with leading flag
+
+**Leading flag** denotes that the function must be called on the **leading edge**, i.e, invoke immediately (like immediate flag), but not just for the first time.
+In basic implementation we are doing a **trailing edge debounce** of the function.
+
+```js title="./src/debounce.js"
+export default function debounce(func, wait, leading) {
+	let timerId = null;
+
+	function debouncedFnImpl(...args) {
+		const thisArg = this;
+
+		if (timerId) {
+			clearTimeout(timerId);
+		}
+
+		const canCallNow = leading && !timerId;
+
+		// Check for the `canCallNow` flag and invoke immediately
+		if (canCallNow) {
+			func.call(thisArg, ...args);
+		}
+
+		timerId = setTimeout(() => {
+			timerId = null;
+			if (!leading) {
+				func.call(thisArg, ...args);
+			}
+		}, wait);
+	}
+
+	return debouncedFnImpl;
+}
+
+// Usage with leading flag
 const debouncedFn = debounce(
 	(e) => {
 		console.log(e.target.value);
