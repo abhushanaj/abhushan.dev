@@ -2,7 +2,7 @@
 seoMetaData:
   title: 'Implement a debounce function'
   description: 'Implement a debounce by using Javascript closures.'
-  ogImage: ''
+  ogImage: '/open-graph/blogs/implement-a-debounce-function.webp'
   ogImageAlt: 'Implement a debounce by using Javascript closures.'
 title: 'Implement a debounce function'
 publishedDate: 2024-03-26
@@ -173,7 +173,7 @@ This variation has few add-ons on the basic implementation and typically involve
 1. <InlineCode code="flush()" />: method to immediately invoke any delayed invocations.
 
 ```js title="./src/debounce.js"
-export default function debounce(func, wait, leading) {
+export default function debounce(func, wait) {
 	let timerId = null;
 	let thisArg = undefined;
 	let invocationArgs = undefined;
@@ -239,4 +239,4 @@ I strongly encourage you to explore and tackle additional questions in my [Closu
 
 By doing so, you can enhance your understanding and proficiency with closures, preparing you to excel in your upcoming frontend interviews.
 
-**_Wishing you best.Happy Interviewing_** 🫡.
+**_Wishing you best. Happy Interviewing_** 🫡.
