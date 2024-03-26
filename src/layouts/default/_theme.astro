@@ -133,7 +133,10 @@
 		const currTheme = htmlDoc.getAttribute('data-theme');
 
 		if (!currTheme || currTheme !== theme) {
-			htmlDoc.setAttribute('data-theme', theme);
+			/**
+			 * TODO: Change this later to use actual theme and not just force to be light at all times
+			 */
+			htmlDoc.setAttribute('data-theme', 'light');
 		}
 	} catch (error) {
 		console.error('Error setting initial theme', error);
