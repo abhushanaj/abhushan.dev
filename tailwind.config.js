@@ -12,12 +12,22 @@ const config = {
 			'text-neutral-lc': 'var(--text-neutral-lc)',
 			'text-neutral-hc': 'var(--text-neutral-hc)',
 
+			'text-info-lc': 'var(--text-info-lc)',
+			'text-info-hc': 'var(--text-info-hc)',
+
 			'ui-neutral-bg': 'var(--ui-neutral-bg)',
 			'ui-neutral-hovered-bg': 'var(--ui-neutral-hovered-bg)',
 			'ui-neutral-active-bg': 'var(--ui-neutral-active-bg)',
 			'ui-neutral-focus-ring': 'var(--ui-neutral-focus-ring)',
 			'ui-neutral-border': 'var(--ui-neutral-border)',
 			'ui-neutral-hovered-border': 'var(--ui-neutral-hovered-border)',
+
+			'ui-info-bg': 'var(--ui-info-bg)',
+			'ui-info-hovered-bg': 'var(--ui-info-hovered-bg)',
+			'ui-info-active-bg': 'var(--ui-info-active-bg)',
+			'ui-info-focus-ring': 'var(--ui-info-focus-ring)',
+			'ui-info-border': 'var(--ui-info-border)',
+			'ui-info-hovered-border': 'var(--ui-info-hovered-border)',
 
 			'ui-seperator-neutral-lc': 'var(--ui-seperator-neutral-lc)',
 			'ui-seperator-neutral-hc': 'var(--ui-seperator-neutral-hc)'

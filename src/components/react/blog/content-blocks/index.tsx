@@ -9,6 +9,7 @@ import { InlineCode } from './inline-code';
 import { List } from './list';
 import { Paragraph } from './paragraph';
 import { Strong } from './strong';
+import { SubHeading } from './sub-heading';
 
 type PolymorphicHeadingProps = Omit<ComponentProps<typeof Heading>, 'as'>;
 type PolymorphicListProps = Omit<ComponentProps<typeof List>, 'as'>;
@@ -28,5 +29,6 @@ export const components = {
 	ExternalLink,
 	InlineCode,
 	ul: (props: PolymorphicListProps) => <List as="ul" {...props} />,
-	ol: (props: PolymorphicListProps) => <List as="ol" {...props} />
+	ol: (props: PolymorphicListProps) => <List as="ol" {...props} />,
+	SubHeading
 };
