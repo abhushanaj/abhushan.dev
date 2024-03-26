@@ -11,7 +11,7 @@ import SeoMeta from '@/components/astro/seo-meta/index.astro';
 import { BlogBackAction } from '@/components/react/blog/back-action';
 import { components } from '@/components/react/blog/content-blocks';
 
-import { getUriFromSlug } from '@/lib/url';
+import { getParentSeriesSlug, getSlugDepth, getUriFromCollectionAndSlug } from '@/lib/url';
 
 export const getStaticPaths = (async () => {
 	const allBlogs = await getCollection('blog');
@@ -34,15 +34,25 @@ const {
 
 const { Content, headings } = await render();
 const showToc = headings.length > 0;
+
+const isPartOfSeries = getSlugDepth(slug) > 1;
+const seriesParentSlug = getParentSeriesSlug(slug);
 ---
 
 <DefaultLayout>
 	<SeoMeta slot="head" {...seoMetaData} />
 	<main class="relative">
 		<div class="gap-10 xl:grid xl:grid-cols-[var(--primary-content-width)_1fr]">
-			<article class="xl:max-w-unset w-full max-w-[var(--primary-content-width)]">
+			<article class="xl:max-w-unset w-full max-w-[var(--primary-content-width)] pb-12">
 				<!-- Back Action -->
-				<BlogBackAction href={getUriFromSlug('blog')} title="Go back to blogs page">go to blog</BlogBackAction>
+				<BlogBackAction
+					href={getUriFromCollectionAndSlug({
+						collection: 'blog',
+						slug: isPartOfSeries ? seriesParentSlug : undefined
+					})}
+					title={isPartOfSeries ? 'back to series' : 'back to blogs'}
+					>{isPartOfSeries ? 'back to series' : 'back to blogs'}</BlogBackAction
+				>
 				<!-- Blog Header -->
 				<BlogHeader title={title} publishedDate={publishedDate} views={0} />
 
@@ -73,6 +83,10 @@ const showToc = headings.length > 0;
 			:root {
 				--page-content-width: 62.8rem;
 			}
+		}
+
+		.expressive-code {
+			margin-bottom: 4rem;
 		}
 	</style>
 </DefaultLayout>

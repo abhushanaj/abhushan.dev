@@ -4,8 +4,19 @@ export type Uri = `/${string}/` | `/`;
 
 export const getUriFromSlug = (slug?: string): Uri => (slug ? `/${slug}/` : `/`);
 
-export const getUriFromCollectionAndSlug = ({ collection, slug }: { collection: string; slug: string }): Uri =>
-	getUriFromSlug(`${collection}/${slug}`);
+export const getUriFromCollectionAndSlug = ({
+	collection,
+	slug
+}: {
+	collection: string;
+	slug?: string | undefined;
+}): Uri => {
+	if (slug) {
+		return getUriFromSlug(`${collection}/${slug}`);
+	}
+
+	return getUriFromSlug(collection);
+};
 
 export const getUrlFromUri = (uri: Uri) => {
 	const env = getActiveEnv();
@@ -15,4 +26,14 @@ export const getUrlFromUri = (uri: Uri) => {
 	url.pathname = uri;
 
 	return url.href;
+};
+
+export const getSlugDepth = (slug: string) => {
+	const parts = slug.split('/');
+	return parts.length;
+};
+
+export const getParentSeriesSlug = (slug: string) => {
+	const [parentSlug] = slug.split('/');
+	return parentSlug;
 };
