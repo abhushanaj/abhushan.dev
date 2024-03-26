@@ -1,26 +1,5 @@
 <!-- https://github.com/pixel-point/fontpie -->
 <style is:global>
-	/* ======== Mono Space fonts for code blocks ======= */
-	/* Geist Mono Light */
-	@font-face {
-		font-family: 'Geist Mono';
-		src: url('/fonts/GeistMono-Light.woff2') format('woff2');
-		font-weight: 300;
-		font-style: normal;
-		font-display: swap;
-	}
-
-	@font-face {
-		font-family: 'Geist Mono Fallback';
-		font-style: normal;
-		font-weight: 300;
-		src: local('Courier New');
-		ascent-override: 92.01%;
-		descent-override: 22%;
-		line-gap-override: 10%;
-		size-adjust: 99.98%;
-	}
-
 	/* Geist Mono Medium */
 	@font-face {
 		font-family: 'Geist Mono';
@@ -48,6 +27,9 @@
 		--font-semibold: 600;
 		--font-bold: 700;
 
+		--font-mono-light: 300;
+		--font-mono-medium: 500;
+
 		/* --font-sans: 'Geist';
 		--font-sans-fallback: 'Geist Fallback'; */
 
@@ -71,5 +53,10 @@
 	h5,
 	h6 {
 		font-weight: var(--font-medium);
+	}
+
+	code {
+		font-family: var(--font-mono-fallback), var(--font-mono) !important;
+		font-weight: var(--font-mono-medium) !important;
 	}
 </style>

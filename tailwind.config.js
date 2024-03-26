@@ -37,8 +37,7 @@ const config = {
 			medium: 'var(--font-medium)',
 			bold: 'var(--font-bold)',
 
-			'mono-light': 'var(--font-light)',
-			'mono-medium': 'var(--font-medium)'
+			'mono-medium': 'var(--font-mono-medium)'
 		},
 		fontFamily: {
 			sans: defaultTheme.fontFamily.sans,

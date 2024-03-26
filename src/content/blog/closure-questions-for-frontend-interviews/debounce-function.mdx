@@ -10,8 +10,6 @@ blogMeta:
   type: standalone
 ---
 
-## What is debouncing?
-
 **Debouncing** is a technique used to control how many times we allow a function to be executed over time.
 
 When a JavaScript function is debounced with a wait time of X milliseconds, it must wait until after X milliseconds have elapsed since the debounced function was last called.
@@ -156,6 +154,79 @@ const debouncedFn = debounce(
 
 const input = document.getElementById('input');
 input.addEventListener('change', debouncedFn);
+```
+
+</section>
+
+{/* ======= Flush and Cancel Variation ======= */}
+
+<section>
+
+<SubHeading>Variation: With Flush and Cancel Methods</SubHeading>
+## 4. Variation with flush and cancel methods
+
+This variation has few add-ons on the basic implementation and typically involves addition of two methods:
+
+1. <InlineCode code="cancel()" />: method to cancel pending invocations.
+1. <InlineCode code="flush()" />: method to immediately invoke any delayed invocations.
+
+```js title="./src/debounce.js"
+export default function debounce(func, wait, leading) {
+	let timerId = null;
+	let thisArg = undefined;
+	let invocationArgs = undefined;
+
+	function cancel() {
+		if (timerId) {
+			clearTimeout(timerId);
+			timerId = null;
+		}
+	}
+
+	function invoke() {
+		if (timerId) {
+			func.call(thisArg, ...invocationArgs);
+			timerId = null;
+		}
+	}
+
+	function debouncedFnImpl(...args) {
+		thisArg = this;
+		invocationArgs = args;
+
+		// we first cancel any pending invocations
+		cancel();
+
+		// we then create delayed execution of the function (trailing edge invocation)
+		timerId = setTimeout(() => {
+			invoke();
+		}, wait);
+	}
+
+	// attach cancel and flush utility methods
+	debouncedFnImpl.cancel = cancel;
+	debouncedFnImpl.flush = invoke;
+
+	return debouncedFnImpl;
+}
+
+// Usage with leading flag
+const debouncedFn = debounce(
+	(e) => {
+		console.log(e.target.value);
+	},
+	1000,
+	true
+);
+
+const input = document.getElementById('input');
+input.addEventListener('change', debouncedFn);
+
+// Using the cancel method : it cancels any delayed invocations
+debouncedFn.cancel();
+
+// Using the flush method: any pending invocation if present is called immediately
+debouncedFn.flush();
 ```
 
 </section>
