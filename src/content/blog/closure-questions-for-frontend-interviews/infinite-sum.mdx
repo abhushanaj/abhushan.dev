@@ -1,0 +1,143 @@
+---
+seoMetaData:
+  title: 'Implement an infinite sum function'
+  description: 'Implement an infinite sum function by using Javascript closures.'
+  ogImage: '/open-graph/blogs/implement-an-infinite-sum-function.webp'
+  ogImageAlt: 'Implement an infinite sum function by using Javascript closures.'
+title: 'Implement an infinite sum function'
+publishedDate: 2024-03-27
+blogMeta:
+  type: standalone
+---
+
+The classic infinite sum problem is probably the most repetitive brain teaser problems I have encountered during my interviews focussing on testing knowledge of closures alongside recursion.
+
+It's arguably one of my favourite questions as well just by the sheer number possible variations it can have 😅.
+
+<section>
+## 1. The classic implementation
+
+Implement a sum function which can perform addition of the input values passed to it in the given form. In this case, **only one argument** can be passed at a time.
+
+<InlineCode code="const result= sum(1)(2)(3)(4)()" /> should yield a result of <InlineCode code="10" />.
+
+```js title="./src/sum.js"
+function sum(valueA) {
+	function curriedSum(valueB) {
+		return typeof valueB === 'undefined' ? valueA : sum(valueA + valueB);
+	}
+
+	return curriedSum;
+}
+
+const result = sum(1)(2)(3)(4)();
+console.log(result); // yields 10
+```
+
+</section>
+
+{/* ===== Variation: Sporadic Inputs==== */}
+
+<section>
+<SubHeading>Variation: Sporadic input</SubHeading>
+
+## 2. Sporadic input implementation
+
+In this variation, there is **no restriction of passing only a single input at a time**. Some possible ways to invoke the sum function can be:
+
+1. <InlineCode code="const result1=sum(1)(2,3,4)()" />
+1. <InlineCode code="const result2=sum(1,2,3)(4)()" />
+1. <InlineCode code="const result3=sum(1,2,3,4)()" />
+1. <InlineCode code="const result4=sum(1,2)(3)(4)()" />
+
+```js title="./src/sum.js"
+function sum(...nums) {
+	let mergedNums = nums;
+
+	// incase it is invoked without any arguments, we simply return zero or throw an error
+	if (nums.length === 0) {
+		return 0;
+	}
+
+	function curriedSum(...nextNums) {
+		const isEnd = nextNums.length === 0;
+		mergedNums = [...mergedNums, ...nextNums];
+
+		// when no arguments are passed we terminate the recursion
+		return isEnd ? mergedNums.reduce((acc, val) => acc + val, 0) : curriedSum;
+	}
+
+	return curriedSum;
+}
+
+// Usage
+const result1 = sum(1)(2, 3, 4)(); // yields 10
+const result2 = sum(1, 2, 3)(4)(); // yields 10
+const result3 = sum(1, 2, 3, 4)(); // yields 10
+const result4 = sum(1, 2)(3, 4); // yields 10
+
+console.log(result1, result2, result3, result4);
+```
+
+</section>
+
+{/* ===== Variation: Sporadic Inputs with fixed length ==== */}
+
+<section>
+<SubHeading>Variation: Sporadic input with fixed arguments length</SubHeading>
+
+## 3. Sporadic input with fixed arguments length implementation
+
+Untill now, all the variations of infinite sum the termination was either **no input** or **empty inpu**t passed to the function.
+However in this variation, we still need to allow sporadic input, but only upto fixed length or size. Some possible invocation in this variation are:
+
+1. <InlineCode code="const result1=sum(1)(2,3,4)" />
+1. <InlineCode code="const result2=sum(1,2,3)(4)" />
+1. <InlineCode code="const result3=sum(1,2,3,4)" />
+1. <InlineCode code="const result4=sum(1,2)(3)(4)" />
+1. <InlineCode code="const result5=sum(1)()(2)(3)(4)" />
+1. <InlineCode code="const result6=sum(1)()()()()(2,3,4)" />
+
+We assume that the fixed length here is **4**, i.e total of 4 arguments;
+
+```js title="./src/sum.js"
+function sum(...nums) {
+	let mergedNums = nums;
+
+	// assuming we are asked to create a curried sum of arguments length of 4 with sporadic input
+	const FIXED_ARGS_SIZE = 4;
+
+	// incase it is invoked without any arguments, we simply return zero or throw an error
+	if (nums.length === 0) {
+		return 0;
+	}
+
+	// if all 4 input are passed in first invocations only
+	if (nums.length === FIXED_ARGS_SIZE) {
+		return nums.reduce((acc, val) => acc + val, 0);
+	}
+
+	function curriedSum(...nextNums) {
+		mergedNums = [...mergedNums, ...nextNums];
+		const isEnd = mergedNums.length === FIXED_ARGS_SIZE;
+
+		// when no arguments are passed we terminate the recursion
+		return isEnd ? mergedNums.reduce((acc, val) => acc + val, 0) : curriedSum;
+	}
+
+	return curriedSum;
+}
+
+// Usage
+const result1 = sum(1)(2, 3, 4); // yields 10
+const result2 = sum(1, 2, 3)(4); // yields 10
+const result3 = sum(1, 2, 3, 4); // yields 10
+const result4 = sum(1, 2)(3)(4); // yields 10
+const result5 = sum(1)()(2)(3)(4); // yields 10
+const result6 = sum(1)()()()()(2, 3, 4); // yields 10
+const result7 = sum(1, 2, 3, 4); // yields 10
+
+console.log(result1, result2, result3, result4, result5, result6, result7);
+```
+
+</section>
