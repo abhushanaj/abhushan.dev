@@ -30,8 +30,8 @@ function sum(valueA) {
 	return curriedSum;
 }
 
-const result = sum(1)(2)(3)(4)(5)();
-console.log(result); // yields 15
+const result = sum(1)(2)(3)(4)();
+console.log(result); // yields 10
 ```
 
 </section>
@@ -86,7 +86,7 @@ console.log(result1, result2, result3, result4);
 <section>
 <SubHeading>Variation: Sporadic input with fixed arguments length</SubHeading>
 
-## 2. Sporadic input with fixed arguments length implementation
+## 3. Sporadic input with fixed arguments length implementation
 
 Untill now, all the variations of infinite sum the termination was either **no input** or **empty inpu**t passed to the function.
 However in this variation, we still need to allow sporadic input, but only upto fixed length or size. Some possible invocation in this variation are:
