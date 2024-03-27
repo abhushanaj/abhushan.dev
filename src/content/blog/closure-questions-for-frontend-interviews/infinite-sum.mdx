@@ -1,0 +1,75 @@
+---
+seoMetaData:
+  title: 'Implement an infinite sum function'
+  description: 'Implement an infinite sum function by using Javascript closures.'
+  ogImage: '/open-graph/blogs/implement-a-cycleon-function.webp'
+  ogImageAlt: 'Implement an infinite sum function by using Javascript closures.'
+title: 'Implement an infinite sum function'
+publishedDate: 2024-03-27
+blogMeta:
+  type: standalone
+---
+
+The classic infinite sum problem is probably the most repetitive brain teaser problems I have encountered during my interviews focussing on testing knowledge of closures alongside recursion.
+
+It's arguably one of my favourite questions as well just by the sheer number possible variations it can have 😅.
+
+<section>
+## 1. The classic implementation
+
+Implement a sum function which can perform addition of the input values passed to it in the given form. In this case, **only one argument** can be passed at a time.
+
+<InlineCode code="const result= sum(1)(2)(3)(4)()" /> should yield a result of <InlineCode code="10" />.
+
+```js title="./src/sum.js"
+function sum(valueA) {
+	function curriedSum(valueB) {
+		return typeof valueB === 'undefined' ? valueA : sum(valueA + valueB);
+	}
+
+	return curriedSum;
+}
+
+const result = sum(1)(2)(3)(4)(5)();
+console.log(result); // yields 15
+```
+
+</section>
+
+<section>
+<SubHeading>Variation: Sporadic input</SubHeading>
+
+## 2. Sporadic input implementation
+
+In this variation, there is **no restriction of passing only a single input at a time**. Some possible ways to invoke the sum sum function can be:
+
+1. <InlineCode code="const result1=sum(1)(2,3,4)()" />
+1. <InlineCode code="const result2=sum(1,2,3)(4)()" />
+1. <InlineCode code="const result3=sum(1,2,3,4)()" />
+1. <InlineCode code="const result4=sum(1,2)(3)(4)()" />
+
+```js title="./src/sum.js"
+function sum(...nums) {
+	let mergedNums = nums;
+
+	function curriedSum(...nextNums) {
+		const isEnd = nextNums.length === 0;
+		mergedNums = [...mergedNums, ...nextNums];
+
+		// when no arguments are passed we terminate the recursion
+		return isEnd ? mergedNums.reduce((acc, val) => acc + val, 0) : curriedSum;
+	}
+
+	return curriedSum;
+}
+
+// Usage
+const result1 = sum(1)(2, 3, 4)(); // yields 10
+const result2 = sum(1, 2, 3)(4)(); // yields 10
+const result3 = sum(1, 2, 3, 4)(); // yields 10
+const result4 = sum(1, 2)(3, 4); // yields 10
+
+console.log(result1, result2, result3, result4);
+```
+
+</section>
