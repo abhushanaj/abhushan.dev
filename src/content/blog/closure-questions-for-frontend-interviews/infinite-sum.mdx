@@ -52,6 +52,11 @@ In this variation, there is **no restriction of passing only a single input at a
 function sum(...nums) {
 	let mergedNums = nums;
 
+	// incase it is invoked without any arguments, we simply return zero or throw an error
+	if (nums.length === 0) {
+		return 0;
+	}
+
 	function curriedSum(...nextNums) {
 		const isEnd = nextNums.length === 0;
 		mergedNums = [...mergedNums, ...nextNums];
