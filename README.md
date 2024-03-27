@@ -11,8 +11,6 @@
 
 # Personal Website
 
-> The website is still Work in Progress (WIP)
-
 My personal website, digital playground and blogging space.
 
 The project is created using the following technologies:
