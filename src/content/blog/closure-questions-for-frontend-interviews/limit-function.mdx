@@ -12,7 +12,7 @@ blogMeta:
 
 **Limit** is a higher order utility function which limits the invocation of a function to at most **n** times. After further invocation (after n), it should yield the same last result.
 
-This is a generic implemetation of limit utility and can be extended to create other similar utilities like **limitOnce**, **limitTwice** etc.
+This is a generic implementation of limit utility and can be extended to create other similar utilities like **limitOnce**, **limitTwice** etc.
 
 {/* ==== Generic Limit Function ====== */}
 
@@ -59,6 +59,8 @@ limitedFn();
 ## 2. Variation of limitOnce
 
 ```js title="./src/limitOnce.js"
+import limitFnInvocation from './src/limit.js';
+
 // Usage of the generic utility function to create limit once
 const limitOnce = limitFnInvocation(() => {
 	console.log('I am called');
@@ -77,6 +79,8 @@ limitOnce();
 ## 3. Variation of limitTwice
 
 ```js title="./src/limitTwice.js"
+import limitFnInvocation from './src/limit.js';
+
 // Usage of the generic utility function to create limit twice
 const limitTwice = limitFnInvocation(() => {
 	console.log('I am called');
