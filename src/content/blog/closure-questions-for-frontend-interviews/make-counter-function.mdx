@@ -1,0 +1,115 @@
+---
+seoMetaData:
+  title: 'Implement a make counter function'
+  description: 'Implement a make counter function by using Javascript closures.'
+  ogImage: '/open-graph/blogs/implement-a-make-counter-function.webp'
+  ogImageAlt: 'Implement a make counter function by using Javascript closures.'
+title: 'Implement a make counter function'
+publishedDate: 2024-03-27
+blogMeta:
+  type: standalone
+---
+
+The **makeCounter** problem is the classic interview question when it comes to showcasing closures ability to do data hiding and encapsulation. It's also the best example, using which we can explain closures.
+
+<section>
+## 1. Basic Implementation
+
+Implement a makeCounter function which returns a function, which when invoked increment the initial value by a step value provided.
+
+```js title="./src/make-counter.js"
+function makeCounter(initialValue = 0, step = 1) {
+	let count = initialValue;
+
+	function counterClosure() {
+		let result = count;
+		// assuming we need to return initial value in first invocation
+		count += step;
+		return result;
+
+		/** Note:
+		 * In cases when we don't need to return the intial value in first invocation
+		 * we can simply alter the logic to be
+		 * count+=step;
+		 * return count;
+		 */
+	}
+
+	return counterClosure;
+}
+
+// Usage
+const counter = makeCounter(0, 1);
+
+console.log(counter()); // yields 0
+console.log(counter()); // yields 1
+console.log(counter()); // yield 2
+```
+
+</section>
+
+{/* ========= Variation of increment, decrement, reset  etc ===== */}
+
+<section>
+<SubHeading>Variation: Increment, Decrement, Get, Set and Reset</SubHeading>
+
+## 2. Counter with state utilities implementation
+
+Implement a makeCounter utility function which ability to **increment**, **decrement**, **set**, **reset** and **get** values of the counter.
+
+```js title="./src/make-counter.js"
+function makeCounter(initialValue = 0, step = 1) {
+	let count = initialValue;
+
+	const counterUtilities = {
+		get() {
+			return count;
+		},
+		set(newValue) {
+			count = newValue;
+			return this.get();
+		},
+		reset() {
+			count = initialValue;
+			return this.get();
+		},
+		increment() {
+			count = count + step;
+			return this.get();
+		},
+		decrement() {
+			count = count - step;
+			return this.get();
+		}
+	};
+
+	return counterUtilities;
+}
+
+// Usage
+const counter = makeCounter(0, 1);
+
+console.log(counter.get()); // yields 0
+console.log(counter.increment()); // yields 1
+console.log(counter.increment()); // yields 2
+console.log(counter.increment()); // yields 3
+console.log(counter.decrement()); // yields 2
+console.log(counter.get()); // yields 2
+console.log(counter.set(5)); // yields 5
+console.log(counter.get()); // yields 5
+console.log(counter.reset()); // yields 0
+```
+
+<br />
+
+**Note**: There can also be a requirement to implement a **min** and **max** limit values on the counter. This is very straight forward, where before changing the counter values, we can simply run a check and limit the value in case it overflows or underflows the max and min values.
+
+</section>
+
+## Further Reading
+
+I strongly encourage you to explore and tackle additional questions in my [Closure Questions for Frontend Interviews](/blog/closure-questions-for-frontend-interviews/ 'Find more question on closures in the closure questions for frontend Interviews blog series') blog series.
+
+By doing so, you can enhance your understanding and proficiency with closures, preparing you to excel in your upcoming frontend interviews.
+
+**_Wishing you best. Happy Interviewing_** 🫡.
