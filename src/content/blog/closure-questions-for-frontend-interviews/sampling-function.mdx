@@ -1,0 +1,104 @@
+---
+seoMetaData:
+  title: 'Implement a sampling function'
+  description: 'Implement a sampling utility function by using Javascript closures.'
+  ogImage: '/open-graph/blogs/implement-a-sampling-function.webp'
+  ogImageAlt: 'Implement a sampling utility function by using Javascript closures.'
+title: 'Implement a sampling function'
+publishedDate: 2024-03-27
+blogMeta:
+  type: standalone
+---
+
+**Sampling** is a higher order utility function which invokes a function every **n** sample period. For other invocation which are not within the sampling period, it can return undefined.
+
+{/* ==== Generic Sampling Function ====== */}
+
+<section>
+
+## 1. Basic Implementation
+
+```js title="./src/sampling.js"
+function sampling(fn, n) {
+	let invocations = 0;
+
+	function samplingFnImpl(...args) {
+		invocation++;
+		if (invocations % n !== 0) {
+			return undefined;
+		}
+
+		return fn.call(this, ...args);
+	}
+
+	return samplingFnImpl;
+}
+
+// Usage of the sampling utility function
+const sampledFn = sampling(() => {
+	console.log('I will be called on every 3rd sampling period');
+}, 3);
+
+sampledFn();
+sampledFn();
+sampledFn(); // yields logs here on 3th sample period
+sampledFn();
+sampledFn();
+sampledFn(); // yields logs here on 6th sample period
+// ... so on
+```
+
+</section>
+
+{/* ========== Last Result Variation ========= */}
+
+<section>
+
+<SubHeading>Variation: With Last Result </SubHeading>
+## 2. Variation with last result
+
+In this variation, if the function is invoked in non-sampling period, we simply need to return the last result saved during the sampling period invocation of function.
+
+```js title="./src/sampling.js"
+function sampling(fn, n) {
+	let invocations = 0;
+	let lastResult = undefined;
+
+	function samplingFnImpl(...args) {
+		invocation++;
+		if (invocations % n !== 0) {
+			// simply return last saved result instead of undefined
+			return lastResult;
+		}
+
+		// save result of function invocation
+		lastResult = fn.call(this, ...args);
+		return lastResult;
+	}
+
+	return samplingFnImpl;
+}
+
+// Usage of the sampling utility function
+const sampledFn = sampling(() => {
+	console.log('I will be called on every 3rd sampling period');
+}, 2);
+
+sampledFn();
+sampledFn(); // yields logs here on 2nd sample period
+sampledFn();
+sampledFn(); // yields logs here on 4th sample period
+sampledFn();
+sampledFn(); // yields logs here on 6th sample period
+// ... so on
+```
+
+</section>
+
+## Further Reading
+
+I strongly encourage you to explore and tackle additional questions in my [Closure Questions for Frontend Interviews](/blog/closure-questions-for-frontend-interviews/ 'Find more question on closures in the closure questions for frontend Interviews blog series') blog series.
+
+By doing so, you can enhance your understanding and proficiency with closures, preparing you to excel in your upcoming frontend interviews.
+
+**_Wishing you best. Happy Interviewing_** 🫡.
