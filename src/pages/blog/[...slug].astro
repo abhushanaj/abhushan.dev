@@ -6,6 +6,7 @@ import type { GetStaticPaths } from 'astro';
 import DefaultLayout from '@/layouts/default/index.astro';
 
 import BlogHeader from '@/components/astro/blog/blog-header/index.astro';
+import InProgressBanner from '@/components/astro/blog/in-progress-banner/index.astro';
 import TocAsideNav from '@/components/astro/blog/toc-aside-nav/index.astro';
 import SeoMeta from '@/components/astro/seo-meta/index.astro';
 import { BlogBackAction } from '@/components/react/blog/back-action';
@@ -28,7 +29,7 @@ const { slug } = Astro.params;
 const blog = await getEntry('blog', slug);
 
 const {
-	data: { seoMetaData, title, publishedDate },
+	data: { seoMetaData, title, publishedDate, inProgress },
 	render
 } = blog;
 
@@ -56,6 +57,14 @@ const seriesParentSlug = getParentSeriesSlug(slug);
 				<!-- Blog Header -->
 				<BlogHeader title={title} publishedDate={publishedDate} views={0} />
 
+				<!-- In Progress Banner -->
+				{
+					inProgress && (
+						<div class="mb-4">
+							<InProgressBanner />
+						</div>
+					)
+				}
 				<!-- Blog Content -->
 				<Content components={components} />
 			</article>
