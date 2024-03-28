@@ -1,0 +1,115 @@
+---
+seoMetaData:
+  title: 'Implement a memoize function'
+  description: 'Implement a memoize utility function by using Javascript closures.'
+  ogImage: '/open-graph/blogs/implement-a-memoize-function.webp'
+  ogImageAlt: 'Implement a memoize utility function by using Javascript closures.'
+title: 'Implement a memoize function'
+publishedDate: 2024-03-28
+blogMeta:
+  type: standalone
+---
+
+**Memoize** function is a higher-order function which can cache the results of function calls and returns the cached result when it recieves the same inputs again.
+It may also be referred as cache function in few cases.
+
+<section>
+## Generic implementation
+
+```js title="./src/memoize.js"
+import generateCacheKey from './src/utils.js';
+
+function memoize(fn) {
+	const cache = new Map();
+
+	function memoizedFnImpl(...args) {
+		const cacheKey = generateCacheKey(args);
+
+		if (!cache.has(cacheKey)) {
+			const result = fn.call(this, ...args);
+			cache.set(cacheKey, result);
+		}
+
+		return cache.get(cacheKey);
+	}
+
+	return memoizedFnImpl;
+}
+
+// assuming this is the function which we want to memoize
+function expensiveOperation(a, b) {
+	console.log('I am called');
+
+	// creating artificial delay to make function call expensive
+	for (let i = 0; i < 10000000; i++) {}
+	return a * b;
+}
+
+// Usage of memoize function
+const memoizedExpensiveOperation = memoize(expensiveOperation);
+
+console.log(memoizedExpensiveOperation(1, 2)); // yields the logs
+console.log(memoizedExpensiveOperation(3, 4)); // yields the logs
+console.log(memoizedExpensiveOperation(1, 2)); // yields cache result directly
+```
+
+<br />
+
+Although the implementation of the memoize function in itself in quite straight forward, the most crucial part which might not seem obvious at first is **generation of the cache keys**, i.e, implementation of the <InlineCode code="generateCacheKey"/> method.
+
+</section>
+
+{/* ======== Generating cache keys ======= */}
+
+<section>
+## Generating effective cache keys
+
+Working and creating an effective cache is always a tricky business. As it's beyond the scope of the blog, I'll only cover details which one might need to consider to discuss in an interview setting.
+
+On first thought, one might approach generating keys using the <InlineCode code="join"/> method on arrays like : <br/> <InlineCode code="const cacheKey=args.join('_')"/>, but that fails to consider two cases we can run into:
+
+1. Cache keys must be able to differentiate between <InlineCode code="strings"/> and <InlineCode code="numbers"/>, i.e, if the function could operate with both type of arguments, we want to treat the two inputs <InlineCode code="const input=['Mike', 27]"/> and <InlineCode code="const input=['Mike', '27']"/>, differently. Using the join methods would yield same key which is <InlineCode code="'Mike_27'"/>.
+2. If the seperator used comes as argument, there can be a cache key collision, i.e, <InlineCode code="['Hello', '_Mike']"/> and <InlineCode code="['Hello_', 'Mike']"/>, would yield the same cache key which is <InlineCode code="'Hello__Mike'"/>.
+
+Surprisingly, the most easiest solution that handles both the cases is the good old <InlineCode code="JSON.stringify(args)"/>.
+
+```js title="./src/utils.js"
+function generateCacheKey(input) {
+	return JSON.stringify(input);
+}
+```
+
+<br />
+
+**Note**: <InlineCode code="JSON.stringify(args)" />, although is quite effective to solve the problem of generate unique keys based on the arguments, one might need to consider that it is **effectively slower on larger data sets**. In cases like these, a more robust and fast solution can be created using the <InlineCode code="Trie"/> data structure.
+
+I found this [article by Christopher Alvear on Medium](https://medium.com/smucs/trie-data-structure-fd2de3304e6e 'Medium Article by Christopher Alvear on using Trie Data Structure') a very good starting point to learn about the same.
+
+The implementation would be along the lines of:
+
+```js title="./src/memoize.js"
+function memoize(fn) {
+	const cache = new Trie();
+
+	function memoizedFnImpl(...args) {
+		if (!cache.has(args)) {
+			const result = fn.call(this, ...args);
+			cache.set(args, result);
+		}
+
+		return cache.get(args);
+	}
+
+	return memoizedFnImpl;
+}
+```
+
+</section>
+
+## Further Reading
+
+I strongly encourage you to explore and tackle additional questions in my [Closure Questions for Frontend Interviews](/blog/closure-questions-for-frontend-interviews/ 'Find more question on closures in the closure questions for frontend Interviews blog series') blog series.
+
+By doing so, you can enhance your understanding and proficiency with closures, preparing you to excel in your upcoming frontend interviews.
+
+**_Wishing you best. Happy Interviewing_** 🫡.
