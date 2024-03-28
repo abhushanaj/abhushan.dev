@@ -1,0 +1,113 @@
+---
+seoMetaData:
+  title: 'Render Optimization Mistakes in React'
+  description: 'Learn about the most common mistakes one can make when it comes to render oprimization in react.'
+  ogImage: '/open-graph/blogs/what-im-learning-in-2024.webp'
+  ogImageAlt: 'Render Optimization Mistakes in React'
+title: 'Render Optimization Mistakes in React'
+publishedDate: 2024-04-28
+blogMeta:
+  type: standalone
+---
+
+I have been working with React for almost 3+ years, and still tend to make mistakes when it comes to optimization of re-render in React.
+
+From my personal experience, when it comes to saving re-renders in React, people either over estimate or under estimate the problem and immediately reach out for solutions like <InlineCode code="React.useMemo()"/>, <InlineCode code="React.useCallback()"/> and <InlineCode code="React.memo()"/> without fully understanding their implications.
+
+It's easy to see why this happens. A simple search on the internet reveals countless articles and tutorials promoting these utilities as a cure-all for re-rendering issues in React. However, this widespread belief often leads to misinformation and the misuse of these utilities, resulting in added code complexity with little to no impact on rendering performance.
+
+However, in this blog I aim to shed light on these common mistakes and clarify how blindly applying these optimization techniques can sometimes be counterproductive and bring no impact to the cause.
+
+But before I do that, we need to take a step back and revisit the root fundamental which is:
+
+## When does React re-render components?
+
+**_The answer: "Whenever state changes"_**.
+
+**Really, that's it**. There's no added complexity to this question. In React a component re-renders whenever the state changes.
+
+You might have heard of cases like below, that can also cause a re-render:
+
+1. Re-render of the parent.
+2. Whenever context value changes.
+3. Whenever prop changes.
+
+But when you inspect closely all will still lead you to the same root cause of **"a state change"** and probably a few misunderstood ideas as well.
+
+For the **_1st case_**, whenever state changes on parent component, the component along with all it's children will re-render. But a parent can re-render only if the state it uses changes or it's parent re-renders.
+
+For the **_2nd case_**, the context value should also a state at the end of day, so it still follows the same principle of a state change causing a re-render.
+
+For the **_3rd case_**, and probably the most misunderstood one.
+
+**A prop change does not cause a re-render** whatsoever. Infact, **React by default does not even care to compare the prop it recieves**.
+
+Let's understand this from an example:
+
+```jsx title="./src/Child.jsx"
+function Child({ count }) {
+	return <p>Count: {count}</p>;
+}
+```
+
+<br />
+
+Let's consider a parent component which passes data to child through props.
+
+```jsx title="./src/Parent.jsx"
+import Child from './src/Child.jsx';
+
+function Parent() {
+	const [state, setState] = React.useState({ count: 0 });
+
+	return (
+		<>
+			<button
+				id="way1"
+				onClick={() => {
+					setState({ count: state.count + 1 });
+				}}
+			>
+				Inc by 1
+			</button>
+
+			<button
+				id="way2"
+				onClick={() => {
+					state.count = state.count + 1;
+				}}
+			>
+				Inc by 1
+			</button>
+
+			<Child count={state.count} />
+		</>
+	);
+}
+```
+
+<br />
+
+**_Here's a quick question?_**
+
+Do you think clicking on button with id **#way2** or **#way1** will cause a re-render of both components?
+
+If the answer is **#way1**, then that's correct and probably something you already are aware about.
+
+But the more interesting case is why does interacting with button **#way2**, not cause a re-render? The prop is definitely changing, isn't it?
+
+The answer again boils down to same fundamental principle: **"a state change"**, more importantly state change in such a way that React is aware about it, almost as if it can now mark the component with a flag, so it can now further take actions to showcase the most recent view in the most efficient manner.
+
+Think of us telling React, I'm marking this for you, and I believe you will take the most suitable course of actions after this to display the latest state. It's passing the control over to React and for React to know it can start, it provides us with these special controllers in the form of hooks.
+
+<InlineCode code="React.useState()" />, is probably the most common way to tell React this, but there can be other
+usages as well in the form of context, reducers and more. But all of them still lead to the same answer, i.e **"a state
+change"** or **"different ways to make a state change"**.
+
+Now that we have that out of the way, let's analyze the common mistakes we can make when it comes to re-render optimizations:
+
+## Common Mistakes in re-render optimization
+
+### Non-memoized props passed to React.memo()
+
+### Memoized props passed to non React.memo()
