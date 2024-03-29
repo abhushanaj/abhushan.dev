@@ -1,0 +1,121 @@
+---
+seoMetaData:
+  title: 'Implement an array iterator function'
+  description: 'Implement an array iterator by using Javascript closures.'
+  ogImage: '/open-graph/blogs/implement-an-array-iterator-function.webp'
+  ogImageAlt: 'Implement an array iterator by using Javascript closures.'
+title: 'Implement an array iterator '
+publishedDate: 2024-03-27
+blogMeta:
+  type: standalone
+---
+
+**Iterator** in Javascript is an object which defines a sequence and potentially a return value upon its termination.
+
+Technically, iterators are objects which follows the [iterator protocol](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols#the_iterator_protocol 'MDN: Learn more about iterator protocol') and by having a <InlineCode code="next()"/> method that returns an object with two properties:
+
+1. <InlineCode code="value" /> : The next value in the iteration sequence.
+1. <InlineCode code="done" /> : This is true if the last **value in the sequence has already been consumed**, else false.
+
+You can learn more about iterators on [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Iterators_and_Generators 'MDN: Learn more about iterators in JavaScript').
+
+However, for our use case, we have to implement a <InlineCode code="iteratorArray" /> method, which takes an array as argument and returns an object with <InlineCode code="next()" /> and <InlineCode code="done()" /> properties.
+
+Calling the <InlineCode code="next()" /> method should return the next item in array until the end of array, after which it returns <InlineCode code="null" /> and <InlineCode code="done()" /> methods returns a boolean flag denoting if all iterations are completed.
+
+<section>
+## 1. Basic Implementation
+
+```js title="./src/array-iterator.js"
+function arrayIterator(arr) {
+	let activeIndex = 0;
+	return {
+		done() {
+			if (activeIndex < arr.length) {
+				return false;
+			}
+
+			return true;
+		},
+		next() {
+			if (activeIndex < arr.length) {
+				let res = arr[activeIndex];
+				activeIndex++;
+				return res;
+			} else {
+				return null;
+			}
+		}
+	};
+}
+
+// Usage of the arrayIterator
+const iterator = arrayIterator([1, 2, 3]);
+
+console.log(iterator.next()); //1
+console.log(iterator.done()); // false
+
+console.log(iterator.next()); //2
+console.log(iterator.next()); // 3
+
+console.log(iterator.done()); // true
+
+console.log(iterator.next()); // null
+console.log(iterator.done()); // true
+```
+
+</section>
+
+{/* ==== Variation of first index ========= */}
+
+<section>
+
+<SubHeading>Variation: With startIndex</SubHeading>
+## 2. With startIndex implementation
+
+A startIndex value can be passed, and iteration should start from that index.
+
+```js title="./src/array-iterator.js"
+function arrayIterator(arr, startIndex = 0) {
+	let activeIndex = startIndex;
+	return {
+		done() {
+			if (activeIndex < arr.length) {
+				return false;
+			}
+
+			return true;
+		},
+		next() {
+			if (activeIndex < arr.length) {
+				let res = arr[activeIndex];
+				activeIndex++;
+				return res;
+			} else {
+				return null;
+			}
+		}
+	};
+}
+
+const iterator = arrayIterator([1, 2, 3], 1);
+
+console.log(iterator.next()); //2
+console.log(iterator.done()); // false
+
+console.log(iterator.next()); //3
+console.log(iterator.done()); // true
+
+console.log(iterator.next()); // null
+console.log(iterator.done()); // true
+```
+
+</section>
+
+## Further Reading
+
+I strongly encourage you to explore and tackle additional questions in my [Closure Questions for Frontend Interviews](/blog/closure-questions-for-frontend-interviews/ 'Find more question on closures in the closure questions for frontend Interviews blog series') blog series.
+
+By doing so, you can enhance your understanding and proficiency with closures, preparing you to excel in your upcoming frontend interviews.
+
+**_Wishing you best. Happy Interviewing_** 🫡.
