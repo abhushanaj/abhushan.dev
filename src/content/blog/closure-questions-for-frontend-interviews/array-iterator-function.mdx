@@ -19,7 +19,9 @@ Technically, iterators are objects which follows the [iterator protocol](https:/
 
 You can learn more about iterators on [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Iterators_and_Generators 'MDN: Learn more about iterators in JavaScript').
 
-However, for our use case, we have to implement a <InlineCode code="iteratorArray" /> method, which takes an array as argument and returns an obbject with <InlineCode code="next()" /> and <InlineCode code="done" /> properties. Calling the <InlineCode code="next()" /> method should return the next item in array until the end of array, after which it returns <InlineCode code="null" /> and <InlineCode code="done()" /> methods returns a boolean flag denoting if all iterations are completed.
+However, for our use case, we have to implement a <InlineCode code="iteratorArray" /> method, which takes an array as argument and returns an object with <InlineCode code="next()" /> and <InlineCode code="done()" /> properties.
+
+Calling the <InlineCode code="next()" /> method should return the next item in array until the end of array, after which it returns <InlineCode code="null" /> and <InlineCode code="done()" /> methods returns a boolean flag denoting if all iterations are completed.
 
 <section>
 ## 1. Basic Implementation
