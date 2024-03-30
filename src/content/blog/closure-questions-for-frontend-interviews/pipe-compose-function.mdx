@@ -1,0 +1,121 @@
+---
+seoMetaData:
+  title: 'Implement a pipe/compose function'
+  description: 'Implement a pipe/compose function by using Javascript closures.'
+  ogImage: '/open-graph/blogs/implement-a-cancellable-timer-function.webp'
+  ogImageAlt: 'Implement a pipe/compose function by using Javascript closures.'
+title: 'Implement a pipe/compose function'
+publishedDate: 2024-03-30
+blogMeta:
+  type: standalone
+---
+
+**Pipe** and **Compose** are both higher order function inspired from functional programming languages to facilitate function composition and data transformation. They are exactly same in their behaviour with one minor difference i.e, the order in which ths transformation is doesNotMatch.
+
+{/* ======= Pipe Function ===== */}
+
+<section>
+## 1. Pipe function implementation
+
+**Pipe** takes multiple functions as arguments and executes them sequentially, passing the output of each function as the input to the next one, which creates a linear flow of data processing.
+
+```js
+function pipe(...fns) {
+	// Simply return an identity function if no function are passed to pipe
+	if (!fns.length) {
+		return (value) => value;
+	}
+
+	function pipeFnImpl(initialValue) {
+		// since we want left to right transformations
+		return fns.reduce((acc, fn) => {
+			return fn(acc);
+		}, initialValue);
+	}
+
+	return pipeFnImpl;
+}
+
+// Usage of pipe
+function addWithTen(num) {
+	return num + 10;
+}
+
+function multipleWithTen(num) {
+	return num * 10;
+}
+
+function divideByFive(num) {
+	return num / 5;
+}
+
+const pipedFn = pipe(addWithTen, multipleWithTen, divideByFive);
+
+/**
+ * 1st transformation: 2 + 10 = 12
+ * 2nd transformation: 12 * 10 = 120
+ * 3rd transfformation: 120 /5 = 24
+ */
+console.log(pipedFn(2)); // yields 24
+```
+
+</section>
+
+{/* ======= Variation Compose Function ===== */}
+
+<section>
+<SubHeading>Variation: Compose function</SubHeading>
+
+## 2. Compose function implementation
+
+**Compose**, on the other hand, also takes multiple functions but executes them in reverse order, where the output of the last function becomes the input of the second-to-last function, and so on, until the first function is reached.
+
+```js
+function compose(...fns) {
+	// Simply return an identity function if no function are passed to compose
+	if (!fns.length) {
+		return (value) => value;
+	}
+
+	function composeFnImpl(initialValue) {
+		// since we want right to left transformations
+		return fns.reduceRight((acc, fn) => {
+			return fn(acc);
+		}, initialValue);
+	}
+
+	return composeFnImpl;
+}
+
+// Usage of compose
+function addWithTen(num) {
+	return num + 10;
+}
+
+function multipleWithTen(num) {
+	return num * 10;
+}
+
+function divideByFive(num) {
+	return num / 5;
+}
+
+const composedFn = compose(addWithTen, multipleWithTen, divideByFive);
+
+/**
+ * 1st transformation: 2/5 = 0.4
+ * 2nd transformation: 0.4 * 10 = 4
+ * 3rd transformation: 4 + 10 = 14
+ */
+console.log(composedFn(2)); // yields 14
+```
+
+</section>
+
+## Further Reading
+
+I strongly encourage you to explore and tackle additional questions in my [Closure Questions for Frontend Interviews](/blog/closure-questions-for-frontend-interviews/ 'Find more question on closures in the closure questions for frontend Interviews blog series') blog series.
+
+By doing so, you can enhance your understanding and proficiency with closures, preparing you to excel in your upcoming frontend interviews.
+
+**_Wishing you best. Happy Interviewing_** 🫡.
