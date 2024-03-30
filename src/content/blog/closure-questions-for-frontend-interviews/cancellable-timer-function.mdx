@@ -1,0 +1,95 @@
+---
+seoMetaData:
+  title: 'Implement a cancellable timer function'
+  description: 'Implement a cancellable timer function by using Javascript closures.'
+  ogImage: '/open-graph/blogs/implement-a-cancellable-timer-function.webp'
+  ogImageAlt: 'Implement a cancellable timer function by using Javascript closures.'
+title: 'Implement a cancellable timer function'
+publishedDate: 2024-03-30
+blogMeta:
+  type: standalone
+---
+
+**Timers** are probably the most used BOM API's, using which we can schedule callbacks to be executed after a wait time.
+We need to implement a higher order utility function for both <InlineCode code="setTimeout"/> and <InlineCode code="setInterval"/> API's which returns a <InlineCode code="cancel"/> function cancelling the timer.
+
+<section>
+## 1. Cancel setInterval implementation
+
+```js
+function cancellableSetInterval(callback, delay, ...args) {
+	let timerId = null;
+
+	timerId = setInterval(callback, delay, ...args);
+
+	function cancelInterval() {
+		if (timerId) {
+			clearInterval(timerId);
+			timerId = null;
+		}
+	}
+
+	return cancelInterval;
+}
+
+// Usage of the API
+let i = 0;
+
+const cancel = cancellableSetInterval(() => {
+	i++;
+	console.log(i); // logs 1,2
+}, 1000);
+
+// Cancel the auto increment on i after 2s
+setTimeout(() => {
+	cancel();
+}, 2500);
+```
+
+</section>
+
+{/* ====== Variation: setTimeout ====== */}
+
+<section>
+<SubHeading>Variation: setTimeout</SubHeading>
+
+## 2. Cancel setTimeout implementation
+
+This is exactly same as setInterval, with only difference that we replace setInterval with setTimout.
+
+```js
+function cancellableSetTimeout(callback, delay, ...args) {
+	let timerId = null;
+
+	timerId = setTimeout(callback, delay, ...args);
+
+	function cancelTimeout() {
+		if (timerId) {
+			clearTimeout(timerId);
+			timerId = null;
+		}
+	}
+
+	return cancelTimeout;
+}
+
+// Usage of the API
+let i = 0;
+
+const cancel = cancellableSetInterval(() => {
+	i++;
+	console.log(i); // never logs anything, since cancellation was done before 1s
+}, 1000);
+
+cancel();
+```
+
+</section>
+
+## Further Reading
+
+I strongly encourage you to explore and tackle additional questions in my [Closure Questions for Frontend Interviews](/blog/closure-questions-for-frontend-interviews/ 'Find more question on closures in the closure questions for frontend Interviews blog series') blog series.
+
+By doing so, you can enhance your understanding and proficiency with closures, preparing you to excel in your upcoming frontend interviews.
+
+**_Wishing you best. Happy Interviewing_** 🫡.
