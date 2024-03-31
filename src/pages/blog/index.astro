@@ -2,6 +2,7 @@
 import DefaultLayout from '@/layouts/default/index.astro';
 
 import BlogListing from '@/components/astro/blog/blog-listing/index.astro';
+import Breadcrumb from '@/components/astro/json-lds/breadcrumb.astro';
 import SeoMeta from '@/components/astro/seo-meta/index.astro';
 ---
 
@@ -13,6 +14,17 @@ import SeoMeta from '@/components/astro/seo-meta/index.astro';
 		ogImage=""
 		ogImageAlt=""
 	/>
+
+	<Breadcrumb
+		slot="breadcrumb-ld"
+		breadcrumbTrial={[
+			{
+				name: 'Blog',
+				uri: '/blog/'
+			}
+		]}
+	/>
+
 	<main>
 		<article class="w-full">
 			<section class="mb-8">

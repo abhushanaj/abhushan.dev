@@ -8,6 +8,7 @@ import DefaultLayout from '@/layouts/default/index.astro';
 import BlogHeader from '@/components/astro/blog/blog-header/index.astro';
 import InProgressBanner from '@/components/astro/blog/in-progress-banner/index.astro';
 import TocAsideNav from '@/components/astro/blog/toc-aside-nav/index.astro';
+import Breadcrumb from '@/components/astro/json-lds/breadcrumb.astro';
 import SeoMeta from '@/components/astro/seo-meta/index.astro';
 import { BlogBackAction } from '@/components/react/blog/back-action';
 import { components } from '@/components/react/blog/content-blocks';
@@ -38,20 +39,34 @@ const showToc = headings.length > 0;
 
 const isPartOfSeries = getSlugDepth(slug) > 1;
 const seriesParentSlug = getParentSeriesSlug(slug);
+
+const pageUri = getUriFromCollectionAndSlug({
+	collection: 'blog',
+	slug: isPartOfSeries ? seriesParentSlug : undefined
+});
 ---
 
 <DefaultLayout>
 	<SeoMeta slot="head" {...seoMetaData} />
+	<Breadcrumb
+		slot="breadcrumb-ld"
+		breadcrumbTrial={[
+			{
+				name: 'Blog',
+				uri: '/blog/'
+			},
+			{
+				name: title,
+				uri: pageUri
+			}
+		]}
+	/>
+
 	<main class="relative">
 		<div class="gap-10 xl:grid xl:grid-cols-[var(--primary-content-width)_1fr]">
 			<article class="xl:max-w-unset w-full max-w-[var(--primary-content-width)] pb-12">
 				<!-- Back Action -->
-				<BlogBackAction
-					href={getUriFromCollectionAndSlug({
-						collection: 'blog',
-						slug: isPartOfSeries ? seriesParentSlug : undefined
-					})}
-					title={isPartOfSeries ? 'back to series' : 'back to blogs'}
+				<BlogBackAction href={pageUri} title={isPartOfSeries ? 'back to series' : 'back to blogs'}
 					>{isPartOfSeries ? 'back to series' : 'back to blogs'}</BlogBackAction
 				>
 				<!-- Blog Header -->

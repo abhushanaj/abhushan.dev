@@ -1,0 +1,43 @@
+---
+import type { Uri } from '@/lib/url';
+
+import { getUrlFromUri } from '@/lib/url';
+
+type Props = {
+	breadcrumbTrial: Array<{
+		name: string;
+		uri: Uri;
+	}>;
+};
+
+const { breadcrumbTrial } = Astro.props;
+
+const breadcrumbTrialWithHome = [
+	// default home node
+	{ name: 'Abhushan Adhikari Joshi', uri: '/' },
+	// other nodes
+	...breadcrumbTrial
+] satisfies Array<{
+	name: string;
+	uri: Uri;
+}>;
+
+const breadCrumbJsonItemsList = breadcrumbTrialWithHome.map((trail, index) => {
+	const position = index + 1;
+
+	return {
+		'@type': 'ListItem',
+		position,
+		name: trail.name,
+		...(position < breadcrumbTrialWithHome.length ? { item: getUrlFromUri(trail.uri) } : {})
+	};
+});
+
+const breadcrumbJsonLd = {
+	'@context': 'https://schema.org',
+	'@type': 'BreadcrumbList',
+	itemListElement: breadCrumbJsonItemsList
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(breadcrumbJsonLd)} />
