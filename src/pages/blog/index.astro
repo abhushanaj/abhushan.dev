@@ -2,8 +2,10 @@
 import DefaultLayout from '@/layouts/default/index.astro';
 
 import BlogListing from '@/components/astro/blog/blog-listing/index.astro';
-import Breadcrumb from '@/components/astro/json-lds/breadcrumb.astro';
+import BreadcrumbJsonLdSchema from '@/components/astro/json-lds/breadcrumb.astro';
 import SeoMeta from '@/components/astro/seo-meta/index.astro';
+
+import { getUriFromSlug } from '@/lib/url';
 ---
 
 <DefaultLayout>
@@ -15,12 +17,12 @@ import SeoMeta from '@/components/astro/seo-meta/index.astro';
 		ogImageAlt=""
 	/>
 
-	<Breadcrumb
+	<BreadcrumbJsonLdSchema
 		slot="breadcrumb-ld"
 		breadcrumbTrial={[
 			{
 				name: 'Blog',
-				uri: '/blog/'
+				uri: getUriFromSlug('blog')
 			}
 		]}
 	/>
