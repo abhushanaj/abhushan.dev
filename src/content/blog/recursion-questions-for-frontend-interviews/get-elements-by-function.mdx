@@ -59,15 +59,18 @@ function getElementsByTagName(rootEl, tagName) {
 	function transverseEl(element) {
 		const elTagName = element.tagName.toLowerCase();
 
+		// each child is checked for matching tagName
 		if (elTagName === targetTagName) {
 			result.push(element);
 		}
 
+		// if it has further nesting, we check on those children
 		for (const childEl of element.children) {
 			transverseEl(childEl);
 		}
 	}
 
+	// we iterate over all children of root and check if we have a match
 	for (const child of rootEl.children) {
 		transverseEl(child);
 	}
