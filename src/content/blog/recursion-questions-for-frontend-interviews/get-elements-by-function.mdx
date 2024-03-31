@@ -1,18 +1,18 @@
 ---
 seoMetaData:
   title: 'Implement getElementsBy function'
-  description: 'Implement getElementsBy by using Javascript closures.'
+  description: 'Implement getElementsBy by using recursion.'
   ogImage: '/open-graph/blogs/get-elements-by-function.webp'
-  ogImageAlt: 'Implement getElementsBy by using Javascript closures.'
+  ogImageAlt: 'Implement getElementsBy by using recursion.'
 title: 'Implement getElementsBy '
 publishedDate: 2024-03-31
 blogMeta:
   type: standalone
 ---
 
-**getElementsBy(\*)** as some common DOM API to find elements matching a certain selector. They are often used to navigate/find elements on a DOM tree. In this blog, we'll learn how to poissble recreate them using recursion.
+**getElementsBy(\*)** are some common DOM API to find elements matching a certain selector. They are often used to navigate/find elements on a DOM tree. In this blog, we'll learn how to possible recreate them using recursive DOM transversal.
 
-We'll consider the following HTML document for all the below problems for simplicity
+We'll consider the following HTML document for all the below problems for simplicity:
 
 ```html
 <!doctype html>
