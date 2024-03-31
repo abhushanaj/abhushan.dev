@@ -88,6 +88,88 @@ console.log(output);
 
 </section>
 
+{/* ====== Variation 2: getElementsByClassName ======= */}
+
+<section>
+<SubHeading>Variation: By ClassNames</SubHeading>
+
+## 2. By className implementation
+
+Implement a getElementsByClassName function which takes a rootElement and classNames, and finds and returns all elements matching the classNames (can be more than one). You can ignore the root element.
+
+```js title="./src/getElementsByClassName"
+import getFormattedClassNames from './src/utils.js';
+
+function getElementsByClassName(rootEl, classNames) {
+	const result = [];
+
+	// The getFormattedClassNames utility function is covered later on.
+	const targetClassNames = getFormattedClassNames(classNames);
+
+	if (!rootEl) {
+		return result;
+	}
+
+	function transverseEl(element) {
+		const elClassNames = getFormattedClassNames(element.className);
+
+		// check if all classNames to match exist on element
+		const isClassNameMatch = targetClassNames.every((cls) => elClassNames.includes(cls));
+
+		if (isClassNameMatch) {
+			result.push(element);
+		}
+
+		// if it has further nesting, we check on those children
+		for (const childEl of element.children) {
+			transverseEl(childEl);
+		}
+	}
+
+	for (const child of rootEl.children) {
+		transverseEl(child);
+	}
+
+	return result;
+}
+
+// Usage
+const output = getElementsByClassName(document.getElementById('root'), 'red');
+
+// Yields the following HTML elements:
+// [span.red.yellow, span.red, span.red.green, span.purple.red.123]
+console.log(output);
+
+// Can also handle more than one classNames
+// const output = getElementsByClassName(document.getElementById('root'), 'red purple');
+```
+
+<br />
+
+In this implementation, the utility function <InlineCode code="getFormattedClassNames" />, may or may not be needed based on how className field is passed. In general there might be few cases you need to handle:
+
+1. Whether only you need to match one or more classNames?
+2. Whethere the classNames passed contains duplicates, whitespaces etc?
+
+My implementation covers the above cases this way, but there maybe be other cases which we might need to cover depending upon the interview. One example can be, lowercase and uppercase classnames 😅
+
+```js title="./src/utils.js"
+function getFormattedClassNames(classNames) {
+	// split by space: "red yellow  red" --> ["red","yellow","", "red"]
+	const classNamesArray = classNames.split(' ');
+
+	// remove whitespaces: ["red","yellow","", "red"] --> ["red","yellow", "red"]
+	const filteredClassNamesArray = classNamesArray.filter((cls) => cls.trim().length > 0);
+
+	// remove duplicate entries: ["red","yellow", "red"] --> ["red","yellow"]
+	const filteredClassNamesArray = Array.from(new Set(filteredClassNamesArray));
+
+	return filteredClassNamesArray;
+}
+```
+
+</section>
+
 ## Further Reading
 
 I strongly encourage you to explore and tackle additional questions in my [Recursion Questions for Frontend Interviews](/blog/recursion-questions-for-frontend-interviews/ 'Find more question on recursion in the recursion questions for frontend interviews blog series') blog series.
