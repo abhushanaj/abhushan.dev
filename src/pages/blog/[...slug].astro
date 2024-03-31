@@ -1,5 +1,5 @@
 ---
-import { getCollection, getEntry } from 'astro:content';
+import { getCollection, getEntry, getEntryBySlug } from 'astro:content';
 
 import type { GetStaticPaths } from 'astro';
 
@@ -13,7 +13,7 @@ import SeoMeta from '@/components/astro/seo-meta/index.astro';
 import { BlogBackAction } from '@/components/react/blog/back-action';
 import { components } from '@/components/react/blog/content-blocks';
 
-import { getParentSeriesSlug, getSlugDepth, getUriFromCollectionAndSlug } from '@/lib/url';
+import { getUriFromCollectionAndSlug, getUriFromSlug } from '@/lib/url';
 
 export const getStaticPaths = (async () => {
 	const allBlogs = await getCollection('blog');
@@ -30,20 +30,21 @@ const { slug } = Astro.params;
 const blog = await getEntry('blog', slug);
 
 const {
-	data: { seoMetaData, title, publishedDate, inProgress },
+	data: { seoMetaData, title, publishedDate, inProgress, blogMeta },
 	render
 } = blog;
 
 const { Content, headings } = await render();
 const showToc = headings.length > 0;
 
-const isPartOfSeries = getSlugDepth(slug) > 1;
-const seriesParentSlug = getParentSeriesSlug(slug);
+const isPartOfSeries = blogMeta.type === 'series-part';
 
-const pageUri = getUriFromCollectionAndSlug({
+const backActionUri = getUriFromCollectionAndSlug({
 	collection: 'blog',
-	slug: isPartOfSeries ? seriesParentSlug : undefined
+	slug: isPartOfSeries ? blogMeta.seriesParentSlug.slug : undefined
 });
+
+const parentBlogDetails = isPartOfSeries ? await getEntryBySlug('blog', blogMeta.seriesParentSlug.slug) : null;
 ---
 
 <DefaultLayout>
@@ -53,11 +54,18 @@ const pageUri = getUriFromCollectionAndSlug({
 		breadcrumbTrial={[
 			{
 				name: 'Blog',
-				uri: '/blog/'
+				uri: getUriFromSlug('blog')
 			},
+
+			// if part of series add the series information
+			...(isPartOfSeries && parentBlogDetails
+				? [{ name: parentBlogDetails.data.title, uri: getUriFromSlug(blogMeta.seriesParentSlug.slug) }]
+				: []),
+
+			// actual blog details
 			{
 				name: title,
-				uri: pageUri
+				uri: getUriFromSlug(slug)
 			}
 		]}
 	/>
@@ -66,7 +74,7 @@ const pageUri = getUriFromCollectionAndSlug({
 		<div class="gap-10 xl:grid xl:grid-cols-[var(--primary-content-width)_1fr]">
 			<article class="xl:max-w-unset w-full max-w-[var(--primary-content-width)] pb-12">
 				<!-- Back Action -->
-				<BlogBackAction href={pageUri} title={isPartOfSeries ? 'back to series' : 'back to blogs'}
+				<BlogBackAction href={backActionUri} title={isPartOfSeries ? 'back to series' : 'back to blogs'}
 					>{isPartOfSeries ? 'back to series' : 'back to blogs'}</BlogBackAction
 				>
 				<!-- Blog Header -->

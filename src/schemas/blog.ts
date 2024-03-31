@@ -12,6 +12,7 @@ import { seoMetaDataSchema } from './seo-meta';
 
 const blogMeta = z.discriminatedUnion('type', [
 	z.object({ type: z.literal('series'), relatedBlogs: z.array(reference('blog')) }),
+	z.object({ type: z.literal('series-part'), seriesParentSlug: reference('blog') }),
 	z.object({ type: z.literal('standalone') })
 ]);
 
