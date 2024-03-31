@@ -1,0 +1,97 @@
+---
+seoMetaData:
+  title: 'Implement getElementsBy function'
+  description: 'Implement getElementsBy by using recursion.'
+  ogImage: '/open-graph/blogs/get-elements-by-function.webp'
+  ogImageAlt: 'Implement getElementsBy by using recursion.'
+title: 'Implement getElementsBy '
+publishedDate: 2024-03-31
+blogMeta:
+  type: standalone
+---
+
+**getElementsBy(\*)** are some common DOM API to find elements matching a certain selector. They are often used to navigate/find elements on a DOM tree. In this blog, we'll learn how to possible recreate them using recursive DOM transversal.
+
+We'll consider the following HTML document for all the below problems for simplicity:
+
+```html
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+
+	<body>
+		<div id="root">
+			<span data-name="1" class="red yellow">1</span>
+			<span data-name="2" class="red">2</span>
+			<button id="btn">Click Me</button>
+			<div>
+				<p><span class="red green">Hello</span>World</p>
+				<div>
+					<b><span data-name="3" class="purple red 123">Bold text</span></b>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
+```
+
+{/* ======= Variation by tagName ========= */}
+
+<section>
+<SubHeading>Variation: By Tag Name</SubHeading>
+## 1. By tagName implementation
+
+Implement a getElementsByTagName function which takes a rootElement and a tagSelector, and finds and returns all elements matching the tagName. You can ignore the root element.
+
+```js title="./src/getElementsByTagName.js"
+function getElementsByTagName(rootEl, tagName) {
+	const result = [];
+	const targetTagName = tagName.toLowerCase();
+
+	if (!rootEl) {
+		return result;
+	}
+
+	function transverseEl(element) {
+		const elTagName = element.tagName.toLowerCase();
+
+		// each child is checked for matching tagName
+		if (elTagName === targetTagName) {
+			result.push(element);
+		}
+
+		// if it has further nesting, we check on those children
+		for (const childEl of element.children) {
+			transverseEl(childEl);
+		}
+	}
+
+	// we iterate over all children of root and check if we have a match
+	for (const child of rootEl.children) {
+		transverseEl(child);
+	}
+
+	return result;
+}
+
+// Usage
+const output = getElementsByTagName(document.getElementById('root'), 'span');
+
+// Yields the following HTML elements:
+// [span.red.yellow, span.red, span.red.green, span.purple.red.123]
+console.log(output);
+```
+
+</section>
+
+## Further Reading
+
+I strongly encourage you to explore and tackle additional questions in my [Recursion Questions for Frontend Interviews](/blog/recursion-questions-for-frontend-interviews/ 'Find more question on recursion in the recursion questions for frontend interviews blog series') blog series.
+
+By doing so, you can enhance your understanding and proficiency with recursion, preparing you to excel in your upcoming frontend interviews.
+
+**_Wishing you best. Happy Interviewing_** 🫡.
