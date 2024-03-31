@@ -162,9 +162,9 @@ function getFormattedClassNames(classNames) {
 	const filteredClassNamesArray = classNamesArray.filter((cls) => cls.trim().length > 0);
 
 	// remove duplicate entries: ["red","yellow", "red"] --> ["red","yellow"]
-	const filteredClassNamesArray = Array.from(new Set(filteredClassNamesArray));
+	const uniqueClassNames = Array.from(new Set(filteredClassNamesArray));
 
-	return filteredClassNamesArray;
+	return uniqueClassNames;
 }
 ```
 
