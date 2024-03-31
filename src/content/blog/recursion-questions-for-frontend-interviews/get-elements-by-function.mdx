@@ -25,8 +25,8 @@ We'll consider the following HTML document for all the below problems for simpli
 
 	<body>
 		<div id="root">
-			<span data-name="1" class="red yellow">1</span>
-			<span data-name="2" class="red">2</span>
+			<span data-name="test-node" class="red yellow">1</span>
+			<span data-name="test-node" class="red">2</span>
 			<button id="btn">Click Me</button>
 			<div>
 				<p><span class="red green">Hello</span>World</p>
@@ -167,6 +167,62 @@ function getFormattedClassNames(classNames) {
 	return uniqueClassNames;
 }
 ```
+
+</section>
+
+{/* ======= Variation: getElementsByCustomDataAttribute ========== */}
+
+<section>
+<SubHeading>Variation: By Custom Data Attribute</SubHeading>
+
+## 3. By customDataAttribute implementation
+
+Implement a getElementsByCustomDataAttribute function which takes a rootElement, a custom attribute name and value, and finds and returns all elements contain the custom attribute name and value. You can ignore the root element.
+
+```js title="./src/getElementsByCustomDataAttribute.js"
+function getElementsByCustomDataAttribute(rootEl, { attributeName, attributeValue }) {
+	const result = [];
+
+	if (!rootEl) {
+		return result;
+	}
+
+	function transverseEl(element) {
+		// get the custom attribute
+		const elAttributeValue = element.getAttribute(`data-${attributeName}`);
+
+		if (attributeValue === elAttributeValue) {
+			result.push(element);
+		}
+
+		// if it has further nesting, we check on those children
+		for (const childEl of element.children) {
+			transverseEl(childEl);
+		}
+	}
+
+	for (const child of rootEl.children) {
+		transverseEl(child);
+	}
+
+	return result;
+}
+
+// Usage
+const output = getElementsByCustomDataAttribute(document.getElementById('root'), {
+	attributeName: 'name',
+	attributeValue: 'test-node'
+});
+
+// Yields the following HTML elements:
+// [span.red.yellow, span.red]
+console.log(output);
+```
+
+<br />
+
+There may be variations of this to check for a list of data attributes as well, which would be similar to getElementsByClassName
+implementation.
 
 </section>
 
