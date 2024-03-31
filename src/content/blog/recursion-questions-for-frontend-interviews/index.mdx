@@ -1,0 +1,54 @@
+---
+seoMetaData:
+  title: '({{year}} Updated)! Recursion Questions for Frontend Interviews'
+  description: 'Practice from real interview questions to master recursion based challenges for your next frontend interview in {{year}} '
+  ogImage: '/open-graph/blogs/recursion-questions-for-frontend-interviews.webp'
+  ogImageAlt: 'Master recursion based javascript questions for frontend Interviews in {{year}}'
+title: 'Recursion Questions for Frontend Interviews'
+publishedDate: 2024-03-31
+inProgress: true
+blogMeta:
+  type: series
+  relatedBlogs:
+    - 'recursion-questions-for-frontend-interviews/get-elements-by-function'
+---
+
+Welcome to my blog series on JavaScript based recursion questions, tailored for frontend interviews!
+
+In this series, we'll explore one of programming's most fundamental yet easily mistaken concepts - recursion. Whether you're just starting out and want a solid understanding of solving recusion based problems or you're an experienced developer seeking mastery of recursion techniques, this series caters to all levels of expertise.
+
+I'll delve into a range of interview questions I've encountered firsthand concerning recursion. Each question will be accompanied by detailed solutions and possible variations I have been asked to ensure a comprehensive understanding of the topic.
+
+So, let's embark on this journey of unraveling recursion together!
+
+## Tips on solving closure based problems
+
+From my personal experience, solving a recursion based problem is not tough at all, as long as one can determine the following:
+
+1. Understanding the base condition on which we can end the recursion.
+1. Understanding the possible values which can be passed, namely edge cases in form of <InlineCode code="null"/> input. Make sure to clarify the question with the interviewer, so as to save time not handling data types which are not expected at all.
+1. Understanding the expected return type. It's not necessary that operating on <InlineCode code="'object'"/> data type, yields object as result.
+1. Understanding whether or not mutation of the argument is allowed. Make sure to explicity ask the question to the interviewer. It might not seem very obvious and might end up failing 1-2 base test cases.
+1. Understanding of basic data types, <InlineCode code="typeof"/> operator, <InlineCode code="instanceOf"/> operator, to ensure you can correctly differentiate between different types that still are <InlineCode code="'objects'"/>. Examples include <InlineCode code="arrays"/>, <InlineCode code="maps"/>, <InlineCode code="sets"/>, <InlineCode code="objects"/>, <InlineCode code="dates"/>, <InlineCode code="null"/> etc.
+1. Understanding whether there will be any cyclic values on input and if so what should be done about it. Most cases, we are expected to remove the cycle and better ask the interviewer early on.
+1. Understanding whether you will operate on nodes or elements on DOM, so you can use the correct API's for transversing children and siblings.
+
+## Questions asked in interviews
+
+In general, if you have a high level look at the questions, you will notice that recursion based question usually revolves around the idea of nested array or objects data manipulation, implementation for common lodash utilities or in general DOM transversal or DOM filter based problems.
+
+In general, solving these questions along with their variations should be sufficient starting point to excel your recursion based question for your next frontend interview:
+
+**Note**: You need a working knowledge of **DOM API's**, **data types in JavaScript** and **_higher order functions_** for these question.
+
+1. [Implement getElementsBy function](/blog/recursion-questions-for-frontend-interviews/get-elements-by-function/ 'getElementsBy function using recursion')
+
+## Personal tips for interview
+
+As recursion based problem usually deals with nested objects and array or DOM transversal, you need to be familiar with Javscript data types and basic DOM API's.
+
+Whenever the problem statement would expect you to deal with nested object or arrays, always try to check for edge cases like <InlineCode code="null" />, use utility functions like <InlineCode code="Array.isArray()" /> , operators like <InlineCode code="instanceOf" />instead of only relying on <InlineCode code="typeof" /> operator which can lead to false positives.
+
+Whenever the problem statement would expect you to deal with DOM transversal, be clear on whether you are operating on **nodes** or **elements** and use the appropriate API's to avoid unnecessary work.
+
+**_Wishing you best. Happy Interviewing_** 🫡.

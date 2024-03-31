@@ -6,14 +6,19 @@
  * CHORE: Not sure how to get rid of these linter waning while using zod
  */
 
-import { z } from 'astro:content';
+import { reference, z } from 'astro:content';
 
 import { seoMetaDataSchema } from './seo-meta';
+
+const blogMeta = z.discriminatedUnion('type', [
+	z.object({ type: z.literal('series'), relatedBlogs: z.array(reference('blog')) }),
+	z.object({ type: z.literal('standalone') })
+]);
 
 export const blogSchema = z.object({
 	seoMetaData: seoMetaDataSchema,
 	title: z.string(),
 	publishedDate: z.date(),
 	inProgress: z.boolean().optional().default(false),
-	type: z.enum(['series', 'standalone']).optional().default('standalone')
+	blogMeta
 });

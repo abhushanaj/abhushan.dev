@@ -1,0 +1,84 @@
+---
+seoMetaData:
+  title: 'Implement a cycleOn function'
+  description: 'Implement a cycleOn utility function by using Javascript closures.'
+  ogImage: '/open-graph/blogs/implement-a-cycleon-function.webp'
+  ogImageAlt: 'Implement a cycleOn utility function by using Javascript closures.'
+title: 'Implement a cycleOn function'
+publishedDate: 2024-03-27
+blogMeta:
+  type: standalone
+---
+
+**cycleOn** is a higher order utility function which helps you cycle through a list of values.
+
+The generic implementation of cycleOn utility and can be extended to create other similar utilities like **toggleOn** (for two values).
+
+{/* ==== Generic Cycle Function ====== */}
+
+<section>
+
+## 1. Generic implementation
+
+```js title="./src/cycleOn.js"
+function cycleOn(values) {
+	let activeIndex = 0;
+
+	function cycledFnImpl() {
+		// if we have exceeded the limit for values length, reset the index
+		if (activeIndex >= values.length) {
+			activeIndex = 0;
+		}
+
+		const result = values[activeIndex];
+		activeIndex++;
+		return result;
+	}
+
+	return cycledFnImpl;
+}
+
+// Usage of the utility function
+const fruits = ['apple', 'mango', 'banana'];
+const cycleValue = cycleOn(fruits);
+
+console.log(cycleValue()); // apple
+console.log(cycleValue()); // mango
+console.log(cycleValue()); // banana
+// cycle restarts from here again
+console.log(cycleValue()); // apple
+```
+
+</section>
+
+{/* ==== ToggleOn Variation ====== */}
+
+<section>
+
+<SubHeading>Variation: Toggle on</SubHeading>
+## 2. Variation of toggleOn
+
+Usually cycleOn with only two values is referred as toggleOn, where you toggle between two state values.
+
+```js title="./src/toggleOn.js"
+import cycleOn from './src/cycleOn.js';
+
+// cycleOn with two values can be also referred as toggleOn
+const fruits = ['on', 'off'];
+const toggleOn = cycleOn(fruits);
+
+console.log(toggleOn()); // on
+console.log(toggleOn()); // off
+// cycle restarts from here again
+console.log(cycleValue()); // on
+```
+
+</section>
+
+## Further Reading
+
+I strongly encourage you to explore and tackle additional questions in my [Closure Questions for Frontend Interviews](/blog/closure-questions-for-frontend-interviews/ 'Find more question on closures in the closure questions for frontend Interviews blog series') blog series.
+
+By doing so, you can enhance your understanding and proficiency with closures, preparing you to excel in your upcoming frontend interviews.
+
+**_Wishing you best. Happy Interviewing_** 🫡.

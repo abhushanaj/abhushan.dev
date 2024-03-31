@@ -3,15 +3,15 @@
 import type { APIRoute } from 'astro';
 
 import { formatForSitemapResponseWithData } from '@/lib/sitemap';
-import { getUrlFromUri } from '@/lib/url';
+import { getUriFromSlug, getUrlFromUri } from '@/lib/url';
 
 export const GET: APIRoute = () => {
 	const sitemap = formatForSitemapResponseWithData([
 		{
-			url: getUrlFromUri('/')
+			url: getUrlFromUri(getUriFromSlug())
 		},
 		{
-			url: getUrlFromUri('/blog')
+			url: getUrlFromUri(getUriFromSlug('blog'))
 		}
 	]);
 

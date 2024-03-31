@@ -1,0 +1,71 @@
+---
+seoMetaData:
+  title: '({{year}} Updated)! Questions on Javascript Closures for Frontend Interviews'
+  description: 'Practice from real interview questions to master closure-related challenges for your next frontend interview in {{year}} '
+  ogImage: '/open-graph/blogs/closure-questions-for-frontend-interviews.webp'
+  ogImageAlt: 'Master questions on Javascript Closures for Frontend Interviews in {{year}}'
+title: 'Closure Questions for Frontend Interviews'
+publishedDate: 2024-03-26
+inProgress: true
+blogMeta:
+  type: series
+  relatedBlogs:
+    - 'closure-questions-for-frontend-interviews/debounce-function'
+    - 'closure-questions-for-frontend-interviews/throttle-function'
+    - 'closure-questions-for-frontend-interviews/limit-function'
+    - 'closure-questions-for-frontend-interviews/sampling-function'
+    - 'closure-questions-for-frontend-interviews/cycleon-function'
+    - 'closure-questions-for-frontend-interviews/infinite-sum'
+    - 'closure-questions-for-frontend-interviews/make-counter-function'
+    - 'closure-questions-for-frontend-interviews/memoize-function'
+    - 'closure-questions-for-frontend-interviews/array-iterator-function'
+    - 'closure-questions-for-frontend-interviews/cancellable-timer-function'
+    - 'closure-questions-for-frontend-interviews/pipe-compose-function'
+---
+
+Welcome to my blog series on JavaScript closures questions, tailored for frontend interviews!
+
+In this series, we'll explore one of JavaScript's fundamental yet frequently misunderstood concepts - closures. Whether you're just starting out and want a solid understanding of closures or you're an experienced developer seeking mastery of advanced closure techniques, this series caters to all levels of expertise.
+
+I'll delve into a range of interview questions I've encountered firsthand concerning JavaScript closures. Each question will be accompanied by detailed solutions and possible variations I have been asked to ensure a comprehensive understanding of the topic.
+
+So, let's embark on this journey of unraveling JavaScript closures together!
+
+## Tips on solving closure based problems
+
+From my personal experience, solving a closure based problem is not tough at all, as long as one can determine the following:
+
+1. Understanding what environment variables needs to be closed over.
+1. Understanding or evaluating the final termination condition when recursion comes into play along with closed over variable environment.
+1. Understanding the basics of garbage collection in JavaScript with [Mark and Sweep Algorithm](https://en.wikipedia.org/wiki/Tracing_garbage_collection 'Mark and Sweep Algorithm for Garbage Collection').
+1. Understanding the advantages and disadvantages of closures.
+
+## Questions asked in interviews
+
+In general, if you have a high level look at the questions, you will notice that closure based question usually revolves around the idea of data encapsulation, data hiding, deriving new state from last state (history) or in general any common UI/UX or performance improvement utilities.
+
+Only in few cases, some brain teasers problems like infinite sum problem may be asked.
+
+In general, solving these questions along with their variations should be sufficient starting point to excel your closure based question for your next frontend interview:
+
+**Note**: You need a working knowledge of **_closures_**, **_this keyword_** and **_higher order functions_** for these question.
+
+1. [Implement a debounce function.](/blog/closure-questions-for-frontend-interviews/debounce-function 'Debounce function implementation using closures')
+1. [Implement a throttle function.](/blog/closure-questions-for-frontend-interviews/throttle-function 'Throttle function implementation using closures')
+1. [Implement a limit function.](/blog/closure-questions-for-frontend-interviews/limit-function 'Limit function implementation using closures')
+1. [Implement a sampling function.](/blog/closure-questions-for-frontend-interviews/sampling-function 'Sampling function implementation using closures')
+1. [Implement a cycleOn function.](/blog/closure-questions-for-frontend-interviews/cycleon-function 'CycleOn function implementation using closures')
+1. [Implement an infinite sum function.](/blog/closure-questions-for-frontend-interviews/infinite-sum 'Classic Infinite Sum function implementation using closures')
+1. [Implement a make counter function.](/blog/closure-questions-for-frontend-interviews/make-counter-function 'Make Counter function implementation using closures')
+1. [Implement a memoize function.](/blog/closure-questions-for-frontend-interviews/memoize-function 'Memoize function implementation using closures')
+1. [Implement an array iterator function.](/blog/closure-questions-for-frontend-interviews/array-iterator-function 'Array Iterator function implementation using closures')
+1. [Implement a cancellable timer function.](/blog/closure-questions-for-frontend-interviews/cancellable-iterator-function 'Array Iterator function implementation using closures')
+1. [Implement a pipe/compose function.](/blog/closure-questions-for-frontend-interviews/pipe-compose-function 'Pipe and Compose function implementation using closures')
+
+## Personal tips for interview
+
+As closure as a concept can be hard to explain through just definitions, I would highly recommend that you show off closures using any one example from the list of quesstions mentioned above.
+
+This opens up room for further conversation (advantages/disadvantages, garbage collection etc) and also showcases your ability to talk through a problem statement through real world practical implementations.
+
+**_Wishing you best. Happy Interviewing_** 🫡.

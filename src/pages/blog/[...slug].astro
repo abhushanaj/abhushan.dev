@@ -6,10 +6,13 @@ import type { GetStaticPaths } from 'astro';
 import DefaultLayout from '@/layouts/default/index.astro';
 
 import BlogHeader from '@/components/astro/blog/blog-header/index.astro';
+import InProgressBanner from '@/components/astro/blog/in-progress-banner/index.astro';
 import TocAsideNav from '@/components/astro/blog/toc-aside-nav/index.astro';
 import SeoMeta from '@/components/astro/seo-meta/index.astro';
 import { BlogBackAction } from '@/components/react/blog/back-action';
 import { components } from '@/components/react/blog/content-blocks';
+
+import { getParentSeriesSlug, getSlugDepth, getUriFromCollectionAndSlug } from '@/lib/url';
 
 export const getStaticPaths = (async () => {
 	const allBlogs = await getCollection('blog');
@@ -26,25 +29,42 @@ const { slug } = Astro.params;
 const blog = await getEntry('blog', slug);
 
 const {
-	data: { seoMetaData, title, publishedDate },
-	collection,
+	data: { seoMetaData, title, publishedDate, inProgress },
 	render
 } = blog;
 
 const { Content, headings } = await render();
 const showToc = headings.length > 0;
+
+const isPartOfSeries = getSlugDepth(slug) > 1;
+const seriesParentSlug = getParentSeriesSlug(slug);
 ---
 
 <DefaultLayout>
-	<SeoMeta slot="head" {...seoMetaData} path={`/${collection}/${slug}`} />
+	<SeoMeta slot="head" {...seoMetaData} />
 	<main class="relative">
 		<div class="gap-10 xl:grid xl:grid-cols-[var(--primary-content-width)_1fr]">
-			<article class="xl:max-w-unset w-full max-w-[var(--primary-content-width)]">
+			<article class="xl:max-w-unset w-full max-w-[var(--primary-content-width)] pb-12">
 				<!-- Back Action -->
-				<BlogBackAction href={`/${collection}`} title="Go back to blogs page">go to blog</BlogBackAction>
+				<BlogBackAction
+					href={getUriFromCollectionAndSlug({
+						collection: 'blog',
+						slug: isPartOfSeries ? seriesParentSlug : undefined
+					})}
+					title={isPartOfSeries ? 'back to series' : 'back to blogs'}
+					>{isPartOfSeries ? 'back to series' : 'back to blogs'}</BlogBackAction
+				>
 				<!-- Blog Header -->
 				<BlogHeader title={title} publishedDate={publishedDate} views={0} />
 
+				<!-- In Progress Banner -->
+				{
+					inProgress && (
+						<div class="mb-4">
+							<InProgressBanner />
+						</div>
+					)
+				}
 				<!-- Blog Content -->
 				<Content components={components} />
 			</article>
@@ -66,12 +86,17 @@ const showToc = headings.length > 0;
 		:root {
 			--aside-toc-size: 25ch;
 			--aside-nav-space-left: 0.8em;
+			--aside-toc-content: 30ch;
 		}
 
 		@screen xl {
 			:root {
 				--page-content-width: 62.8rem;
 			}
+		}
+
+		.expressive-code {
+			margin-bottom: 4rem;
 		}
 	</style>
 </DefaultLayout>

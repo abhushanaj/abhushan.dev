@@ -4,23 +4,36 @@ import { getCollection } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 import type { ComponentProps } from 'react';
 
-import { getUriFromCollectionAndSlug } from '@/lib/url';
+import { getSlugDepth, getUriFromCollectionAndSlug } from '@/lib/url';
 
 import Listing from './listing.astro';
 
 type Props = {
-	type: CollectionEntry<'blog'>['data']['type'];
+	type: CollectionEntry<'blog'>['data']['blogMeta']['type'];
 	heading: string;
 };
 
 const { type, heading } = Astro.props;
 
-const listingByType = await getCollection('blog', (entry) => entry.data.type === type);
+const listingByType = await getCollection('blog', (entry) => {
+	const matchingEntry = entry.data.blogMeta.type === type;
+
+	if (matchingEntry && type === 'standalone') {
+		return getSlugDepth(entry.slug) === 1;
+	}
+
+	if (matchingEntry && type === 'series') {
+		return true;
+	}
+
+	return false;
+});
 
 const listingDetails = listingByType.map((blog) => ({
 	title: blog.data.title,
 	publishedDate: blog.data.publishedDate,
-	uri: getUriFromCollectionAndSlug({ collection: blog.collection, slug: blog.slug })
+	uri: getUriFromCollectionAndSlug({ collection: blog.collection, slug: blog.slug }),
+	seriesLength: blog.data.blogMeta.type === 'series' ? blog.data.blogMeta.relatedBlogs.length : 0
 })) satisfies ComponentProps<typeof Listing>['listings'];
 ---
 

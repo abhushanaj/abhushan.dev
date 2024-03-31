@@ -24,7 +24,7 @@ const { listings } = Astro.props;
 				</InternalLink>
 				<p class="mt-1 flex flex-wrap items-center gap-2 text-sm">
 					<time datetime={listing.publishedDate.toISOString()}>{formatPublishedDate(listing.publishedDate)}</time>
-					{listing.seriesLength && <span>- ({listing.seriesLength} part series)</span>}
+					{Boolean(listing.seriesLength) && <span>- ({listing.seriesLength} part series)</span>}
 				</p>
 			</li>
 		))

@@ -16,6 +16,19 @@
 		--solid-white: #fff;
 		--solid-black: #000;
 
+		--blue-1: #fbfdff;
+		--blue-2: #f4faff;
+		--blue-3: #e6f4fe;
+		--blue-4: #d5efff;
+		--blue-5: #c2e5ff;
+		--blue-6: #acd8fc;
+		--blue-7: #8ec8f6;
+		--blue-8: #5eb1ef;
+		--blue-9: #0090ff;
+		--blue-10: #0588f0;
+		--blue-11: #0d74ce;
+		--blue-12: #113264;
+
 		/* ===== Pallete Composition ====== */
 
 		/* App Background */
@@ -36,6 +49,20 @@
 		--ui-neutral-focus-ring: var(--gray-7);
 		--ui-neutral-border: var(--gray-7);
 		--ui-neutral-hovered-border: var(--gray-8);
+
+		/* Informational Palete */
+		--text-info-hc: var(--blue-12);
+		--text-info-lc: var(--blue-11);
+
+		--ui-seperator-info-lc: var(--blue-6);
+		--ui-seperator-info-hc: var(--blue-7);
+
+		--ui-info-bg: var(--blue-3);
+		--ui-info-hovered-bg: var(--blue-4);
+		--ui-info-active-bg: var(--blue-5);
+		--ui-info-focus-ring: var(--blue-7);
+		--ui-info-border: var(--blue-7);
+		--ui-info-hovered-border: var(--blue-8);
 	}
 
 	[data-theme='dark'] {
@@ -53,6 +80,19 @@
 		--gray-12: #eeeeee;
 
 		--app-bg: var(--gray-1);
+
+		--blue-1: #0d1520;
+		--blue-2: #111927;
+		--blue-3: #0d2847;
+		--blue-4: #003362;
+		--blue-5: #004074;
+		--blue-6: #104d87;
+		--blue-7: #205d9e;
+		--blue-8: #2870bd;
+		--blue-9: #0090ff;
+		--blue-10: #3b9eff;
+		--blue-11: #70b8ff;
+		--blue-12: #c2e6ff;
 	}
 
 	html {
@@ -93,7 +133,10 @@
 		const currTheme = htmlDoc.getAttribute('data-theme');
 
 		if (!currTheme || currTheme !== theme) {
-			htmlDoc.setAttribute('data-theme', theme);
+			/**
+			 * TODO: Change this later to use actual theme and not just force to be light at all times
+			 */
+			htmlDoc.setAttribute('data-theme', 'light');
 		}
 	} catch (error) {
 		console.error('Error setting initial theme', error);
