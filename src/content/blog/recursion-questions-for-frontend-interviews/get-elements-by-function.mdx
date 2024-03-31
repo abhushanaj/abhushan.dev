@@ -221,8 +221,42 @@ console.log(output);
 
 <br />
 
-There may be variations of this to check for a list of data attributes as well, which would be similar to getElementsByClassName
-implementation.
+There may be further variations of this to check for a **list of data attributes**, a **particular style attribute** like **color**, **fontSize** etc.
+
+The possibilities here are endless, but the core transversal remains same with only the filter/matching logic changes.
+
+Example, if we were to check for a particular style attribute like color, we could simply do:
+
+```js
+/**
+ * ......
+ * ..... before
+ */
+function transverseEl(element) {
+	// get any style attribute using window.getComputedStyle API
+	const elColor = window.getComputedStyle(element).color;
+
+	// if we were to check a direct match
+	if (elColor === targetColor) {
+		result.push(element);
+	}
+
+	// if we were to check for inclusion
+	if (targetColor.includes(elColor)) {
+		result.push(element);
+	}
+
+	/**
+	 * ......
+	 * ..... and so on
+	 */
+}
+
+/**
+ * ......
+ * ..... after
+ */
+```
 
 </section>
 
