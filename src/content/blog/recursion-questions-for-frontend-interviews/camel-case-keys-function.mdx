@@ -1,0 +1,95 @@
+---
+seoMetaData:
+  title: 'Implement camelCaseKeys function'
+  description: 'Implement camelCaseKeys function using recursion'
+  ogImage: '/open-graph/blogs/implement-a-classnames-function.webp'
+  ogImageAlt: 'Implement camelCaseKeys function using recursion'
+title: 'Implement camelCaseKeys function'
+publishedDate: 2024-04-01
+blogMeta:
+  type: 'series-part'
+  seriesParentSlug: 'recursion-questions-for-frontend-interviews'
+---
+
+<InlineCode code="camelCase" /> is a convention used in programming and naming conventions where multiple words are combined
+into one continuous string of text, with each word within the string capitalized except for the first word.
+
+<InlineCode code="camelCase" /> conventions are followed in JavaScript codebases as well. We need to implement a camelCaseKeys
+functon that can convert all keys in object to follow camelCase convention.
+
+<section>
+## 1. Basic implementation
+
+Input can have nested objects or array of objects. Try not to mutate the original input.
+
+```js title="./src/camelCaseKeys.js"
+import camelCase from './src/utils.js';
+
+function camelCaseKeys(input) {
+	// for arrays
+	if (Array.isArray(input)) {
+		const outArr = [];
+		input.forEach((item) => {
+			outArr.push(camelCaseKeys(item));
+		});
+		return outArr;
+	}
+
+	// for objects
+	const outObj = Object.create({});
+
+	for (const key in input) {
+		// avoid iterating over inherited keys
+		if (Object.hasOwn(input, key)) {
+			const value = input[key];
+
+			if (typeof value !== 'object') {
+				outObj[camelCase(key)] = value;
+			} else {
+				outObj[camelCase(key)] = camelCaseKeys(value);
+			}
+		}
+	}
+	return outObj;
+}
+
+// Usage
+
+const convertedObj = camelCaseKeys({
+	hello_world: true,
+	hello: {
+		baz_bar: [{ name: 'JS', age_in_years: 24 }]
+	}
+});
+
+console.log(convertedObj);
+
+/**
+ * Yields
+ * {
+    "helloWorld": true,
+    "hello": {
+        "bazBar": [
+            {
+                "name": "JS",
+                "ageInYears": 24
+            }
+        ]
+    }
+}
+ */
+```
+
+<br />
+
+Here the implementation of <InlineCode code="camelCase"/> is not really important. You can use any technique solution you prefer present on the internet. The goal is not to focus on utility but rather the recursion done.
+
+</section>
+
+## Further Reading
+
+I strongly encourage you to explore and tackle additional questions in my [Recursion Questions for Frontend Interviews](/blog/recursion-questions-for-frontend-interviews/ 'Find more question on recursion in the recursion questions for frontend interviews blog series') blog series.
+
+By doing so, you can enhance your understanding and proficiency with recursion, preparing you to excel in your upcoming frontend interviews.
+
+**_Wishing you best. Happy Interviewing_** 🫡.
