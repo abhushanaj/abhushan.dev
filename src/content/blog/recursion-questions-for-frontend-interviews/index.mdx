@@ -14,6 +14,7 @@ blogMeta:
     - 'recursion-questions-for-frontend-interviews/classnames-function'
     - 'recursion-questions-for-frontend-interviews/camel-case-keys-function'
     - 'recursion-questions-for-frontend-interviews/compact-object-function'
+    - 'recursion-questions-for-frontend-interviews/deep-flatten-array-function'
 ---
 
 Welcome to my blog series on JavaScript based recursion questions, tailored for frontend interviews!
@@ -35,6 +36,7 @@ From my personal experience, solving a recursion based problem is not tough at a
 1. Understanding of basic data types, <InlineCode code="typeof"/> operator, <InlineCode code="instanceOf"/> operator, to ensure you can correctly differentiate between different types that still are <InlineCode code="'objects'"/>. Examples include <InlineCode code="arrays"/>, <InlineCode code="maps"/>, <InlineCode code="sets"/>, <InlineCode code="objects"/>, <InlineCode code="dates"/>, <InlineCode code="null"/> etc.
 1. Understanding whether there will be any cyclic values on input and if so what should be done about it. Most cases, we are expected to remove the cycle and better ask the interviewer early on.
 1. Understanding whether you will operate on nodes or elements on DOM, so you can use the correct API's for transversing children and siblings.
+1. Understanding whether or not inherited keys in objects needs to be considered as well. In almost all cases it should not be considered. You can use <InlineCode code="Object.hasOwn()"/>, <InlineCode code="object.hasOwnProperty()"/> or any approach to do so.
 
 ## Questions asked in interviews
 
@@ -48,6 +50,7 @@ In general, solving these questions along with their variations should be suffic
 1. [Implement a classnames function](/blog/recursion-questions-for-frontend-interviews/classnames-function/ 'Implement a classnames function using recursion')
 1. [Implement a camelCaseKeys function](/blog/recursion-questions-for-frontend-interviews/camel-case-keys-function/ 'Implement a camelCaseKeys function using recursion')
 1. [Implement a compactObject function](/blog/recursion-questions-for-frontend-interviews/compact-object-function/ 'Implement a compactObject function using recursion')
+1. [Implement a deepFlattenArray function](/blog/recursion-questions-for-frontend-interviews/deep-flatten-array-function/ 'Implement a deepFlattenArray function using recursion')
 
 ## Personal tips for interview
 

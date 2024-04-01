@@ -1,0 +1,147 @@
+---
+seoMetaData:
+  title: 'Implement a deepFlattenArray function'
+  description: 'Implement a deepFlattenArray function using recursion'
+  ogImage: '/open-graph/blogs/implement-a-deep-flatten-array-function.webp'
+  ogImageAlt: 'Implement a deepFlattenArray function using recursion'
+title: 'Implement a deepFlattenArray function'
+publishedDate: 2024-04-01
+blogMeta:
+  type: 'series-part'
+  seriesParentSlug: 'recursion-questions-for-frontend-interviews'
+---
+
+**Deep Flattening** refers to the process of transforming a nested array into a single-level array by flattening all nested arrays within it. We already have the <InlineCode code="Array.prototype.flat()"/> method available to use, but in this case we are recreating it.
+
+{/* ====== Basic Implementation ======== */}
+
+<section>
+## 1. Basic implementation
+
+Flatten the array to for any level of nesting.
+
+```js title="./src/deepFlattenArray.js"
+function deepFlattenArray(arr) {
+	const result = [];
+
+	function deepFlattenArrayImpl(input) {
+		input.forEach((item) => {
+			if (Array.isArray(item)) {
+				deepFlattenArrayImpl(item);
+			} else {
+				result.push(item);
+			}
+		});
+	}
+
+	deepFlattenArrayImpl(arr);
+
+	return result;
+}
+
+// Usage
+const inputArr = [1, [2, [3, [4, [{ name: 'John Doe' }, null], 0], -1]]];
+const output = deepFlattenArray(inputArr);
+
+/**
+ * Yields:
+ * [
+    1,
+    2,
+    3,
+    4,
+    {
+        "name": "John Doe"
+    },
+    null,
+    0,
+    -1
+]
+ */
+
+console.log(output);
+```
+
+</section>
+
+{/* ====== Variation: With Depth ===== */}
+
+<section>
+<SubHeading>Variation: With Depth</SubHeading>
+
+## 2. With Depth implementation
+
+In the previous case, we simply flattened the array to for any level of nesting. This variation will have a depth field upto which the flattening needs to be performed.
+
+```js title="./src/deepFlattenArray.js"
+function deepFlattenArray(arr, depth = 1) {
+	const result = [];
+
+	function deepFlattenArrayImpl(input, depth) {
+		input.forEach((item) => {
+			// if flattening is needed and depth is not exhausted
+			if (Array.isArray(item) && depth > 0) {
+				deepFlattenArrayImpl(item, depth - 1);
+			} else {
+				result.push(item);
+			}
+		});
+	}
+
+	deepFlattenArrayImpl(arr, depth);
+
+	return result;
+}
+
+// Usage
+const inputArr = [1, [2, [3, [4, [{ name: 'John Doe' }, null], 0], -1]]];
+const output = deepFlattenArray(inputArr, 1);
+
+/**
+ * Yields:
+ [
+    1,
+    2,
+    [
+        3,
+        [
+            4,
+            [
+                {
+                    "name": "John Doe"
+                },
+                null
+            ],
+            0
+        ],
+        -1
+    ]
+]
+ */
+
+console.log(output);
+```
+
+<br />
+
+As <InlineCode code="Array.prototype.flat()"/> is already present to be used on arrays, in an interview setting one might also expect to implement a **polyfill** for this. The solution to that is also staright forward and only requires an understanding of <InlineCode code="this"/> keyword and <InlineCode code="prototype"/> property on constructor functions.
+
+```js
+if (!Array.prototype.flat) {
+	Array.prototype.flat = function (depth = 1) {
+		const arr = this;
+		// original array should not be mutated
+		return deepFlattenArray(arr, this);
+	};
+}
+```
+
+</section>
+
+## Further Reading
+
+I strongly encourage you to explore and tackle additional questions in my [Recursion Questions for Frontend Interviews](/blog/recursion-questions-for-frontend-interviews/ 'Find more question on recursion in the recursion questions for frontend interviews blog series') blog series.
+
+By doing so, you can enhance your understanding and proficiency with recursion, preparing you to excel in your upcoming frontend interviews.
+
+**_Wishing you best. Happy Interviewing_** 🫡.
