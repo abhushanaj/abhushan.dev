@@ -1,10 +1,10 @@
 ---
 seoMetaData:
-  title: 'Implement classnames function'
-  description: 'Implement classnames function using recursion'
+  title: 'Implement a classnames function'
+  description: 'Implement a classnames function using recursion'
   ogImage: '/open-graph/blogs/implement-a-classnames-function.webp'
-  ogImageAlt: 'Implement classnames function using recursion'
-title: 'Implement classnames function'
+  ogImageAlt: 'Implement a classnames function using recursion'
+title: 'Implement a classnames function'
 publishedDate: 2024-04-01
 blogMeta:
   type: 'series-part'
@@ -18,7 +18,7 @@ blogMeta:
 
 We assume the possible values are strings, boolean, arrays and objects. We must also remove duplicates in classnames.
 
-```js
+```js title="./src/classNames.js"
 function classNames(...classes) {
 	const result = new Set();
 
