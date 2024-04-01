@@ -1,0 +1,98 @@
+---
+seoMetaData:
+  title: 'Implement classnames function'
+  description: 'Implement classnames function using recursion'
+  ogImage: '/open-graph/blogs/implement-a-classnames-function.webp'
+  ogImageAlt: 'Implement classnames function using recursion'
+title: 'Implement classnames function'
+publishedDate: 2024-04-01
+blogMeta:
+  type: 'series-part'
+  seriesParentSlug: 'recursion-questions-for-frontend-interviews'
+---
+
+<InlineCode code="classNames" /> is popular Javascript package used to conditionally apply and join CSS classnames together.
+
+<section>
+## 1. Basic implementation
+
+We assume the possible values are strings, boolean, arrays and objects. We must also remove duplicates in classnames.
+
+```js
+function classNames(...classes) {
+	const result = new Set();
+
+	function classNamesImpl(...classesArray) {
+		classesArray.forEach((cls) => {
+			// if not truthy we don't want to include them
+			if (!cls) {
+				return;
+			}
+
+			// for string and numbers
+			if (typeof cls === 'string' || typeof cls === 'number') {
+				result.add(cls.toString());
+				return;
+			}
+
+			// for arrays
+			if (Array.isArray(cls)) {
+				cls.forEach((classValue) => {
+					classNamesImpl(classValue);
+				});
+				return;
+			}
+
+			// objects
+			for (const key in cls) {
+				// to avoid iterating over inherited keys
+				if (Object.hasOwn(cls, key)) {
+					const value = cls[key];
+					// we only want truthy values for object
+					if (value) {
+						// if truthy value and not nested we simply want the key
+						if (typeof value !== 'object') {
+							classNamesImpl(key);
+						} else {
+							// recursively get the keys from the nested object
+							classNamesImpl(value);
+						}
+					}
+				}
+			}
+		});
+	}
+
+	classNamesImpl(...classes);
+
+	return Array.from(new Set(result)).join(' ');
+}
+
+// Usage
+
+// yields : "red yellow 1"
+console.log(classNames('red', 'yellow', 'yellow', null, false, 1, undefined));
+
+// yields : "red yellow purple magenta"
+console.log(
+	classNames(['red', 'yellow'], {
+		green: false,
+		colors: {
+			purple: true,
+			voilet: {
+				magenta: true
+			}
+		}
+	})
+);
+```
+
+</section>
+
+## Further Reading
+
+I strongly encourage you to explore and tackle additional questions in my [Recursion Questions for Frontend Interviews](/blog/recursion-questions-for-frontend-interviews/ 'Find more question on recursion in the recursion questions for frontend interviews blog series') blog series.
+
+By doing so, you can enhance your understanding and proficiency with recursion, preparing you to excel in your upcoming frontend interviews.
+
+**_Wishing you best. Happy Interviewing_** 🫡.
