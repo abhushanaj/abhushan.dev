@@ -1,0 +1,71 @@
+---
+seoMetaData:
+  title: 'Implement a deepFlattenArray function'
+  description: 'Implement a deepFlattenArray function using recursion'
+  ogImage: '/open-graph/blogs/implement-a-camel-case-keys-function.webp'
+  ogImageAlt: 'Implement a deepFlattenArray function using recursion'
+title: 'Implement a deepFlattenArray function'
+publishedDate: 2024-04-01
+blogMeta:
+  type: 'series-part'
+  seriesParentSlug: 'recursion-questions-for-frontend-interviews'
+---
+
+**Deep Flattening** refers to the process of transforming a nested array into a single-level array by flattening all nested arrays within it. We already have the <InlineCode code="Array.prototype.flat()"/> method available to use, but in this case we are recreating it.
+
+{/* ====== Basic Implementation ======== */}
+
+<section>
+## 1. Basic implementation
+
+```js title="./src/deepFlattenArray.js"
+function deepFlattenArray(arr) {
+	const result = [];
+
+	function deepFlattenArrayImpl(input) {
+		input.forEach((item) => {
+			if (Array.isArray(item)) {
+				deepFlattenArrayImpl(item);
+			} else {
+				result.push(item);
+			}
+		});
+	}
+
+	deepFlattenArrayImpl(arr);
+
+	return result;
+}
+
+// Usage
+const inputArr = [1, [2, [3, [4, [{ name: 'John Doe' }, null], 0], -1]]];
+const output = deepFlattenArray(inputArr);
+
+/**
+ * Yields:
+ * [
+    1,
+    2,
+    3,
+    4,
+    {
+        "name": "John Doe"
+    },
+    null,
+    0,
+    -1
+]
+ */
+
+console.log(output);
+```
+
+</section>
+
+## Further Reading
+
+I strongly encourage you to explore and tackle additional questions in my [Recursion Questions for Frontend Interviews](/blog/recursion-questions-for-frontend-interviews/ 'Find more question on recursion in the recursion questions for frontend interviews blog series') blog series.
+
+By doing so, you can enhance your understanding and proficiency with recursion, preparing you to excel in your upcoming frontend interviews.
+
+**_Wishing you best. Happy Interviewing_** 🫡.
