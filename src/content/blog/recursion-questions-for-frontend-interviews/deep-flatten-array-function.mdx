@@ -18,6 +18,8 @@ blogMeta:
 <section>
 ## 1. Basic implementation
 
+Flatten the array to for any level of nesting.
+
 ```js title="./src/deepFlattenArray.js"
 function deepFlattenArray(arr) {
 	const result = [];
@@ -58,6 +60,80 @@ const output = deepFlattenArray(inputArr);
  */
 
 console.log(output);
+```
+
+</section>
+
+{/* ====== Variation: With Depth ===== */}
+
+<section>
+<SubHeading>Variation: With Depth</SubHeading>
+
+## 2. With Depth implementation
+
+In the previous case, we simply flattened the array to for any level of nesting. This variation will have a depth field upto which the flattening needs to be performed.
+
+```js title="./src/deepFlattenArray.js"
+function deepFlattenArray(arr, depth = 1) {
+	const result = [];
+
+	function deepFlattenArrayImpl(input, depth) {
+		input.forEach((item) => {
+			// if flattening is needed and depth is not exhausted
+			if (Array.isArray(item) && depth > 0) {
+				deepFlattenArrayImpl(item, depth - 1);
+			} else {
+				result.push(item);
+			}
+		});
+	}
+
+	deepFlattenArrayImpl(arr, depth);
+
+	return result;
+}
+
+// Usage
+const inputArr = [1, [2, [3, [4, [{ name: 'John Doe' }, null], 0], -1]]];
+const output = deepFlattenArray(inputArr, 1);
+
+/**
+ * Yields:
+ [
+    1,
+    2,
+    [
+        3,
+        [
+            4,
+            [
+                {
+                    "name": "John Doe"
+                },
+                null
+            ],
+            0
+        ],
+        -1
+    ]
+]
+ */
+
+console.log(output);
+```
+
+<br />
+
+As <InlineCode code="Array.prototype.flat()"/> is already present to be used on arrays, in an interview setting one might also expect to implement a **polyfill** for this. The solution to that is also staright forward and only requires an understanding of <InlineCode code="this"/> keyword and <InlineCode code="prototype"/> property on constructor functions.
+
+```js
+if (!Array.prototype.flat) {
+	Array.prototype.flat = function (depth = 1) {
+		const arr = this;
+		// original array should not be mutated
+		return deepFlattenArray(arr, this);
+	};
+}
 ```
 
 </section>
