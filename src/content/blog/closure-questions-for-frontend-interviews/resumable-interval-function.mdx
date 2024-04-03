@@ -1,0 +1,105 @@
+---
+seoMetaData:
+  title: 'Implement a resumable interval function'
+  description: 'Implement a resumable interval function by using Javascript closures.'
+  ogImage: '/open-graph/blogs/implement-a-resumable-interval-function.webp'
+  ogImageAlt: 'Implement a resumable interval function by using Javascript closures.'
+title: 'Implement a resumable interval function'
+publishedDate: 2024-04-03
+blogMeta:
+  type: 'series-part'
+  seriesParentSlug: 'closure-questions-for-frontend-interviews'
+---
+
+**resumeInterval** is a utility function using which we can create intervals that can be **paused**, **restarted** and **stopped**.
+
+It takes the same signature as <InlineCode code="window.setInterval()"/> and returns an object with the following methods:
+
+1. <InlineCode code="start" />: executes the callback immediately and every interval seconds.
+1. <InlineCode code="paused" />: pauses the running interval. Calling start again should restart the interval again.
+1. <InlineCode code="stop" />: permanently stops the interval. Once stopped, intervals can be started or paused again.
+
+{/* ====== Basic Implemenation ====== */}
+
+<section>
+## 1. Basic implementation
+
+<br />
+
+```js title="./src/createResumableInterval.js"
+function createResumableInterval(callback, delay, ...args) {
+	let timerId = null;
+	let hasStopped = false;
+
+	function pause() {
+		// if stopped we return
+		if (hasStopped) {
+			return;
+		}
+
+		// we can stop only when timer id running, i.e timerId exists
+		if (timerId) {
+			clearInterval(timerId);
+			timerId = null;
+		}
+	}
+
+	function start() {
+		// if hasStopped, we return
+		if (hasStopped) {
+			return;
+		}
+
+		// we can start only when there is no timerId present
+		if (!timerId) {
+			callback();
+			timerId = setInterval(callback, delay, ...args);
+		}
+	}
+
+	function stop() {
+		// we can stop only created timers
+		if (!hasStopped && timerId) {
+			hasStopped = true;
+			clearInterval(timerId);
+		}
+	}
+
+	return {
+		start,
+		stop,
+		pause
+	};
+}
+
+let count = 0;
+
+const interval = createResumableInterval(() => {
+	count++;
+	console.log(count);
+}, 1000);
+
+interval.start();
+
+setTimeout(() => {
+	interval.pause();
+}, 3500);
+
+setTimeout(() => {
+	interval.start();
+}, 4500);
+
+setTimeout(() => {
+	interval.stop();
+}, 6000);
+```
+
+</section>
+
+## Further Reading
+
+I strongly encourage you to explore and tackle additional questions in my [Closure Questions for Frontend Interviews](/blog/closure-questions-for-frontend-interviews/ 'Find more question on closures in the closure questions for frontend Interviews blog series') blog series.
+
+By doing so, you can enhance your understanding and proficiency with closures, preparing you to excel in your upcoming frontend interviews.
+
+**_Wishing you best. Happy Interviewing_** 🫡.
