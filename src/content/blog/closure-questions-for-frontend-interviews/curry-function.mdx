@@ -1,0 +1,144 @@
+---
+seoMetaData:
+  title: 'Implement a curry function'
+  description: 'Implement a curry function by using Javascript closures.'
+  ogImage: '/open-graph/blogs/implement-a-curry-function.webp'
+  ogImageAlt: 'Implement a curry function by using Javascript closures.'
+title: 'Implement a curry function'
+publishedDate: 2024-04-03
+blogMeta:
+  type: 'series-part'
+  seriesParentSlug: 'closure-questions-for-frontend-interviews'
+---
+
+**Currying** is a technique using which we can convert function that takes multiple arguments into a sequence of functions that take a single/multiple argument. It is a common technique used in functional programming languages.
+
+We are suppose to implement a higher order **curry** function that takes a function as argument and returns a curried version of the function. We can invoke the curries function until the arguments requirements are met after which it returns the result.
+
+{/* ====== Basic Implemenation ====== */}
+
+<section>
+<SubHeading>Variation: Fixed Parameters</SubHeading>
+## 1. Basic implementation
+
+We consider that the original function which needs to be curried takes only fixed number of arguments.
+
+```js title="./src/curry.js"
+function curry(fn) {
+	// we get the roiginal function parameter length
+	const ogFnParametersLength = fn.length;
+
+	function curryFnImpl(...args) {
+		/**
+		 * if arguments passed exceeds the parameters length we invoke the function
+		 * and return the result
+		 * */
+		if (args.length >= ogFnParametersLength) {
+			return fn.call(this, ...args);
+		}
+
+		/**
+		 * else we return a new function to be invoked and
+		 * bind it with existing args available already
+		 * */
+		return curryFnImpl.bind(this, ...args);
+	}
+
+	return curryFnImpl;
+}
+
+function sumThreeNumber(a, b, c) {
+	return a + b + c;
+}
+
+const curriedSum = curry(sumThreeNumber);
+
+console.log(curriedSum(1)(2)(3)); // yields 6
+console.log(curriedSum(1)(2, 3)); // yields 6
+console.log(curriedSum(1, 2, 3)); // yields 6
+```
+
+</section>
+
+{/* ====== Variation 2: Sporadic Arguments Length ======= */}
+
+<section>
+<SubHeading>Variation: Sporadic Arguments</SubHeading>
+## 2. Sporadic arguments implementation
+
+As in previous case, we curried a function, where we knew the total number of arguments, we were able to terminate and execute the final function once the expectation was met.
+
+If we consider a function that takes sporadic arguments, like a sum function defined as:
+
+```js title="./src/utils.js"
+function sum(...nums) {
+	return nums.reduce((acc, num) => acc + num, 0);
+}
+```
+
+<br />
+
+In this function we can pass any number of arguments, so curry implementation used above will not work. We need to create a new implementation such that function with sporadic input can also be curried.
+
+But before doing that, we need to revisit the fundamentals of <InlineCode code="valueOf"/> to leverage value conversion.
+
+```js title="./src/helloWorld.js"
+function helloWorld() {
+	console.log('Hello World');
+}
+
+helloWorld.valueOf = function () {
+	// converting the object value of "helloWorld" function returns in 4
+	return 4;
+};
+
+/**
+ * here due to the + operation
+ * JS tries to convert the "helloWorld" function to a object value using "valueOf" method.
+ */
+const output = helloWorld + 2; // yields 6
+```
+
+<br />
+
+Applying the same principle of <InlineCode code="valueOf"/> we can have our sporadic input currying implementation as follows:
+
+```js title="./src/curry.js"
+function curry(fn) {
+	function curryFnImpl(...args) {
+		const thisArg = this;
+
+		const boundFn = curryFnImpl.bind(this, ...args);
+
+		// The valueOf() method is invoked when we do the + operation
+		boundFn.valueOf = () => {
+			return fn.call(this, ...args);
+		};
+
+		return boundFn;
+	}
+
+	return curryFnImpl;
+}
+
+// Usage
+const curriedSum = curry(sum);
+
+console.log(curriedSum(1, 2)(3) + 5); // yields 11
+console.log(curriedSum(1, 2)(3, 4)(5) + 5); // yields 12
+console.log(+curriedSum(1, 2)); // yields 3
+```
+
+<br />
+
+We can also implement the same using the [Symbol.toPrimitive](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol/toPrimitive 'Visit Symbol.toPrimitive MDN documentation') method as well.
+
+</section>
+
+## Further Reading
+
+I strongly encourage you to explore and tackle additional questions in my [Closure Questions for Frontend Interviews](/blog/closure-questions-for-frontend-interviews/ 'Find more question on closures in the closure questions for frontend Interviews blog series') blog series.
+
+By doing so, you can enhance your understanding and proficiency with closures, preparing you to excel in your upcoming frontend interviews.
+
+**_Wishing you best. Happy Interviewing_** 🫡.
