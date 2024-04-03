@@ -1,0 +1,131 @@
+---
+seoMetaData:
+  title: 'Implement a circuitBreaker function'
+  description: 'Implement a circuitBreaker function by using Javascript closures.'
+  ogImage: '/open-graph/blogs/implement-a-circuit-breaker-function.webp'
+  ogImageAlt: 'Implement a circuitBreaker function by using Javascript closures.'
+title: 'Implement a circuitBreaker function'
+publishedDate: 2024-04-03
+blogMeta:
+  type: 'series-part'
+  seriesParentSlug: 'closure-questions-for-frontend-interviews'
+---
+
+**Circuit Breaker** is a Javascript design pattern used to handle faults and failures in distributed systems. It is particulary helpful in scenario when external resources might be unavilable and we want to prevent reaching out to them continously and save resources.
+
+You can learn more about the circuit breaker pattern on [Wikipedia](https://en.wikipedia.org/wiki/Circuit_breaker_design_pattern 'Vistit Wikipedia to read more on the circuit breaker pattern').
+
+We'll recreate a very small utility function called <InlineCode code="createCircuitBreaker"/> which takes a function and prevents calling the function if it fails for a threshold count. We can retry reaching the service again after a certain back-off cooling period.
+When the service in unreachable, we can return a message saying "service unavailable".
+
+<section>
+## 1. Basic implementation
+
+```js title="./src/createCircuitBreaker.js"
+function createCircuitBreaker(service, failureThreshold, cooldownTime) {
+	let failureCount = 0;
+	let lastFailureTime = 0;
+	let isAvailable = true;
+
+	function circuitBreakerFnImpl(...args) {
+		// when service is not available we check if we can open the service again
+		if (!isAvailable) {
+			const now = Date.now();
+			const diff = now - lastFailureTime;
+
+			if (diff < cooldownTime) {
+				return {
+					message: 'service unavailable',
+					isAvailable,
+					result: undefined
+				};
+			} else {
+				// we have waited the cooldown period since last failure
+				isAvailable = true;
+			}
+		}
+
+		try {
+			const res = service.call(this, ...args);
+
+			// we reset failures whenever service is reached without any errors
+			failureCount = 0;
+
+			return {
+				message: undefined,
+				isAvailable,
+				result: res
+			};
+		} catch (error) {
+			// when service throws any error, we check the if it has met the failure threshold
+			failureCount++;
+			lastFailureTime = Date.now();
+
+			// if met the threshold, we close the service for a cool down time
+			if (failureCount >= failureThreshold) {
+				isAvailable = false;
+			}
+
+			return {
+				isAvailable,
+				result: undefined,
+				message: 'error'
+			};
+		}
+	}
+
+	return circuitBreakerFnImpl;
+}
+
+// Usage:
+let count = 0;
+function incCout() {
+	count += 1;
+
+	if (count > 2 && count <= 5) {
+		throw new Error('Count in unavailable range');
+	}
+	return count;
+}
+
+const breaker = createCircuitBreaker(incCout, 3, 1000);
+
+// { message: undefined, isAvailable: true, result: 1 }
+console.log(breaker());
+
+// { message: undefined, isAvailable: true, result: 2 }
+console.log(breaker());
+
+// { message: 'error', isAvailable: true, result: undefined }
+console.log(breaker());
+
+// { message: 'error', isAvailable: true, result: undefined }
+console.log(breaker());
+
+// { message: 'error', isAvailable: false, result: undefined }
+console.log(breaker());
+
+// { message: 'service unavailable', isAvailable: false, result: undefined }
+console.log(breaker());
+
+// { message: 'service unavailable', isAvailable: false, result: undefined }
+console.log(breaker());
+
+// { message: 'service unavailable', isAvailable: false, result: undefined }
+console.log(breaker());
+
+setTimeout(() => {
+	// { message: undefined, isAvailable: true, result: 6 }
+	console.log(breaker());
+}, 1200);
+```
+
+</section>
+
+## Further Reading
+
+I strongly encourage you to explore and tackle additional questions in my [Closure Questions for Frontend Interviews](/blog/closure-questions-for-frontend-interviews/ 'Find more question on closures in the closure questions for frontend Interviews blog series') blog series.
+
+By doing so, you can enhance your understanding and proficiency with closures, preparing you to excel in your upcoming frontend interviews.
+
+**_Wishing you best. Happy Interviewing_** 🫡.
