@@ -1,0 +1,69 @@
+---
+seoMetaData:
+  title: 'Implement a resumable interval function'
+  description: 'Implement a resumable interval function by using Javascript closures.'
+  ogImage: '/open-graph/blogs/implement-a-resumable-interval-function.webp'
+  ogImageAlt: 'Implement a resumable interval function by using Javascript closures.'
+title: 'Implement a resumable interval function'
+publishedDate: 2024-04-03
+blogMeta:
+  type: 'series-part'
+  seriesParentSlug: 'closure-questions-for-frontend-interviews'
+---
+
+**Currying** is a technique using which we can convert function that takes multiple arguments into a sequence of functions that take a single argument. It is a common technique used in functional programming languages.
+
+We are suppose to implement a higher order **curry** function that takes a function as argument and returns function or result depending on whether the arguments passed satify the original function parameters.
+
+{/* ====== Basic Implemenation ====== */}
+
+<section>
+<SubHeading>Variation: Fixed Parameters</SubHeading>
+## 1. Basic implementation
+
+We consider the same when the original function which needs to be curried takes only fixed number of arguments.
+
+```js title="./src/curry.js"
+function curry(fn) {
+	// we get the roiginal function parameter length
+	const ogFnParametersLength = fn.length;
+
+	function curryFnImpl(...args) {
+		/**
+		 * if arguments passed exceeds the parameters length we invoke the function
+		 * and return the result
+		 * */
+		if (args.length >= ogFnParametersLength) {
+			return fn.call(this, ...args);
+		}
+
+		/**
+		 * else we return a new function to be innvoked and
+		 * bind it with existing args available already
+		 * */
+		return curryFnImpl.bind(this, ...args);
+	}
+
+	return curryFnImpl;
+}
+
+function sumThreeNumber(a, b, c) {
+	return a + b + c;
+}
+
+const curriedSum = curry(sumThreeNumber);
+
+console.log(curriedSum(1)(2)(3)); // yields 6
+console.log(curriedSum(1)(2, 3)); // yields 6
+console.log(curriedSum(1, 2, 3)); // yields 6
+```
+
+</section>
+
+## Further Reading
+
+I strongly encourage you to explore and tackle additional questions in my [Closure Questions for Frontend Interviews](/blog/closure-questions-for-frontend-interviews/ 'Find more question on closures in the closure questions for frontend Interviews blog series') blog series.
+
+By doing so, you can enhance your understanding and proficiency with closures, preparing you to excel in your upcoming frontend interviews.
+
+**_Wishing you best. Happy Interviewing_** 🫡.
