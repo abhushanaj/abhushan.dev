@@ -28,7 +28,7 @@ function removeCycle(inputObj) {
 		if (Object.hasOwn(inputObj, key)) {
 			const value = inputObj[key];
 
-			if (typeof value === 'object') {
+			if (typeof value === 'object' && value != null) {
 				if (visited.has(value)) {
 					delete inputObj[key];
 				}
@@ -42,7 +42,8 @@ function removeCycle(inputObj) {
 // Usage
 const obj = {
 	a: 1,
-	b: 2
+	b: 2,
+	d: null
 };
 
 // create a cyclic reference
