@@ -100,7 +100,7 @@ function getSquashedKey(parentKey, currentKey) {
 
 ## 2. With depth implementation
 
-In above example, we squashed all keys for any depth of the object or array. In this case, we should only squash keys unil a certain depth of the object.
+In above example, we squashed all keys for any depth of the object or array. In this case, we should only squash keys until a certain depth of the object.
 
 As most of the implementation remains exactly same, I will highlight only the newer additions made on the utility.
 
@@ -166,6 +166,63 @@ const output = squashObjectKeys(input, 2);
     "h": {
         "i": "Hola!"
     }
+}
+ */
+console.log(output);
+```
+
+</section>
+
+{/* ========== Variation : With emmpty keys ========== */}
+
+<section>
+<SubHeading>Variation: Empty Keys</SubHeading>
+
+## 3. With empty keys implementation
+
+Since object keys are strings, there can be cases where some keys maybe be passed as empty spaces. In such cases, we simply need to ignore the key, instead of generating squashed keys with empty spaces in between like <InlineCode code="const key='a.b.c.''.d'"/>
+
+For this implementation we don't really need to anything within the <InlineCode code="squashObjectKeys"/> function, we can simply alter the <InlineCode code="getSquashedKey"/> utility created as such:
+
+```js title="./src/utils.js" ins={6-8}
+function getSquashedKey(parentKey, currentKey) {
+	if (Object.is(parentKey, null)) {
+		return currentKey;
+	}
+
+	if (!currentKey || !currentKey.trim().length) {
+		return parentKey;
+	}
+
+	return `${parentKey}.${currentKey}`;
+}
+
+// Output changes
+// Usage
+const input = {
+	a: 1,
+	b: 2,
+	c: {
+		d: 12,
+		'': {
+			f: {
+				'': {
+					h: 16
+				}
+			}
+		}
+	}
+};
+const output = squashObjectKeys(input);
+
+/**
+ * Yields:
+ * {
+    "a": 1,
+    "b": 2,
+    "c.d": 12,
+    "c.f.h": 16
+  }
 }
  */
 console.log(output);
