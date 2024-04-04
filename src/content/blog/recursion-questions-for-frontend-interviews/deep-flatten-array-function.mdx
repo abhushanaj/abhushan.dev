@@ -73,7 +73,9 @@ console.log(output);
 
 In the previous case, we simply flattened the array to for any level of nesting. This variation will have a depth field upto which the flattening needs to be performed.
 
-```js title="./src/deepFlattenArray.js"
+As most of the implementation remains exactly same, I will highlight only the newer changes made.
+
+```js title="./src/deepFlattenArray.js" mark="depth" ins={7,8, 15}
 function deepFlattenArray(arr, depth = 1) {
 	const result = [];
 
@@ -122,7 +124,14 @@ const output = deepFlattenArray(inputArr, 1);
 console.log(output);
 ```
 
-<br />
+</section>
+
+{/* ======== Variation: As polyfill ====== */}
+
+<section>
+<SubHeading>Variation: As Polyfill</SubHeading>
+
+## 3. As polyfill implementation
 
 As <InlineCode code="Array.prototype.flat()"/> is already present to be used on arrays, in an interview setting one might also expect to implement a **polyfill** for this. The solution to that is also staright forward and only requires an understanding of <InlineCode code="this"/> keyword and <InlineCode code="prototype"/> property on constructor functions.
 
