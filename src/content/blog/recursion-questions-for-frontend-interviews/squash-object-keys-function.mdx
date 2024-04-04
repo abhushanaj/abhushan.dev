@@ -1,0 +1,102 @@
+---
+seoMetaData:
+  title: 'Implement a squashObjectKeys function'
+  description: 'Implement a squashObjectKeys function using recursion'
+  ogImage: '/open-graph/blogs/implement-a-deep-flatten-array-function.webp'
+  ogImageAlt: 'Implement a squashObjectKeys function using recursion'
+title: 'Implement a squashObjectKeys function'
+publishedDate: 2024-04-04
+blogMeta:
+  type: 'series-part'
+  seriesParentSlug: 'recursion-questions-for-frontend-interviews'
+---
+
+**Squashing keys** refers to the process of transforming a nested objects into a single-level object by flattening out the keys of the object.
+
+{/* ====== Basic Implementation ======== */}
+
+<section>
+## 1. Basic implementation
+
+Squash keys for an object and use _._ as seperator. For array values use index as keys.
+
+```js title="./src/squashObjectKeys.js"
+import getSquashedKey from './src/utils.js';
+
+function squashObjectKeys(input) {
+	const resultObj = {};
+
+	function squashObjectKeys(inputObj, parentKey) {
+		for (const key in inputObj) {
+			// only perform operation for non inherited keys
+			if (Object.hasOwn(inputObj, key)) {
+				const value = inputObj[key];
+
+				// utility get new key which is squashed
+				const newKey = getSquashedKey(parentKey, key);
+
+				if (typeof value !== 'object') {
+					resultObj[newKey] = value;
+				} else {
+					squashObjectKeys(value, newKey);
+				}
+			}
+		}
+	}
+
+	squashObjectKeys(input, null);
+
+	return resultObj;
+}
+
+// Usage
+const input = {
+	a: 1,
+	b: 2,
+	c: {
+		d: 12,
+		e: {
+			f: 'Hello World',
+			g: [12, 14]
+		}
+	}
+};
+const output = squashObjectKeys(input);
+
+/**
+ * Yields:
+ * {
+    "a": 1,
+    "b": 2,
+    "c.d": 12,
+    "c.e.f": "Hello World",
+    "c.e.g.0": 12,
+    "c.e.g.1": 14
+  }
+ */
+console.log(output);
+```
+
+<br />
+The utility to generate new keys which are squashed can be implemented as follows:
+
+```js title="./src/utils.js"
+function getSquashedKey(parentKey, currentKey) {
+	// when null, return the same key (for root keys )
+	if (Object.is(parentKey, null)) {
+		return currentKey;
+	}
+
+	return `${parentKey}.${currentKey}`;
+}
+```
+
+</section>
+
+## Further Reading
+
+I strongly encourage you to explore and tackle additional questions in my [Recursion Questions for Frontend Interviews](/blog/recursion-questions-for-frontend-interviews/ 'Find more question on recursion in the recursion questions for frontend interviews blog series') blog series.
+
+By doing so, you can enhance your understanding and proficiency with recursion, preparing you to excel in your upcoming frontend interviews.
+
+**_Wishing you best. Happy Interviewing_** 🫡.
