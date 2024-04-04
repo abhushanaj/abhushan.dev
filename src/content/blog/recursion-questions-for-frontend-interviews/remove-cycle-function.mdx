@@ -1,0 +1,71 @@
+---
+seoMetaData:
+  title: 'Implement a removeCycle function'
+  description: 'Implement a removeCycle function using recursion'
+  ogImage: '/open-graph/blogs/implement-a-squash-object-keys-function.webp'
+  ogImageAlt: 'Implement a removeCycle function using recursion'
+title: 'Implement a removeCycle function'
+publishedDate: 2024-04-04
+blogMeta:
+  type: 'series-part'
+  seriesParentSlug: 'recursion-questions-for-frontend-interviews'
+---
+
+{/* ====== Variation : Remove cycle ====== */}
+In JavaScript, a **cycle in an object** occurs when there are circular references within the object's structure. Circular references mean that an object references itself directly or indirectly through a chain of references.
+
+<section>
+## 1. Basic implementaion
+
+Implement a removeCycle function which can take an object with circular references and delete them. **It can mutate the original object**.
+
+```js title="./src/removeCycle.js"
+function removeCycle(inputObj) {
+	const visited = new WeakSet([inputObj]);
+
+	for (const key in inputObj) {
+		// only for non inhertied keys
+		if (Object.hasOwn(inputObj, key)) {
+			const value = inputObj[key];
+
+			if (typeof value === 'object') {
+				if (visited.has(value)) {
+					delete inputObj[key];
+				}
+
+				visited.add(value);
+			}
+		}
+	}
+}
+
+// Usage
+const obj = {
+	a: 1,
+	b: 2
+};
+
+// create a cyclic reference
+obj.c = obj;
+
+removeCycle(obj);
+
+/**
+ * Yields:
+ * {
+    "a": 1,
+    "b": 2
+  }
+ */
+console.log(obj);
+```
+
+</section>
+
+## Further Reading
+
+I strongly encourage you to explore and tackle additional questions in my [Recursion Questions for Frontend Interviews](/blog/recursion-questions-for-frontend-interviews/ 'Find more question on recursion in the recursion questions for frontend interviews blog series') blog series.
+
+By doing so, you can enhance your understanding and proficiency with recursion, preparing you to excel in your upcoming frontend interviews.
+
+**_Wishing you best. Happy Interviewing_** 🫡.
