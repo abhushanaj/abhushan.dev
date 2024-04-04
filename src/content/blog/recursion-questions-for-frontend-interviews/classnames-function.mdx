@@ -89,6 +89,108 @@ console.log(
 
 </section>
 
+{/* ====== Variation: Turnoff classes ====== */}
+
+<section>
+<SubHeading>Variation: Turn off classes</SubHeading>
+
+## 2. Turn off class implementation
+
+In the above implementation, we only considered cases to add classes (as object keys) whemever they had a truthy value. In this implementation we can remove classes from the final result when same class with a falsy value appears on the object.
+
+An example to demonstrate the idea:
+
+```js title="./src/utils.js"
+import classNames from './src/classNames.js';
+
+const output = classNames('foo', 'bar', { foo: false });
+
+console.log('output', output); // yields "bar" and not "foo bar"
+```
+
+<br />
+
+Most of the implementation for this variation remains exactly same as above, so I will highlight only the new changes which needs to be made to accomodate the new case.
+
+```js title="./src/classNames.js" ins={41-44}
+function classNames(...classes) {
+	const result = new Set();
+
+	function classNamesImpl(...classesArray) {
+		classesArray.forEach((cls) => {
+			// if not truthy we don't want to include them
+			if (!cls) {
+				return;
+			}
+
+			// for string and numbers
+			if (typeof cls === 'string' || typeof cls === 'number') {
+				result.add(cls.toString());
+				return;
+			}
+
+			// for arrays
+			if (Array.isArray(cls)) {
+				cls.forEach((classValue) => {
+					classNamesImpl(classValue);
+				});
+				return;
+			}
+
+			// objects
+			for (const key in cls) {
+				// to avoid iterating over inherited keys
+				if (Object.hasOwn(cls, key)) {
+					const value = cls[key];
+					// add to result when truthy
+					if (value) {
+						// if truthy value and not nested we simply want the key
+						if (typeof value !== 'object') {
+							classNamesImpl(key);
+						} else {
+							// recursively get the keys from the nested object
+							classNamesImpl(value);
+						}
+					}
+					// remove if already consider when falsy
+					else {
+						if (result.has(key)) {
+							result.delete(key);
+						}
+					}
+				}
+			}
+		});
+	}
+
+	classNamesImpl(...classes);
+
+	return Array.from(new Set(result)).join(' ');
+}
+
+// Usage
+
+// yields : "red yellow 1"
+console.log(classNames('red', 'yellow', 'yellow', null, false, 1, undefined));
+
+// yields : "red purple magenta"
+console.log(
+	classNames(['red', 'yellow'], {
+		green: false,
+		colors: {
+			purple: true,
+			voilet: {
+				magenta: true,
+				// should remove yellow
+				yellow: false
+			}
+		}
+	})
+);
+```
+
+</section>
+
 ## Further Reading
 
 I strongly encourage you to explore and tackle additional questions in my [Recursion Questions for Frontend Interviews](/blog/recursion-questions-for-frontend-interviews/ 'Find more question on recursion in the recursion questions for frontend interviews blog series') blog series.
