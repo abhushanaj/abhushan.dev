@@ -1,0 +1,125 @@
+---
+seoMetaData:
+  title: 'Implement a deepSealObject function'
+  description: 'Implement a deepSealObject function using recursion'
+  ogImage: '/open-graph/blogs/implement-a-squash-object-keys-function.webp'
+  ogImageAlt: 'Implement a deepSealObject function using recursion'
+title: 'Implement a deepSealObject function'
+publishedDate: 2024-04-04
+blogMeta:
+  type: 'series-part'
+  seriesParentSlug: 'recursion-questions-for-frontend-interviews'
+---
+
+<InlineCode code="Object.seal()" /> static method on the Object constructor when used on objects "seal" the object. A sealed
+object has a fixed set of properties: new properties cannot be added, existing properties cannot be removed, their enumerability
+and configurability cannot be changed, and its prototype cannot be re-assigned.{' '}
+
+You can learn more about seal on [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/seal 'Visit MDN to learn more about Object.seal()').
+
+However, **_sealing only works on non-nested objects._**
+
+{/* ===== Variation: Deep Seal ==== */}
+
+<section>
+<SubHeading>Variation: Deep Seal</SubHeading>
+
+## 1. Basic implementation
+
+We have to implement a <InlineCode code="deepSealObject" /> function which seals an object on every nested level.
+
+We can verify whether an object is sealed or not using the <InlineCode code="Object.isSealed()" /> static method on object constructor.
+
+```js title="./src/deepSealObject.js"
+function deepSealObject(input) {
+	const result = {};
+
+	for (const key in input) {
+		// only for non inherited keys
+		if (Object.hasOwn(input, key)) {
+			const value = input[key];
+
+			if (typeof value !== 'object') {
+				result[key] = Object.seal(value);
+			} else {
+				// recursively keep sealing each level
+				result[key] = deepSealObject(value);
+			}
+		}
+	}
+
+	// finally seal the root
+	return Object.seal(result);
+}
+
+// Usage
+const input = {
+	a: 1,
+	b: {
+		c: 2
+	}
+};
+
+console.log(Object.isSealed(input)); // yields false
+
+const output = deepSealObject(input);
+
+console.log(Object.isSealed(input)); // yields true
+
+delete output.b.c; // no effect
+
+console.log(output);
+```
+
+</section>
+
+{/* ====== Variation: Deep freeze ===== */}
+
+<section>
+
+<SubHeading>Variation: Deep Freeze</SubHeading>
+
+## 2. Deep freeze implementation
+
+We also have a <InlineCode code="Object.freeze()"/> static method available which is very similar to <InlineCode code="Object.seal()"/>. For an interview setting, one might be asked to implement <InlineCode code="deepFreezeObject"/> as well.
+
+The implementation remains exactly same except, we use the **Object.freeze()** method instead of **Object.seal()**.
+
+```js title="./src/deepFreezeObject.js" ins={10,13, 19}
+function deepFreezeObject(input) {
+	const result = {};
+
+	for (const key in input) {
+		// only for non inherited keys
+		if (Object.hasOwn(input, key)) {
+			const value = input[key];
+
+			if (typeof value !== 'object') {
+				result[key] = Object.freeze(value);
+			} else {
+				// recursively keep sealing each level
+				result[key] = deepFreezeObject(value);
+			}
+		}
+	}
+
+	// finally seal the root
+	return Object.freeze(result);
+}
+```
+
+</section>
+
+<br />
+
+Whether to **deepFreeze** or **deepSeal** an object really depends on what type of restrictions you want imposed on the object.
+It's better to understand the difference between them, so as to make the best possible decision when it comes to preventing/restricting
+modifications of an object.
+
+## Further Reading
+
+I strongly encourage you to explore and tackle additional questions in my [Recursion Questions for Frontend Interviews](/blog/recursion-questions-for-frontend-interviews/ 'Find more question on recursion in the recursion questions for frontend interviews blog series') blog series.
+
+By doing so, you can enhance your understanding and proficiency with recursion, preparing you to excel in your upcoming frontend interviews.
+
+**_Wishing you best. Happy Interviewing_** 🫡.
