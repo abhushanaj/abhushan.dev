@@ -93,6 +93,86 @@ function getSquashedKey(parentKey, currentKey) {
 
 </section>
 
+{/* ====== Variation : With depth ======= */}
+
+<section>
+<SubHeading>Variation: With depth</SubHeading>
+
+## 2. With depth implementation
+
+In above example, we squashed all keys for any depth of the object or array. In this case, we should only squash keys unil a certain depth of the object.
+
+As most of the implementation remains exactly same, I will highlight only the newer additions made on the utility.
+
+```js title="./src/squashObjectKeys.js" ins={16-19} mark="depth"
+function squashObjectKeys(input, depth) {
+	const resultObj = {};
+
+	function squashObjectKeys(inputObj, parentKey, depth) {
+		for (const key in inputObj) {
+			// only perform operation for non inherited keys
+			if (Object.hasOwn(inputObj, key)) {
+				const value = inputObj[key];
+
+				// get new key which is squashed
+				const newKey = getSquashedKey(parentKey, key);
+
+				if (typeof value !== 'object') {
+					resultObj[newKey] = value;
+				} else {
+					if (depth > 0) {
+						squashObjectKeys(value, newKey, depth - 1);
+					} else {
+						resultObj[key] = value;
+					}
+				}
+			}
+		}
+	}
+
+	squashObjectKeys(input, null, depth);
+
+	return resultObj;
+}
+
+// Usage
+const input = {
+	a: 1,
+	b: 2,
+	c: {
+		// depth 1
+		d: 12,
+		e: {
+			// depth 2
+			f: 'Hello World',
+			g: [12, 14], // depth 3
+			h: {
+				// depth 3
+				i: 'Hola!'
+			}
+		}
+	}
+};
+const output = squashObjectKeys(input, 2);
+
+/**
+ * Yields:
+ * {
+    "a": 1,
+    "b": 2,
+    "c.d": 12,
+    "c.e.f": "Hello World",
+    "g": [12,14],
+    "h": {
+        "i": "Hola!"
+    }
+}
+ */
+console.log(output);
+```
+
+</section>
+
 ## Further Reading
 
 I strongly encourage you to explore and tackle additional questions in my [Recursion Questions for Frontend Interviews](/blog/recursion-questions-for-frontend-interviews/ 'Find more question on recursion in the recursion questions for frontend interviews blog series') blog series.
