@@ -16,7 +16,56 @@ blogMeta:
 ## 1. Basic implementation
 
 ```js title="./src/map.js"
+Array.prototype.myMap = function (predicate) {
+	// "this" is the arr on which map method is called (left side of .(dot))
+	const arr = this;
 
+	const result = [];
+
+	if (!arr.length) {
+		return result;
+	}
+
+	for (let i = 0; i < arr.length; i++) {
+		const item = arr[i];
+		// check if the item is not empty (for sparse arrays)
+		if (i in arr) {
+			const predicateValue = predicate(item, i, arr);
+			result.push(predicateValue);
+		} else {
+			result.push(item);
+		}
+	}
+
+	return result;
+};
+
+// Usage
+function callback(item, index, arr) {
+	return item * 2;
+}
+const inputArr = [1, 2, 3, , 5];
+
+const originalMap = inputArr.map(callback);
+const customMap = inputArr.myMap(callback);
+
+console.log(originalMap); // yields [2,4,6,empty,10]
+console.log(customMap); // yields [2,4,6,empty,10]
+
+console.log(JSON.stringify(originalMap) === JSON.stringify(customMap)); // yields true
+```
+
+<br />
+
+In above implementation I have not patched the original map method on purpose so I can showcase the comparision of results
+from original and our implementation. In the interview setting feel free to mention that to the interviewer.
+
+```js title="./src/map.js"
+if (!Array.prototype.map) {
+	Array.prototype.map = function () {
+		// the implemetation provided above
+	};
+}
 ```
 
 </section>
