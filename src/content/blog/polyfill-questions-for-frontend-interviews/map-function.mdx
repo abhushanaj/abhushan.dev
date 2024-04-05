@@ -55,9 +55,63 @@ console.log(customMap); // yields [2,4,6,empty,10]
 console.log(JSON.stringify(originalMap) === JSON.stringify(customMap)); // yields true
 ```
 
+</section>
+
+{/* ============= Variation: with thisArg  ========= */}
+
+<section>
+<SubHeading>Variation: thisArg argument</SubHeading>
+## 2. With thisArg  implementation
+
+There is also a second argument which we can pass to the map method which is the value of the "this" for the predicate function, when it is invoked.
+
+The implemetation remains exactly same, so I am highlighting only the new additions.
+
+```js title="./src/map.js" ins={15,27,31,32} mark="thisArg"
+Array.prototype.myMap = function (predicate, thisArg) {
+	// "this" is the arr on which map method is called (left side of .(dot))
+	const arr = this;
+
+	const result = [];
+
+	if (!arr.length) {
+		return result;
+	}
+
+	for (let i = 0; i < arr.length; i++) {
+		const item = arr[i];
+		// check if the item is not empty (for sparse arrays)
+		if (i in arr) {
+			const predicateValue = predicate.call(thisArg, item, i, arr);
+			result.push(predicateValue);
+		} else {
+			result.push(item);
+		}
+	}
+
+	return result;
+};
+
+// Usage
+function callback(item, index, arr) {
+	return item * 2 + this.offset;
+}
+const inputArr = [1, 2, 3, , 5];
+
+const originalMap = inputArr.map(callback, { offset: 2 });
+const customMap = inputArr.myMap(callback, { offset: 2 });
+
+console.log(originalMap); // yields [4,6,8,empty,12]
+console.log(customMap); // yields [4,6,8,empty,12]
+
+console.log(JSON.stringify(originalMap) === JSON.stringify(customMap)); // yields true
+```
+
+</section>
+
 <br />
 
-In above implementation I have not patched the original map method on purpose so I can showcase the comparision of results
+In both above implementationsW I have not patched the original map method on purpose so I can showcase the comparision of results
 from original and our implementation. In the interview setting feel free to mention that to the interviewer.
 
 ```js title="./src/map.js"
@@ -67,8 +121,6 @@ if (!Array.prototype.map) {
 	};
 }
 ```
-
-</section>
 
 ## Further Reading
 
