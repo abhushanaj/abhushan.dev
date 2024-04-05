@@ -1,0 +1,59 @@
+---
+seoMetaData:
+  title: '({{year}} Updated)! Polyfill Questions for Frontend/JavaScript Interviews'
+  description: 'Collection of JavaScript polyfill based questions with solutions from real Frontend and JavaScript interviews in {{year}}'
+  ogImage: '/open-graph/blogs/recursion-questions-for-frontend-interviews.webp'
+  ogImageAlt: 'Master polyfill based javascript questions for frontend Interviews in {{year}}'
+title: 'Polyfill Questions for Frontend Interviews'
+publishedDate: 2024-04-05
+inProgress: true
+blogMeta:
+  type: series
+  relatedBlogs:
+    - 'recursion-questions-for-frontend-interviews/get-elements-by-function'
+---
+
+Welcome to my blog series on JavaScript polyfills, tailored for Frontend/JavaScript interviews!
+
+In this series, we'll explore the idea of Polyfills in software development, focusing specifically on questions related to JavaScript and Frontend interviews.
+
+I'll delve into a range of interview questions I've encountered firsthand concerning polyfills. Each question will be accompanied by detailed solutions and possible variations I have been asked to ensure a comprehensive understanding of the topic.
+
+So, let's embark on this journey of unraveling polyfills together!
+
+## Tips on solving polyfill based questions
+
+From my personal experience, solving a polyfill based question is not tough at all, as long we have experience with the API already.
+
+In cases when you are asked to create a polyfill for a API which your do not know about, **it's okay to ask the interview more about the API and what it accomplishes**.
+
+It's likely that you might not cover all cases (including edge cases for them), but that's totally acceptable as the judgmement for polyfill questions usually is based on whether the understanding of topics like **this keyword**, **prototypal inheritance** are crystal clear or not.
+
+Regardless of your situation, I do recommend to focus on the following pointers:
+
+1. Understanding what [polyfills](<https://en.wikipedia.org/wiki/Polyfill_(programming)> 'Visist Wikipedia Polyfill') are, and the basic stratergy to creating a polyfill.
+2. Understanding where to write the polyfill. If it's a shared method, it's likely to be part of the prototype chain or if's a browser based API which is globally available, we pollute the global scope and so on.
+3. Understanding arguments and return value for polyfills. No matter what you are polyfilling, you must have an idea on what data type you will be operating upon and what type of return value is expected.
+4. Understanding on whether you are suppose to mutate the original argument in place or return a new copy. Some array methods mutates data in place while some returns a new updated copy. When in doubt simply ask the interviewer for verification.
+5. Understanding of sparse arrays when writing polyfills for array methods.
+6. Understanding of promises and it's settlement when writing polyfills for promise methods.
+
+## Questions asked in interviews
+
+In general, there's not much to think about here. Most polyfill questions revolve around arrays, promises and strings.
+
+Only few polyfills will be based on globally available API's on browser or DOM API's. In many such cases, even a small enhancement might be asked to add to this API's.
+
+Sometimes, recreating popular [lodash](https://lodash.com/ 'Visit Lodash Docs: A modern JavaScript utility library delivering modularity, performance & extras.') utility functions are put into the same category as polyfills.
+
+In general, solving these questions along with their variations should be sufficient starting point to excel your polyfill based question for your next frontend/javascript interview:
+
+**Note**: You need a working knowledge of **this keyword**, **data types in JavaScript** , **prototypal inheritance** for these questions.
+
+1. [Implement a getElementsBy function](/blog/recursion-questions-for-frontend-interviews/get-elements-by-function/ 'Implement a getElementsBy function using recursion')
+
+## Personal tips for interview
+
+As polyfill questions are usually based on popular methods used in day to day practise, or newer methods added to the **ECMA specification**, they usually are repetitive and solving a fixed set of questions mentioned above should be more than enough for most interviews or atleast server as a very good starting point.
+
+**_Wishing you best. Happy Interviewing_** 🫡.
