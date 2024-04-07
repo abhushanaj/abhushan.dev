@@ -1,0 +1,281 @@
+---
+seoMetaData:
+  title: 'Implement a deepMap function'
+  description: 'Implement a deepMap function using recursion'
+  ogImage: '/open-graph/blogs/implement-a-deep-map-function.webp'
+  ogImageAlt: 'Implement a deepMap function using recursion'
+title: 'Implement a deepMap function'
+publishedDate: 2024-04-07
+blogMeta:
+  type: 'series-part'
+  seriesParentSlug: 'recursion-questions-for-frontend-interviews'
+---
+
+We need to create a <InlineCode code="deepMap"/> utility which can return a new result by invoking a callback function against each value of the input recursively. Only JSON serializable values will be passed as input.
+
+Basically, we need to achieve the following:
+
+1. If the value is any primitive type, simple invoke the callback with the value.
+1. If the value is any non-primitive type, recursively go to all depths and invoke the callback to get the result.
+
+We should not mutate the original input.
+
+{/* ======= Basic implementation ======== */}
+
+<section>
+<SubHeading>Variation: Basic implementation</SubHeading>
+
+## 1. Basic implementation
+
+```js
+function deepMap(input, callback) {
+	if (typeof input !== 'object') {
+		return callback(input);
+	}
+
+	if (Array.isArray(input)) {
+		const outputArr = [];
+		input.forEach((item) => {
+			outputArr.push(deepMap(item, callback));
+		});
+
+		return outputArr;
+	}
+
+	const resultObj = Object.create({});
+	for (const key in input) {
+		if (Object.hasOwn(input, key)) {
+			const value = input[key];
+
+			resultObj[key] = deepMap(value, callback);
+		}
+	}
+
+	return resultObj;
+}
+
+const double = (x) => x * 2;
+
+const output = deepMap(
+	{
+		foo: 1,
+		bar: [2, 3, 4],
+		qux: { a: 5, b: 6 }
+	},
+	double
+);
+
+/**
+ * Yields: {
+    "foo": 2,
+    "bar": [
+        4,
+        6,
+        8
+    ],
+    "qux": {
+        "a": 10,
+        "b": 12
+    }
+	}
+ */
+console.log(output);
+```
+
+</section>
+
+{/* ======= Variation: "this" keyword implementation ======== */}
+
+<section>
+<SubHeading>Variation: with this keyword</SubHeading>
+
+## 2. this keyword implementation
+
+In above implementation we simply invoked the callback without considering the "this" keyword for the callback. In this version, every call of the callback but have reference of "this" keyword bound to the original input.
+
+Most of the implementation here remains same, expect how we invoke the callback function. For simpler access to the original input argument, I have also created a inner helper recursion function.
+
+```js title="./src/deepMap.js" ins={5, 33-35}
+function deepMap(input, callback) {
+	function deepMapImpl(arg) {
+		if (typeof arg !== 'object') {
+			// invoke the callback by binding "this" to the original input value
+			return callback.call(input, arg);
+		}
+
+		if (Array.isArray(arg)) {
+			const outputArr = [];
+			arg.forEach((item) => {
+				outputArr.push(deepMapImpl(item));
+			});
+
+			return outputArr;
+		}
+
+		const resultObj = Object.create({});
+		for (const key in arg) {
+			if (Object.hasOwn(arg, key)) {
+				const value = arg[key];
+
+				resultObj[key] = deepMapImpl(value);
+			}
+		}
+
+		return resultObj;
+	}
+
+	return deepMapImpl(input);
+}
+
+// since arrow function will have lexical "this", I have change the callback to normal function
+function double(x) {
+	return x * 2 + this.foo;
+}
+const output = deepMap(
+	{
+		foo: 1,
+		bar: [2, 3, 4],
+		qux: { a: 5, b: 6 }
+	},
+	double
+);
+
+/**
+ * Yields: {
+    "foo": 3,
+    "bar": [
+        5,
+        7,
+        9
+    ],
+    "qux": {
+        "a": 11,
+        "b": 13
+    }
+	}
+ */
+console.log(output);
+```
+
+</section>
+
+{/* ========= Variation of deep pipe ======== */}
+
+<section>
+<SubHeading>Variation: Function values to pipe</SubHeading>
+
+## 3. Pipe implementation
+
+In this implementation, we have have function values present at any nested level of the object. Each function values must be evaluated and returned on the result.
+
+This technique requires working knowledge of JavaScript closures, so I recommend my [Closure Questions for Frontend Interview](/blog/closure-questions-for-frontend-interviews/ 'Practice more questions from Closures for Frontend Interviews Series') blog series to get practice with some common cloure questions.
+
+We'll update the above implement of "this" keyword variation, to return a function now instead of result. This returned function then can be further called by a set of arguments which we will pipe through on our object to get the final state.
+
+I'm marking the new changes for easier access;
+
+```js title="./src/deepMap.js" ins={23-24, 38}
+function deepMap(input, callback) {
+	function deepMapWithPipeImpl(...toPipeArgs) {
+		// same implementation as above, with only change marked when we iterate a function
+		function deepMapImpl(arg) {
+			if (typeof arg !== 'object') {
+				return callback.call(input, arg);
+			}
+
+			if (Array.isArray(arg)) {
+				const outputArr = [];
+				arg.forEach((item) => {
+					outputArr.push(deepMapImpl(item));
+				});
+
+				return outputArr;
+			}
+
+			const resultObj = Object.create({});
+			for (const key in arg) {
+				if (Object.hasOwn(arg, key)) {
+					const value = arg[key];
+
+					if (typeof value === 'function') {
+						resultObj[key] = value.call(input, ...toPipeArgs);
+					} else {
+						resultObj[key] = deepMapImpl(value);
+					}
+				}
+			}
+
+			return resultObj;
+		}
+
+		return deepMapImpl(input);
+	}
+
+	// we return a function first which can take a set of argument to pipe on the object with function as values
+	return deepMapWithPipeImpl;
+}
+
+function double(x) {
+	return x * 2 + this.foo;
+}
+
+// pipeValues is a function
+const pipeValues = deepMap(
+	{
+		foo: 1,
+		bar: [2, 3, 4],
+		qux: { a: 5, b: 6 },
+		pipes: {
+			a: {
+				b(arg1, arg2, arg3) {
+					return arg1 + arg2 + arg3 + this.foo;
+				}
+			},
+			c(arg1, arg2, arg3) {
+				return arg1 - arg2 - arg3;
+			}
+		}
+	},
+	double
+);
+
+/**
+ * we invoke the function with 1,2,3 as arguments.
+ * which will be used in object evaluation thanks to closures
+ */
+
+const output = pipeValues(1, 2, 3);
+
+/**
+ * Yields: {
+    "foo": 3,
+    "bar": [
+        5,
+        7,
+        9
+    ],
+    "qux": {
+        "a": 11,
+        "b": 13
+    },
+    "pipes": {
+        "a": {
+            "b": 7
+        },
+        "c": -4
+    }
+	}
+ */
+
+console.log(output);
+```
+
+</section>
+
+## Further Reading
+
+I strongly encourage you to explore and tackle additional questions in my [Recursion Questions for Frontend Interviews](/blog/recursion-questions-for-frontend-interviews/ 'Find more question on recursion in the recursion questions for frontend interviews blog series') blog series.
+
+By doing so, you can enhance your understanding and proficiency with recursion, preparing you to excel in your upcoming frontend interviews.
+
+**_Wishing you best. Happy Interviewing_** 🫡.
