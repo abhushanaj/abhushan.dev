@@ -84,6 +84,81 @@ console.log(output);
 
 </section>
 
+{/* ======= Basic implementation ======== */}
+
+<section>
+<SubHeading>Variation: with this keyword</SubHeading>
+
+## 2. this keyword implementation
+
+In above implementation we simply invoked the callback without considering the "this" keyword for the callback. In this version, every call of the callback but have reference of "this" keyword bound to the original input.
+
+Most of the implementation here remains same, expect how we invoke the callback function. For simpler access to the original input argument, I have also created a inner helper recursion function.
+
+```js title="./src/deepMap.js" ins={5, 33-35}
+function deepMap(input, callback) {
+	function deepMapImpl(arg) {
+		if (typeof arg !== 'object') {
+			// invoke the callback by binding "this" to the original input value
+			return callback.call(input, arg);
+		}
+
+		if (Array.isArray(arg)) {
+			const outputArr = [];
+			arg.forEach((item) => {
+				outputArr.push(deepMapImpl(item));
+			});
+
+			return outputArr;
+		}
+
+		const resultObj = Object.create({});
+		for (const key in arg) {
+			if (Object.hasOwn(arg, key)) {
+				const value = arg[key];
+
+				resultObj[key] = deepMapImpl(value);
+			}
+		}
+
+		return resultObj;
+	}
+
+	return deepMapImpl(input);
+}
+
+// since arrow function will have lexical "this", I have change the callback to normal function
+function double(x) {
+	return x * 2 + this.foo;
+}
+const output = deepMap(
+	{
+		foo: 1,
+		bar: [2, 3, 4],
+		qux: { a: 5, b: 6 }
+	},
+	double
+);
+
+/**
+ * Yields: {
+    "foo": 3,
+    "bar": [
+        5,
+        7,
+        9
+    ],
+    "qux": {
+        "a": 11,
+        "b": 13
+    }
+	}
+ */
+console.log(output);
+```
+
+</section>
+
 ## Further Reading
 
 I strongly encourage you to explore and tackle additional questions in my [Recursion Questions for Frontend Interviews](/blog/recursion-questions-for-frontend-interviews/ 'Find more question on recursion in the recursion questions for frontend interviews blog series') blog series.
