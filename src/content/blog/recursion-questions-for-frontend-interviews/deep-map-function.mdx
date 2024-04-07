@@ -84,7 +84,7 @@ console.log(output);
 
 </section>
 
-{/* ======= Basic implementation ======== */}
+{/* ======= Variation: "this" keyword implementation ======== */}
 
 <section>
 <SubHeading>Variation: with this keyword</SubHeading>
@@ -154,6 +154,119 @@ const output = deepMap(
     }
 	}
  */
+console.log(output);
+```
+
+</section>
+
+{/* ========= Variation of deep pipe ======== */}
+
+<section>
+<SubHeading>Variation: Function values to pipe</SubHeading>
+
+## 3. Pipe implementation
+
+In this implementation, we have have function values present at any nested level of the object. Each function values must be evaluated and returned on the result.
+
+This technique requires working knowledge of JavaScript closures, so I recommend my [Closure Questions for Frontend Interview](/blog/closure-questions-for-frontend-interviews/ 'Practice more questions from Closures for Frontend Interviews Series') blog series to get practice with some common cloure questions.
+
+We'll update the above implement of "this" keyword variation, to return a function now instead of result. This returned function then can be further called by a set of arguments which we will pipe through on our object to get the final state.
+
+I'm marking the new changes for easier access;
+
+```js title="./src/deepMap.js" ins={23-24, 38}
+function deepMap(input, callback) {
+	function deepMapWithPipeImpl(...toPipeArgs) {
+		// same implementation as above, with only change marked when we iterate a function
+		function deepMapImpl(arg) {
+			if (typeof arg !== 'object') {
+				return callback.call(input, arg);
+			}
+
+			if (Array.isArray(arg)) {
+				const outputArr = [];
+				arg.forEach((item) => {
+					outputArr.push(deepMapImpl(item));
+				});
+
+				return outputArr;
+			}
+
+			const resultObj = Object.create({});
+			for (const key in arg) {
+				if (Object.hasOwn(arg, key)) {
+					const value = arg[key];
+
+					if (typeof value === 'function') {
+						resultObj[key] = value.call(input, ...toPipeArgs);
+					} else {
+						resultObj[key] = deepMapImpl(value);
+					}
+				}
+			}
+
+			return resultObj;
+		}
+
+		return deepMapImpl(input);
+	}
+
+	// we return a function first which can take a set of argument to pipe on the object with function as values
+	return deepMapWithPipeImpl;
+}
+
+function double(x) {
+	return x * 2 + this.foo;
+}
+
+// pipeValues is a function
+const pipeValues = deepMap(
+	{
+		foo: 1,
+		bar: [2, 3, 4],
+		qux: { a: 5, b: 6 },
+		pipes: {
+			a: {
+				b(arg1, arg2, arg3) {
+					return arg1 + arg2 + arg3 + this.foo;
+				}
+			},
+			c(arg1, arg2, arg3) {
+				return arg1 - arg2 - arg3;
+			}
+		}
+	},
+	double
+);
+
+/**
+ * we invoke the function with 1,2,3 as arguments.
+ * which will be used in object evaluation thanks to closures
+ */
+
+const output = pipeValues(1, 2, 3);
+
+/**
+ * Yields: {
+    "foo": 3,
+    "bar": [
+        5,
+        7,
+        9
+    ],
+    "qux": {
+        "a": 11,
+        "b": 13
+    },
+    "pipes": {
+        "a": {
+            "b": 7
+        },
+        "c": -4
+    }
+	}
+ */
+
 console.log(output);
 ```
 
