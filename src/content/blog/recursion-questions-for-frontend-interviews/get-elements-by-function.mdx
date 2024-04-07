@@ -25,13 +25,13 @@ We'll consider the following HTML document for all the below problems for simpli
 	</head>
 
 	<body>
-		<div id="root">
+		<div id="root" class="root">
 			<span data-name="test-node" class="red yellow">1</span>
 			<span data-name="test-node" class="red">2</span>
 			<button id="btn">Click Me</button>
-			<div>
+			<div class="div1" id="div1">
 				<p><span class="red green">Hello</span>World</p>
-				<div>
+				<div class="div2" id="div2">
 					<b><span data-name="3" class="purple red 123">Bold text</span></b>
 				</div>
 			</div>
@@ -257,6 +257,67 @@ function transverseEl(element) {
  * ......
  * ..... after
  */
+```
+
+</section>
+
+{/* =============== Variation: getElementsByClassNameHierarchy ========= */}
+
+<section>
+
+<SubHeading>Variation: By class Name Hierarchy</SubHeading>
+## 4. By classNameHierarchy implementation
+
+In this implementation, we need to find elements which follow a given classname hierarchy on DOM, i.e, <InlineCode code="fruits>apple>ripe"/> Hierarchy means finding all elements will classname <InlineCode code="ripe"/> which are direct children of elements with classname <InlineCode code="apple"/> and so on..
+
+```js title="./src/getElementsByClassNameHierarchy"
+function getElementsByClassNameHierarchy(root, classHierarchy) {
+	const classNames = classHierarchy.split('>');
+
+	const result = [];
+
+	function transverse(el, index = 0) {
+		// current className which were are interested in
+		const currentClassName = classNames[index];
+
+		// does current el have that class
+		const elHasCurrentClassName = el.classList.contains(currentClassName);
+
+		// if it has it and it's also last className, then search is over
+		if (elHasCurrentClassName && index === classNames.length - 1) {
+			result.push(el);
+			return;
+		}
+
+		if (elHasCurrentClassName) {
+			// if it did have, we transverse child and look for second className
+			for (const childEl of el.children) {
+				transverse(childEl, index + 1);
+			}
+		} else {
+			// if it did not have it, we transverse child and restart the search
+			for (const childEl of el.children) {
+				transverse(childEl, 0);
+			}
+		}
+	}
+
+	// we start from root directly since we want to include root as well
+	transverse(root);
+
+	return result;
+}
+
+const root = document.getElementById('root');
+
+const result = getElementsByClassNameHierarchy(root, 'root>div1>div2');
+
+/**
+ * Yields: [div#div2.div2]
+ *
+ */
+
+console.log(result);
 ```
 
 </section>
