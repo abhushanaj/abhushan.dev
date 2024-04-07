@@ -1,0 +1,106 @@
+---
+seoMetaData:
+  title: 'Implement a deepEqual function'
+  description: 'Implement a deepEqual function using recursion'
+  ogImage: '/open-graph/blogs/implement-a-deep-equal-function.webp'
+  ogImageAlt: 'Implement a deepEqual function using recursion'
+title: 'Implement a deepEqual function'
+publishedDate: 2024-04-07
+blogMeta:
+  type: 'series-part'
+  seriesParentSlug: 'recursion-questions-for-frontend-interviews'
+---
+
+The <InlineCode code="Object.is()" /> static method determines whether two values are the same values or not in JavaScript.
+
+Same values in JavaScript can mean different things based on how they are compared. You can read about equality comparisons and sameness from this [MDN reference](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Equality_comparisons_and_sameness#same-value_equality_using_object.is 'Visit MDN for Equality comparisons and sameness').
+
+We are to implement a <InlineCode code="deepEqual" /> function which recursively checks if two values are same or not, i.e hold the same value. It can take any JSON-serializable values.
+
+{/* ===== Variation: Deep Seal ==== */}
+
+<section>
+
+## 1. Basic implementation
+
+```js title="./src/deepEqual.js"
+import isPojo from './src/utils.js';
+
+function deepEqual(inputA, inputB) {
+	const typeOfA = typeof inputA;
+	const typeOfB = typeof inputB;
+
+	// if type is not same, they can't be equal
+	if (typeOfA !== typeOfB) {
+		return false;
+	}
+
+	// if both are arrays
+	if (Array.isArray(inputA) && Array.isArray(inputB)) {
+		if (inputA.length !== inputB.length) {
+			return false;
+		}
+
+		return Array.prototype.every.call(inputA, (itemInA, index) => deepEqual(itemInA, inputB[index]));
+	}
+
+	// if both are objects
+	if (isPojo(inputA) && isPojo(inputB)) {
+		// we are using Object.key since we are only interested in objects own properties
+		const keysA = Object.keys(inputA);
+		const keysB = Object.keys(inputB);
+
+		if (keysA.length !== keysB.length) {
+			return false;
+		}
+
+		const everyKeysSame = keysA.every((key) => keysB.includes(key));
+		if (!everyKeysSame) {
+			return false;
+		}
+
+		return Array.prototype.every.call(keysA, (keyInA) => deepEqual(inputA[keyInA], inputB[keyInA]));
+	}
+
+	// other primitive values
+	return Object.is(inputA, inputB);
+}
+
+// Usage
+console.log(deepEqual(1, 1)); // yields true
+console.log(deepEqual(1, '1')); // yields false
+console.log(deepEqual(null, null)); // yields true
+
+console.log(
+	deepEqual(
+		[1, 2, '3', [2, 4, '9', { a: 1, b: 2, c: 'hi' }]], // nested inputs
+		[1, 2, '3', [2, 4, '9', { b: 2, c: 'hi', a: 1 }]]
+	)
+); // yields true
+```
+
+<br />
+
+In above implementation I have used a utility function called <InlineCode code="isPojo()"/> to determine if the value is an plain old javascript object. It can be implemented as follows
+.
+
+```js title="./src/isPojo.js"
+function isPojo(value) {
+	if (value != null) {
+		const prototype = Object.getPrototypeOf(value);
+		return prototype === null || prototype === Object.prototype;
+	}
+
+	return false;
+}
+```
+
+</section>
+
+## Further Reading
+
+I strongly encourage you to explore and tackle additional questions in my [Recursion Questions for Frontend Interviews](/blog/recursion-questions-for-frontend-interviews/ 'Find more question on recursion in the recursion questions for frontend interviews blog series') blog series.
+
+By doing so, you can enhance your understanding and proficiency with recursion, preparing you to excel in your upcoming frontend interviews.
+
+**_Wishing you best. Happy Interviewing_** 🫡.
