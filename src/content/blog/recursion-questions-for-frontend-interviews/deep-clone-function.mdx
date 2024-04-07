@@ -61,7 +61,7 @@ In above example:
 
 ## 1. Basic implementation
 
-We have a implement a utility called <InlineCode code="deepClone"/>, which can create copy of a value by removing any references on them. Consider only JSON serializable values as input.
+We have a implement a utility called <InlineCode code="deepClone"/>, which can create copy of a value by removing any references on them. Consider only **JSON serializable** values as input.
 
 ```js title="./src/deepClone.js"
 function deepClone(value) {
@@ -128,6 +128,174 @@ console.log(obj1);
  */
 
 console.log(obj2);
+```
+
+</section>
+
+{/* ===== Variation : Other data types ========== */}
+
+<section>
+<SubHeading>Variation: All Data Types</SubHeading>
+
+## 2. All Data Types implementation
+
+In the above implementation we also considered JSON serializable values. In this particular case we need to clone all possible data types in JavaScript as much as possible mainly: <InlineCode code="Date" />, <InlineCode code="Map" />, <InlineCode code="Set" />, <InlineCode code="Symbol" />, <InlineCode code="RegExp" /> and <InlineCode code="BigInt" />{' '}
+
+The implementation remains almost the same here, we just need to handle the new cases explicitly.
+
+```js title="./src/deepClone.js"
+import getTypeof from './src/utils.js';
+
+function deepClone(input) {
+	// this utility is covered below
+	const argType = getTypeof(input);
+
+	switch (argType) {
+		// the primitives/values which don't store reference
+		// function can be treated with same reference here (as only exception)
+		case 'boolean':
+		case 'string':
+		case 'bigint':
+		case 'number':
+		case 'null':
+		case 'undefined':
+		case 'symbol':
+		case 'function': {
+			return input;
+		}
+
+		case 'date': {
+			return new Date(input);
+		}
+		case 'regexp': {
+			return new RegExp(input);
+		}
+
+		// we copy each item as clone and return a new set
+		case 'set': {
+			const clonedSet = new Set();
+			input.forEach((item) => {
+				clonedSet.add(deepClone(item));
+			});
+			return clonedSet;
+		}
+
+		// we copy each item as clone and return a new map
+		case 'map': {
+			const clonedMap = new Map();
+			input.forEach((item, key) => {
+				clonedMap.set(key, deepClone(item));
+			});
+			return clonedMap;
+		}
+
+		case 'array': {
+			const clonedArr = [];
+			input.forEach((item) => {
+				clonedArr.push(deepClone(item));
+			});
+			return clonedArr;
+		}
+
+		case 'object': {
+			// so we even clone the prototype of the object input
+			const clonedObject = Object.create(Object.getPrototypeOf(input));
+
+			// we are using Relect.ownKeys since it's the only way symbols on object
+			for (const key of Reflect.ownKeys(input)) {
+				const value = input[key];
+				clonedObject[key] = deepClone(value);
+			}
+
+			return clonedObject;
+		}
+	}
+}
+
+// Usage
+const mapData = new Map();
+mapData.set('key1', 'msg1');
+mapData.set('key2', new Set([3, 4, 5]));
+
+const set = new Set([1, 2, 3]);
+const date = new Date();
+
+const symbol = Symbol('s');
+
+const obj = {
+	msg: 'Hello',
+	[symbol]: 'Hi Symbol'
+};
+
+const arr = [1, 2];
+
+const fn = (data) => `Hello ${data}`;
+
+const regex = new RegExp(/^hel/);
+
+let obj1 = {
+	a: 0,
+	b: 1,
+	c: null,
+	d: undefined,
+	e: arr,
+	f: obj,
+	g: set,
+	h: mapData,
+	i: date,
+	j: regex,
+	symbol: 'symbol',
+	k: fn
+};
+
+const obj2 = deepClone(obj1);
+
+delete obj1.a;
+obj1.e.push(1, 2, 3);
+obj1.g.add(10);
+
+console.log('Obj1', obj1);
+console.log('Obj2', obj2); // not affected by above changes on obj1
+```
+
+<br />
+
+You may have noticed a utility function called <InlineCode code="getTypeof"/> which I used above. As the <InlineCode code="typeof"/> operator is unreliable here, the new utility helps us get the actual type of input correctly as a string.
+
+```js title="./src/utils.js"
+function getTypeof(input) {
+	const argType = typeof input;
+
+	if (argType === 'object') {
+		if (Array.isArray(input)) {
+			return 'array';
+		}
+
+		if (input instanceof Map) {
+			return 'map';
+		}
+
+		if (input instanceof Set) {
+			return 'set';
+		}
+
+		if (input instanceof RegExp) {
+			return 'regexp';
+		}
+
+		if (input instanceof Date) {
+			return 'date';
+		}
+
+		if (Object.is(null, input)) {
+			return 'null';
+		}
+
+		return 'object';
+	}
+
+	return argType;
+}
 ```
 
 </section>
