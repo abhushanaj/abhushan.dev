@@ -1,0 +1,93 @@
+---
+seoMetaData:
+  title: 'Implement a deepMap function'
+  description: 'Implement a deepMap function using recursion'
+  ogImage: '/open-graph/blogs/implement-a-deep-map-function.webp'
+  ogImageAlt: 'Implement a deepMap function using recursion'
+title: 'Implement a deepMap function'
+publishedDate: 2024-04-07
+blogMeta:
+  type: 'series-part'
+  seriesParentSlug: 'recursion-questions-for-frontend-interviews'
+---
+
+We need to create a <InlineCode code="deepMap"/> utility which can return a new result by invoking a callback function against each value of the input recursively. Only JSON serializable values will be passed as input.
+
+Basically, we need to achieve the following:
+
+1. If the value is any primitive type, simple invoke the callback with the value.
+1. If the value is any non-primitive type, recursively go to all depths and invoke the callback to get the result.
+
+We should not mutate the original input.
+
+{/* ======= Basic implementation ======== */}
+
+<section>
+<SubHeading>Variation: Basic implementation</SubHeading>
+
+## 1. Basic implementation
+
+```js
+function deepMap(input, callback) {
+	if (typeof input !== 'object') {
+		return callback(input);
+	}
+
+	if (Array.isArray(input)) {
+		const outputArr = [];
+		input.forEach((item) => {
+			outputArr.push(deepMap(item, callback));
+		});
+
+		return outputArr;
+	}
+
+	const resultObj = Object.create({});
+	for (const key in input) {
+		if (Object.hasOwn(input, key)) {
+			const value = input[key];
+
+			resultObj[key] = deepMap(value, callback);
+		}
+	}
+
+	return resultObj;
+}
+
+const double = (x) => x * 2;
+
+const output = deepMap(
+	{
+		foo: 1,
+		bar: [2, 3, 4],
+		qux: { a: 5, b: 6 }
+	},
+	double
+);
+
+/**
+ * Yields: {
+    "foo": 2,
+    "bar": [
+        4,
+        6,
+        8
+    ],
+    "qux": {
+        "a": 10,
+        "b": 12
+    }
+	}
+ */
+console.log(output);
+```
+
+</section>
+
+## Further Reading
+
+I strongly encourage you to explore and tackle additional questions in my [Recursion Questions for Frontend Interviews](/blog/recursion-questions-for-frontend-interviews/ 'Find more question on recursion in the recursion questions for frontend interviews blog series') blog series.
+
+By doing so, you can enhance your understanding and proficiency with recursion, preparing you to excel in your upcoming frontend interviews.
+
+**_Wishing you best. Happy Interviewing_** 🫡.
