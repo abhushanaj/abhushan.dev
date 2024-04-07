@@ -81,8 +81,7 @@ function deepClone(value) {
 		return resultArr;
 	}
 
-	const valueObj = value;
-	const resultObj = {};
+	const resultObj = Object.create({});
 
 	for (const key in valueObj) {
 		if (Object.hasOwn(valueObj, key)) {
