@@ -1,0 +1,142 @@
+---
+seoMetaData:
+  title: 'Implement a deepEqual function'
+  description: 'Implement a deepEqual function using recursion'
+  ogImage: '/open-graph/blogs/implement-a-deep-equal-function.webp'
+  ogImageAlt: 'Implement a deepEqual function using recursion'
+title: 'Implement a deepEqual function'
+publishedDate: 2024-04-07
+blogMeta:
+  type: 'series-part'
+  seriesParentSlug: 'recursion-questions-for-frontend-interviews'
+---
+
+A **clone** is not a formally defined term in JavaScript, but in general it is well understood as a copy of a value.
+
+In JavaScript copies can be of two kind i.e, **copy by value** and **copy by reference**. All non-primitive types are copies by references meaning any update on them will reflect in any copies at the same times.
+
+Let's take a small example before tackling the problem statement.
+
+```js title="./index.js"
+let msg1 = 'Hello World';
+let msg2 = msg1;
+
+msg2 = 'Hello World 2';
+
+// Yields: 'Hello World', 'Hello World 2'
+console.log(msg1, msg2);
+
+let obj1 = {
+	a: 2,
+	b: {
+		c: 3
+	}
+};
+
+let obj2 = obj1;
+
+delete obj1.a;
+delete obj1.b.c;
+
+/**
+ * Yields same for both
+ * {
+    "b": {}
+    }
+ */
+
+console.log(obj1, obj2);
+```
+
+<br />
+
+In above example:
+
+1. Updating the value of <InlineCode code="msg2"/>, does not affect <InlineCode code="msg1"/> since they were copied by value.
+1. Updating the value of <InlineCode code="obj1"/>, did not affect <InlineCode code="obj2"/> since they were copied by reference, i.e they hold same reference on the memory.
+
+{/* ===== Variation: Deep Clone ==== */}
+
+<section>
+
+## 1. Basic implementation
+
+We have a implement a utility called <InlineCode code="deepClone"/>, which can create copy of a value by removing any references on them. Consider only JSON serializable values as input.
+
+```js title="./src/deepClone.js"
+function deepClone(value) {
+	if (typeof value !== 'object') {
+		return value;
+	}
+
+	if (Object.is(null, value)) {
+		return value;
+	}
+
+	if (Array.isArray(value)) {
+		const resultArr = [];
+		value.forEach((item) => {
+			resultArr.push(deepClone(item));
+		});
+		return resultArr;
+	}
+
+	const valueObj = value;
+	const resultObj = {};
+
+	for (const key in valueObj) {
+		if (Object.hasOwn(valueObj, key)) {
+			const value = valueObj[key];
+			if (typeof value !== 'object') {
+				resultObj[key] = value;
+			} else {
+				resultObj[key] = deepClone(value);
+			}
+		}
+	}
+
+	return resultObj;
+}
+
+// Usage
+
+let obj1 = {
+	a: 2,
+	b: {
+		c: 3
+	}
+};
+
+let obj2 = deepClone(obj1);
+
+delete obj1.a;
+delete obj1.b.c;
+
+/**
+ * Yields:
+ * {
+    "b": {}
+  }
+ */
+console.log(obj1);
+
+/**
+ * Yields: {
+    "b": {
+        "c": 3
+    }
+  }
+ */
+
+console.log(obj2);
+```
+
+</section>
+
+## Further Reading
+
+I strongly encourage you to explore and tackle additional questions in my [Recursion Questions for Frontend Interviews](/blog/recursion-questions-for-frontend-interviews/ 'Find more question on recursion in the recursion questions for frontend interviews blog series') blog series.
+
+By doing so, you can enhance your understanding and proficiency with recursion, preparing you to excel in your upcoming frontend interviews.
+
+**_Wishing you best. Happy Interviewing_** 🫡.
