@@ -57,7 +57,7 @@ function getElementsByTagName(rootEl, tagName) {
 		return result;
 	}
 
-	function transverseEl(element) {
+	function traverseEl(element) {
 		const elTagName = element.tagName.toLowerCase();
 
 		// each child is checked for matching tagName
@@ -67,13 +67,13 @@ function getElementsByTagName(rootEl, tagName) {
 
 		// if it has further nesting, we check on those children
 		for (const childEl of element.children) {
-			transverseEl(childEl);
+			traverseEl(childEl);
 		}
 	}
 
 	// we iterate over all children of root and check if we have a match
 	for (const child of rootEl.children) {
-		transverseEl(child);
+		traverseEl(child);
 	}
 
 	return result;
@@ -111,7 +111,7 @@ function getElementsByClassName(rootEl, classNames) {
 		return result;
 	}
 
-	function transverseEl(element) {
+	function traverseEl(element) {
 		const elClassNames = getFormattedClassNames(element.className);
 
 		// check if all classNames to match exist on element
@@ -123,12 +123,12 @@ function getElementsByClassName(rootEl, classNames) {
 
 		// if it has further nesting, we check on those children
 		for (const childEl of element.children) {
-			transverseEl(childEl);
+			traverseEl(childEl);
 		}
 	}
 
 	for (const child of rootEl.children) {
-		transverseEl(child);
+		traverseEl(child);
 	}
 
 	return result;
@@ -188,7 +188,7 @@ function getElementsByCustomDataAttribute(rootEl, { attributeName, attributeValu
 		return result;
 	}
 
-	function transverseEl(element) {
+	function traverseEl(element) {
 		// get the custom attribute
 		const elAttributeValue = element.getAttribute(`data-${attributeName}`);
 
@@ -198,12 +198,12 @@ function getElementsByCustomDataAttribute(rootEl, { attributeName, attributeValu
 
 		// if it has further nesting, we check on those children
 		for (const childEl of element.children) {
-			transverseEl(childEl);
+			traverseEl(childEl);
 		}
 	}
 
 	for (const child of rootEl.children) {
-		transverseEl(child);
+		traverseEl(child);
 	}
 
 	return result;
@@ -233,7 +233,7 @@ Example, if we were to check for a particular style attribute like color, we cou
  * ......
  * ..... before
  */
-function transverseEl(element) {
+function traverseEl(element) {
 	// get any style attribute using window.getComputedStyle API
 	const elColor = window.getComputedStyle(element).color;
 
@@ -276,7 +276,7 @@ function getElementsByClassNameHierarchy(root, classHierarchy) {
 
 	const result = [];
 
-	function transverse(el, index = 0) {
+	function traverse(el, index = 0) {
 		// current className which were are interested in
 		const currentClassName = classNames[index];
 
@@ -290,20 +290,20 @@ function getElementsByClassNameHierarchy(root, classHierarchy) {
 		}
 
 		if (elHasCurrentClassName) {
-			// if it did have, we transverse child and look for second className
+			// if it did have, we traverse child and look for second className
 			for (const childEl of el.children) {
-				transverse(childEl, index + 1);
+				traverse(childEl, index + 1);
 			}
 		} else {
-			// if it did not have it, we transverse child and restart the search
+			// if it did not have it, we traverse child and restart the search
 			for (const childEl of el.children) {
-				transverse(childEl, 0);
+				traverse(childEl, 0);
 			}
 		}
 	}
 
 	// we start from root directly since we want to include root as well
-	transverse(root);
+	traverse(root);
 
 	return result;
 }
