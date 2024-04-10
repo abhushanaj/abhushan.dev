@@ -1,0 +1,269 @@
+---
+seoMetaData:
+  title: 'Leveraging Observer Pattern for Atomic State Management in JavaScript'
+  description: 'Discover how to unlock and create an atomic state manager like Jotai using the Observer pattern.'
+  ogImage: '/open-graph/blogs/what-im-learning-in-2024.webp'
+  ogImageAlt: 'Leveraging Observer Pattern for Atomic State Management in JavaScript'
+title: 'Leveraging Observer Pattern for Atomic State Management in JavaScript'
+publishedDate: 2024-04-10
+blogMeta:
+  type: standalone
+---
+
+State management lies at the core of modern web development, especially when working with complex user interfaces.
+
+In JavaScript and React applications, handling state efficiently is crucial for building scalable and maintainable solutions.
+
+One powerful and extremly common design pattern that is used significantly for state management capabilities is the **Observer design pattern**, sometimes also referred as the **Pub-Sub design pattern**.
+
+In this blog, I'll dive into how observer pattern can be used to create an atomic state manager in JavaScript and create an equivalent binding for React.
+
+The term **"atomic"** referes to the idea of treating each state as a seperate self contained entity, much like atom (which are the building blocks of matter).
+
+In the context of front-end development, especially in frameworks like React, atomic state management is about breaking down the application state into smaller, manageable pieces that are scoped to specific components or modules.
+
+So let's recreate one for ourselves.
+
+{/* =============== Deinition the Model ===== */}
+
+<section>
+## Defining the state model
+
+Let's define our atom (or individual state) through the basic properties of a observer design pattern alongside the essentials needed for a typical state manager, i.e, :
+
+1. <InlineCode code="get()" /> : a method to get the state value.
+1. <InlineCode code="set()" /> : a method to set/update with a new state value.
+1. <InlineCode code="subscribe()" /> : a method which takes a callback to subscribe to store changes and also returns a function
+   to clear the subscriptions created.
+
+```ts title="./src/atom.ts"
+type SubscribeCallback<T> = (newValue: T) => void;
+type UnSubscribeCallback = () => boolean;
+
+export type AtomStore<T> = {
+	get: () => T;
+	set: (newValue: T) => void;
+	subscribe: (callback: SubscribeCallback<T>) => UnSubscribeCallback;
+};
+```
+
+<br />
+
+Now, that we have the interface of our <InlineCode code="AtomStore" />, let's define the actual implementation using which we can create the atomic store.
+
+```ts title="./src/atom.ts"
+export function createAtom<T>(initialValue: T): AtomStore<T> {
+	let value: T = initialValue;
+	const subscribers = new Set<SubscribeCallback<T>>();
+
+	const get = () => value;
+
+	const set = (newValue: T) => {
+		value = newValue;
+	};
+
+	const subscribe = (callback: SubscribeCallback<T>): UnSubscribeCallback => {
+		subscribers.add(callback);
+		return () => subscribers.delete(callback);
+	};
+
+	return {
+		get,
+		set,
+		subscribe
+	};
+}
+```
+
+<br />
+
+Here's a small breakdown explaining what we did above:
+
+1. <InlineCode code="createAtom" />: is a function which takes an <InlineCode code="initialValue" /> for the store and
+   returns an <InlineCode code="AtomStore" /> instance. We do this, so we can leverage scopes and closures in
+   JavaScript, making the value <InlineCode code="value" /> available even when the <InlineCode code="createAtom" /> function
+   completes executing. Also each atom stores thier own respective values, so there is no chance of value collision
+   between multiple stores.
+
+1. <InlineCode code="get" />: method that simply returns whatever is currently saved on the store, i.e <InlineCode code="value" />
+
+1. <InlineCode code="set" />: method that takes a <InlineCode code="newValue" /> for the store and replaces the current
+   value, i.e <InlineCode code="value" />
+
+1. <InlineCode code="subscribe" />: method that takes a <InlineCode code="callback" /> and saves them onto the <InlineCode code="subscribers" /> list
+   and returns a cleanup function to clear that subscription. We are using set here, to we can remove deuplicate
+   subscriptions passed to the store, the same can be achieved by using arrays for maintaing subscription list as well.
+
+Now, with following considerations in mind, we can create a atomic store as follows:
+
+```ts src="./src/index.ts"
+const atom = createAtom(0);
+
+console.log(atom.get()); // yields 0
+atom.set(1); // change 0 to 1
+console.log(atom.get()); // yields 1
+```
+
+</section>
+
+{/* ============ Subscription Callbacks ============= */}
+
+<section>
+
+## Understanding subscription callback
+
+Although the above implementation is absolutely correct, we still have one crucial piece missing.
+
+If you notice, we need to invoke <InlineCode code="atom.get()"/> everytime when we need to see the latest state. This also means that when we are not aware about how the state might be changed, we might run into using old values of the state.
+
+This is where the observer pattern shines, which helps us to know about the latest changes on the store and "react" to it when needed. We have already considered this when defining our store interface, so we'll update our implementation to actually make use of it.
+
+I'll just highlight the new changes.
+
+```ts title="./src/atom.ts" ins={9-11}
+export function createAtom<T>(initialValue: T): AtomStore<T> {
+	let value: T = initialValue;
+	const subscribers = new Set<SubscribeCallback<T>>();
+
+	const get = () => value;
+
+	const set = (newValue: T) => {
+		value = newValue;
+		subscribers.forEach((sub) => {
+			sub(newValue);
+		});
+	};
+
+	const subscribe = (callback: SubscribeCallback<T>): UnSubscribeCallback => {
+		subscribers.add(callback);
+		return () => subscribers.delete(callback);
+	};
+
+	return {
+		get,
+		set,
+		subscribe
+	};
+}
+```
+
+<br />
+
+All we're doing here, is simply on every change of state value, i.e call of <InlineCode code="set(newValue:T)"/> method, we iterate over all the subscriptions we have added and simply pass the new value to theme.
+
+```ts src="./src/index.ts"
+const atom = createAtom(0);
+
+console.log(atom.get()); // yields 0
+atom.set(1); // change 0 to 1
+console.log(atom.get()); // yields 1
+
+// invoke everytime we set a new value
+function callback(newValue) {
+	console.log('Value on store is updated to', newValue);
+}
+
+const unsub = atom.subscribe(callback);
+
+atom.set(2); // change 1 to 2
+atom.set(3); // change 2 to 3
+
+unsub(); // unsubscribe the callback
+
+atom.set(4); // change 3 to 4
+/**
+ * From this point on the callback function will not be invoked at all.
+ */
+```
+
+<br />
+
+Congratulations! You just created your own atomic state manager and learned about leveraging a very popular design pattern. 🎉🚀 .
+
+The next section will focus only on creating a binding of the same atomic state to be used with React, in case you want to follow along.
+
+</section>
+
+{/* ============ Binding for React ====== */}
+
+<section>
+
+## Creating Bindings for React
+
+So, up until now, we create a pure Vanilla atomic state manager, which abilities to **get**, **set** and l**isten to store changes**.
+
+The binding for React will simply link these methods returned from the store, to the React internals like "state", so our UI can react to the changes.
+
+With that in mind, let's create a hook implementation for the atomic store.
+
+```ts title="./src/atom.ts" mark="atom"
+export const useAtom = <T>(atom: AtomStore<T>) => {
+	const [state, setState] = React.useState(atom.get());
+
+	React.useEffect(() => {
+		const unSub = atom.subscribe(setState);
+		return unSub;
+	}, [atom]);
+
+	return [state, atom.set] as const;
+};
+```
+
+<br />
+
+Here's the breakdown of what we did above:
+
+1. <InlineCode code="atom.get()" /> : we use state returned by atom as the initialValue for React's **useState** hook.
+1. <InlineCode code="atom.subscribe()" /> : we leverage React's **useEffect** hook, to create a subscription to the atom
+   store and ask it to invoke React's stateState function, so it can render the component.
+1. <InlineCode code="atom.set()" />: we return this as a setter function to update the store value with new state.
+
+A very small example demonstrate how all comes together:
+
+```tsx title="./src/Counter.tsx" "createAtom" "useAtom"
+import { createAtom } from './src/atom.ts';
+
+const countAtom = createAtom(0);
+
+function Counter() {
+	const [count, setCount] = useAtom(countAtom);
+
+	return (
+		<div>
+			<p>Count: {count}</p>
+			<button
+				onClick={() => {
+					setCount(count + 2);
+				}}
+			>
+				Inc by 1
+			</button>
+		</div>
+	);
+}
+```
+
+<br />
+
+</section>
+
+{/* ======== Conclusion ========== */}
+
+<section>
+## Conclusion
+
+That's it. That's all it takes to create an atomic state manager in pure JavaScript and create bindings in React.
+
+If throughout the blog, even for a second you were wondering why does the API signature look very similar to something on worked on before? That's because it is. 😀
+
+The signature and naming is similar to a very popular atomic state manager called [Jotai](https://jotai.org/ 'Visit documentation for Jotai: Atomic State management for React').
+
+Now, Jotai is much more complex, intricate and feature rich compared to what we did here, so our version does not stand a chance against it. 😅 The goal was to understand the fundamentals of a practical usage of observer design pattern while creating something fun and most likely to be used.
+
+I have used Jotai in production before and literally have no complaints with the library. It's perfect option when it comes to handling small atomic states (expecially synchronous state). If you have not used Jotai before, I highly recommend it.
+
+Do give the Jotai project a **like** on [Github](https://github.com/pmndrs/jotai 'Github Jotai repository') and follow their maintainers to learn more about it.
+
+**_Keep Learning! Take Care!_**
+
+</section>
