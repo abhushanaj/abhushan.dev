@@ -24,7 +24,7 @@ const mazeCellBgColorMap: Record<MazeItem, string> = {
 	target: 'red',
 	wall: '#000',
 	visited: 'cyan',
-	reached: 'green'
+	reached: 'pink'
 } as const;
 
 function PathFinderVisualizer() {

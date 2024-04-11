@@ -6,7 +6,7 @@ import BreadcrumbJsonLdSchema from '@/components/astro/json-lds/breadcrumb.astro
 import SectionHead from '@/components/astro/section-head/index.astro';
 import SeoMeta from '@/components/astro/seo-meta/index.astro';
 import RecreatesWrapper from '@/components/react/recreates/demo-wrapper';
-import PathFinderVisualizer from '@/components/react/recreates/path-finder-visualizer';
+import PathFinder from '@/components/react/recreates/path-finder-visualizer';
 
 import { getUriFromSlug } from '@/lib/url';
 ---
@@ -40,7 +40,7 @@ import { getUriFromSlug } from '@/lib/url';
 
 			<section class="mb-8">
 				<RecreatesWrapper>
-					<PathFinderVisualizer client:load />
+					<PathFinder client:load />
 				</RecreatesWrapper>
 			</section>
 
