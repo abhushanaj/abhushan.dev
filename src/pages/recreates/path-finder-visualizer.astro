@@ -3,9 +3,9 @@ import DefaultLayout from '@/layouts/default/index.astro';
 
 import ClosingConnectCta from '@/components/astro/closing-connect-cta/index.astro';
 import BreadcrumbJsonLdSchema from '@/components/astro/json-lds/breadcrumb.astro';
-import RecreatesListing from '@/components/astro/recreates/listing/index.astro';
 import SectionHead from '@/components/astro/section-head/index.astro';
 import SeoMeta from '@/components/astro/seo-meta/index.astro';
+import RecreatesWrapper from '@/components/react/recreates/demo-wrapper';
 
 import { getUriFromSlug } from '@/lib/url';
 ---
@@ -13,7 +13,7 @@ import { getUriFromSlug } from '@/lib/url';
 <DefaultLayout>
 	<SeoMeta
 		slot="head"
-		title="Recreates | Abhushan Adhikari Joshi"
+		title="Path Finder Visualizer | Recreates"
 		description="Explore Abhushan's Recreates Portfolio - Showcasing expertise in Web Development"
 		ogImage="/open-graph/root.png"
 		ogImageAlt="Recreates by Abhushan Adhikari Joshi"
@@ -25,33 +25,30 @@ import { getUriFromSlug } from '@/lib/url';
 			{
 				name: 'Recreates',
 				uri: getUriFromSlug('recreates')
+			},
+			{
+				name: 'Path Finder Visualizer',
+				uri: getUriFromSlug('recreates/path-finder-visualizer')
 			}
 		]}
 	/>
 
 	<main>
 		<article class="w-full">
+			<h1 class="mb-6 mt-2 text-2xl md:text-4xl">Path Finder Visualizer</h1>
+
 			<section class="mb-8">
-				<h1 class="mb-4 text-3xl md:text-4xl">recreates</h1>
-
-				<p class="mb-6">
-					Welcome to my digital creative space, where I recreate some really popular and viral ideas that grabbed my
-					attention due to their expected complexity or sheer love of creating something totally outside my comfort zone
-					and learning new techniques along the way.
-				</p>
-
-				<p class="mb-6">
-					Recreates is not just a space for code; it's a collection of new learnings, joyous moments of falling in love
-					with the art of Frontend even more; one new idea at a time.
-				</p>
-
-				<ClosingConnectCta />
+				<RecreatesWrapper>This is recreates</RecreatesWrapper>
 			</section>
 
-			<!-- Latest recreates -->
+			<!-- Planning to add in future -->
 			<section class="mb-8">
-				<SectionHead title="latest recreates" />
-				<RecreatesListing />
+				<SectionHead title="Future improvements planned" />
+			</section>
+
+			<!-- Reach out listing -->
+			<section class="mb-8">
+				<ClosingConnectCta />
 			</section>
 		</article>
 	</main>

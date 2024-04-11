@@ -7,7 +7,7 @@ const recreatesListing = [
 	{
 		title: 'Path Finder Algorithm Visualizer',
 		publishedDate: '2024-04-11',
-		href: '/'
+		href: '/recreates/path-finder-visualizer'
 	}
 ];
 ---
@@ -16,7 +16,7 @@ const recreatesListing = [
 	{
 		recreatesListing.map((listing) => (
 			<li>
-				<InternalLink href="/" title="View the series" variant="highContrast">
+				<InternalLink href={listing.href} title="View the recreation" variant="highContrast">
 					{listing.title}
 				</InternalLink>
 				<p class="mt-1 flex flex-wrap items-center gap-2 text-sm">
