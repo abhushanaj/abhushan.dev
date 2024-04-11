@@ -2,20 +2,17 @@
 import { getCollection } from 'astro:content';
 
 import type { CollectionEntry } from 'astro:content';
-import type { ComponentProps } from 'react';
 
-import SectionHead from '@/components/astro/section-head/index.astro';
+import { InternalLink } from '@/components/react/link/internal';
 
+import { formatPublishedDate } from '@/lib/date-time';
 import { getSlugDepth, getUriFromCollectionAndSlug } from '@/lib/url';
-
-import Listing from './listing.astro';
 
 type Props = {
 	type: CollectionEntry<'blog'>['data']['blogMeta']['type'];
-	heading: string;
 };
 
-const { type, heading } = Astro.props;
+const { type } = Astro.props;
 
 const listingByType = await getCollection('blog', (entry) => {
 	const matchingEntry = entry.data.blogMeta.type === type;
@@ -31,19 +28,37 @@ const listingByType = await getCollection('blog', (entry) => {
 	return false;
 });
 
+type BlogListing = {
+	title: string;
+	uri: `/${string}`;
+	seriesLength?: number;
+	publishedDate: Date;
+};
+
 const listingDetails = listingByType.map((blog) => ({
 	title: blog.data.title,
 	publishedDate: blog.data.publishedDate,
 	uri: getUriFromCollectionAndSlug({ collection: blog.collection, slug: blog.slug }),
 	seriesLength: blog.data.blogMeta.type === 'series' ? blog.data.blogMeta.relatedBlogs.length : 0
-})) satisfies ComponentProps<typeof Listing>['listings'];
+})) satisfies Array<BlogListing>;
 ---
 
 {
 	listingByType.length > 0 ? (
 		<>
-			<SectionHead title={heading} />
-			<Listing listings={listingDetails} />
+			<ul class="flex flex-col gap-5">
+				{listingDetails.map((listing) => (
+					<li>
+						<InternalLink href={listing.uri} title="View the series" variant="highContrast">
+							{listing.title}
+						</InternalLink>
+						<p class="mt-1 flex flex-wrap items-center gap-2 text-sm">
+							<time datetime={listing.publishedDate.toISOString()}>{formatPublishedDate(listing.publishedDate)}</time>
+							{Boolean(listing.seriesLength) && <span>- ({listing.seriesLength} part series)</span>}
+						</p>
+					</li>
+				))}
+			</ul>
 		</>
 	) : null
 }

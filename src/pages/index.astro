@@ -4,6 +4,7 @@ import DefaultLayout from '@/layouts/default/index.astro';
 import BlogListing from '@/components/astro/blog/blog-listing/index.astro';
 import ProfilePageJsonLdSchema from '@/components/astro/json-lds/profile-page.astro';
 import ReachOutListing from '@/components/astro/reach-out-listing/index.astro';
+import SectionHead from '@/components/astro/section-head/index.astro';
 import SeoMeta from '@/components/astro/seo-meta/index.astro';
 ---
 
@@ -52,12 +53,14 @@ import SeoMeta from '@/components/astro/seo-meta/index.astro';
 
 			<!-- Series Blogs Listings Section -->
 			<section class="mb-8">
-				<BlogListing type="series" heading="latest series" />
+				<SectionHead title="latest series" />
+				<BlogListing type="series" />
 			</section>
 
 			<!-- Latest Blogs Listings -->
 			<section class="mb-8">
-				<BlogListing type="standalone" heading="latest blogs" />
+				<SectionHead title="latest blogs" />
+				<BlogListing type="standalone" />
 			</section>
 		</article>
 	</main>
