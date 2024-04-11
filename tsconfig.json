@@ -2,7 +2,6 @@
 	"$schema": "https://json.schemastore.org/tsconfig",
 	"extends": "astro/tsconfigs/strictest",
 	"compilerOptions": {
-		"noPropertyAccessFromIndexSignature": true,
 		"jsxImportSource": "react",
 		"jsx": "react-jsx",
 		"baseUrl": ".",
