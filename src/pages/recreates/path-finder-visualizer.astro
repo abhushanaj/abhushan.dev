@@ -5,6 +5,7 @@ import ClosingConnectCta from '@/components/astro/closing-connect-cta/index.astr
 import BreadcrumbJsonLdSchema from '@/components/astro/json-lds/breadcrumb.astro';
 import SectionHead from '@/components/astro/section-head/index.astro';
 import SeoMeta from '@/components/astro/seo-meta/index.astro';
+import { BackAction } from '@/components/react/back-action';
 import RecreatesWrapper from '@/components/react/recreates/demo-wrapper';
 import PathFinder from '@/components/react/recreates/path-finder-visualizer';
 
@@ -35,6 +36,8 @@ import { getUriFromSlug } from '@/lib/url';
 	/>
 
 	<main>
+		<BackAction href={getUriFromSlug('recreates')} title="back to recreates">back to recreates</BackAction>
+
 		<article class="w-full">
 			<h1 class="mb-6 mt-2 text-2xl md:text-4xl">Path Finder Visualizer</h1>
 

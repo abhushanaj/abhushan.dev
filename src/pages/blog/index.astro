@@ -5,6 +5,7 @@ import BlogListing from '@/components/astro/blog/blog-listing/index.astro';
 import BreadcrumbJsonLdSchema from '@/components/astro/json-lds/breadcrumb.astro';
 import SectionHead from '@/components/astro/section-head/index.astro';
 import SeoMeta from '@/components/astro/seo-meta/index.astro';
+import { BackAction } from '@/components/react/back-action';
 
 import { getUriFromSlug } from '@/lib/url';
 ---
@@ -29,7 +30,9 @@ import { getUriFromSlug } from '@/lib/url';
 	/>
 
 	<main>
-		<article class="w-full">
+		<BackAction href={getUriFromSlug()} title="back to home">back to home</BackAction>
+
+		<article class="mt-2 w-full">
 			<section class="mb-8">
 				<h1 class="mb-4 text-3xl md:text-4xl">blog</h1>
 

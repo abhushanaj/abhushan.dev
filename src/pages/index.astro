@@ -4,6 +4,7 @@ import DefaultLayout from '@/layouts/default/index.astro';
 import BlogListing from '@/components/astro/blog/blog-listing/index.astro';
 import ClosingConnectCta from '@/components/astro/closing-connect-cta/index.astro';
 import ProfilePageJsonLdSchema from '@/components/astro/json-lds/profile-page.astro';
+import ProjectListing from '@/components/astro/projects/listing.astro';
 import SectionHead from '@/components/astro/section-head/index.astro';
 import SeoMeta from '@/components/astro/seo-meta/index.astro';
 ---
@@ -47,16 +48,22 @@ import SeoMeta from '@/components/astro/seo-meta/index.astro';
 				<ClosingConnectCta />
 			</section>
 
-			<!-- Series Blogs Listings Section -->
+			<!-- Projects listings  -->
 			<section class="mb-8">
-				<SectionHead title="latest series" />
-				<BlogListing type="series" />
+				<SectionHead title="latest works" />
+				<ProjectListing />
 			</section>
 
 			<!-- Latest Blogs Listings -->
 			<section class="mb-8">
 				<SectionHead title="latest blogs" />
 				<BlogListing type="standalone" />
+			</section>
+
+			<!-- Series Blogs Listings Section -->
+			<section class="mb-8">
+				<SectionHead title="latest series" />
+				<BlogListing type="series" />
 			</section>
 		</article>
 	</main>

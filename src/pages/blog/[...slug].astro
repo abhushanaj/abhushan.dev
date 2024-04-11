@@ -10,7 +10,7 @@ import InProgressBanner from '@/components/astro/blog/in-progress-banner/index.a
 import TocAsideNav from '@/components/astro/blog/toc-aside-nav/index.astro';
 import BreadcrumbJsonLdSchema from '@/components/astro/json-lds/breadcrumb.astro';
 import SeoMeta from '@/components/astro/seo-meta/index.astro';
-import { BlogBackAction } from '@/components/react/blog/back-action';
+import { BackAction } from '@/components/react/back-action';
 import { components } from '@/components/react/blog/content-blocks';
 
 import { getUriFromCollectionAndSlug, getUriFromSlug } from '@/lib/url';
@@ -74,8 +74,8 @@ const parentBlogDetails = isPartOfSeries ? await getEntryBySlug('blog', blogMeta
 		<div class="gap-10 xl:grid xl:grid-cols-[var(--primary-content-width)_1fr]">
 			<article class="xl:max-w-unset w-full max-w-[var(--primary-content-width)] pb-12">
 				<!-- Back Action -->
-				<BlogBackAction href={backActionUri} title={isPartOfSeries ? 'back to series' : 'back to blogs'}
-					>{isPartOfSeries ? 'back to series' : 'back to blogs'}</BlogBackAction
+				<BackAction href={backActionUri} title={isPartOfSeries ? 'back to series' : 'back to blogs'}
+					>{isPartOfSeries ? 'back to series' : 'back to blogs'}</BackAction
 				>
 				<!-- Blog Header -->
 				<BlogHeader title={title} publishedDate={publishedDate} views={0} />
@@ -123,3 +123,4 @@ const parentBlogDetails = isPartOfSeries ? await getEntryBySlug('blog', blogMeta
 		}
 	</style>
 </DefaultLayout>
+@/components/react/back-action
