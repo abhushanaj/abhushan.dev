@@ -1,0 +1,30 @@
+---
+import { InternalLink } from '@/components/react/link/internal';
+
+import { formatPublishedDate } from '@/lib/date-time';
+
+const recreatesListing = [
+	{
+		title: 'Path Finder Algorithm Visualizer',
+		publishedDate: '2024-04-11',
+		href: '/'
+	}
+];
+---
+
+<ul class="flex flex-col gap-5">
+	{
+		recreatesListing.map((listing) => (
+			<li>
+				<InternalLink href="/" title="View the series" variant="highContrast">
+					{listing.title}
+				</InternalLink>
+				<p class="mt-1 flex flex-wrap items-center gap-2 text-sm">
+					<time datetime={new Date(listing.publishedDate).toISOString()}>
+						{formatPublishedDate(new Date(listing.publishedDate))}
+					</time>
+				</p>
+			</li>
+		))
+	}
+</ul>

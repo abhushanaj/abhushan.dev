@@ -3,6 +3,7 @@ import DefaultLayout from '@/layouts/default/index.astro';
 
 import BreadcrumbJsonLdSchema from '@/components/astro/json-lds/breadcrumb.astro';
 import ReachOutListing from '@/components/astro/reach-out-listing/index.astro';
+import RecreatesListing from '@/components/astro/recreates/listing/index.astro';
 import SectionHead from '@/components/astro/section-head/index.astro';
 import SeoMeta from '@/components/astro/seo-meta/index.astro';
 
@@ -54,6 +55,7 @@ import { getUriFromSlug } from '@/lib/url';
 			<!-- Latest recreates -->
 			<section class="mb-8">
 				<SectionHead title="latest recreates" />
+				<RecreatesListing />
 			</section>
 		</article>
 	</main>
