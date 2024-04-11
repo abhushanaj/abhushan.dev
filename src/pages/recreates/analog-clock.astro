@@ -3,11 +3,10 @@ import DefaultLayout from '@/layouts/default/index.astro';
 
 import ClosingConnectCta from '@/components/astro/closing-connect-cta/index.astro';
 import BreadcrumbJsonLdSchema from '@/components/astro/json-lds/breadcrumb.astro';
-import SectionHead from '@/components/astro/section-head/index.astro';
 import SeoMeta from '@/components/astro/seo-meta/index.astro';
 import { BackAction } from '@/components/react/back-action';
+import AnalogClockImpl from '@/components/react/recreates/analog-clock/';
 import RecreatesWrapper from '@/components/react/recreates/demo-wrapper';
-import PathFinder from '@/components/react/recreates/path-finder-visualizer';
 
 import { getUriFromSlug } from '@/lib/url';
 ---
@@ -15,10 +14,10 @@ import { getUriFromSlug } from '@/lib/url';
 <DefaultLayout>
 	<SeoMeta
 		slot="head"
-		title="Path Finder Visualizer | Recreates by Abhushan"
-		description="Explore Abhushan's recreation of the path finder algorithm visualizer, showcasing expertise in Frontend Development"
+		title="Analog Clock | Recreates by Abhushan"
+		description="Explore Abhushan's recreation of the analog clock, showcasing expertise in Frontend Development"
 		ogImage="/open-graph/recreates/path-finder-algorithm-recreates.webp"
-		ogImageAlt="Path Finder Visualizer recreates by Abhushan Adhikari Joshi"
+		ogImageAlt="Analog Clock recreates by Abhushan Adhikari Joshi"
 	/>
 
 	<BreadcrumbJsonLdSchema
@@ -29,8 +28,8 @@ import { getUriFromSlug } from '@/lib/url';
 				uri: getUriFromSlug('recreates')
 			},
 			{
-				name: 'Path Finder Visualizer',
-				uri: getUriFromSlug('recreates/path-finder-visualizer')
+				name: 'Analog Clock',
+				uri: getUriFromSlug('recreates/analog-clock')
 			}
 		]}
 	/>
@@ -43,20 +42,8 @@ import { getUriFromSlug } from '@/lib/url';
 
 			<section class="mb-8">
 				<RecreatesWrapper>
-					<PathFinder client:load />
+					<AnalogClockImpl client:load />
 				</RecreatesWrapper>
-			</section>
-
-			<!-- Planning to add in future -->
-			<section class="mb-8">
-				<SectionHead title="Future improvements planned 💡" />
-				<ul class="flex list-inside list-disc flex-col gap-2 pl-4">
-					<li class="line-through">Generate a random maze.</li>
-					<li>Depth First Search Visualizer.</li>
-					<li>Backtrack and highlight path.</li>
-					<li>Custom target and source nodes.</li>
-					<li>Selection presets for different mazes.</li>
-				</ul>
 			</section>
 
 			<!-- Reach out listing -->
