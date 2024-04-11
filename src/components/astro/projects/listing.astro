@@ -1,17 +1,22 @@
 ---
 import { InternalLink } from '@/components/react/link/internal';
 
+import { getUriFromSlug } from '@/lib/url';
+
 const projectsList = [
 	{
 		name: '@abhushanaj/react-hooks',
 		href: 'https://react-hooks.abhushan.dev/',
 		description:
 			'A collection of modern and server-safe custom React hooks to supercharge your React application development.'
+	},
+	{
+		name: 'Recreates',
+		href: getUriFromSlug('recreates'),
+		description: 'Recreating the most viral and popular projects to learn something new.'
 	}
 ];
 ---
-
-<h2 class="mb-4 text-2xl">latest works</h2>
 
 <ul class="flex flex-col gap-5">
 	{

@@ -2,9 +2,10 @@
 import DefaultLayout from '@/layouts/default/index.astro';
 
 import BlogListing from '@/components/astro/blog/blog-listing/index.astro';
+import ClosingConnectCta from '@/components/astro/closing-connect-cta/index.astro';
 import ProfilePageJsonLdSchema from '@/components/astro/json-lds/profile-page.astro';
 import ProjectListing from '@/components/astro/projects/listing.astro';
-import ReachOutListing from '@/components/astro/reach-out-listing/index.astro';
+import SectionHead from '@/components/astro/section-head/index.astro';
 import SeoMeta from '@/components/astro/seo-meta/index.astro';
 ---
 
@@ -13,7 +14,7 @@ import SeoMeta from '@/components/astro/seo-meta/index.astro';
 	<SeoMeta
 		slot="head"
 		title="Abhushan Adhikari Joshi | Frontend Engineer"
-		description="Explore Abhushan's Frontend Engineering Portfolio - Showcasing expertise in Web Development"
+		description="Explore Abhushan's Frontend Engineering Portfolio - Showcasing expertise in Frontend Development"
 		ogImage="/open-graph/root.png"
 		ogImageAlt="Abhushan Adhikari Joshi | Frontend Engineer"
 	/>
@@ -44,26 +45,25 @@ import SeoMeta from '@/components/astro/seo-meta/index.astro';
 					great products, becoming a better developer and growing a career in tech.
 				</p>
 
-				<p class="mb-10">
-					If you're looking to collaborate, learn, or share your insights, feel free to connect with me. Let's explore
-					the ever-evolving world of web development together.
-				</p>
-				<ReachOutListing />
+				<ClosingConnectCta />
 			</section>
 
 			<!-- Projects listings  -->
 			<section class="mb-8">
+				<SectionHead title="latest works" />
 				<ProjectListing />
 			</section>
 
 			<!-- Latest Blogs Listings -->
 			<section class="mb-8">
-				<BlogListing type="standalone" heading="latest blogs" />
+				<SectionHead title="latest blogs" />
+				<BlogListing type="standalone" />
 			</section>
 
 			<!-- Series Blogs Listings Section -->
 			<section class="mb-8">
-				<BlogListing type="series" heading="latest series" />
+				<SectionHead title="latest series" />
+				<BlogListing type="series" />
 			</section>
 		</article>
 	</main>
