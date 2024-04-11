@@ -4,6 +4,8 @@ import { getCollection } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 import type { ComponentProps } from 'react';
 
+import SectionHead from '@/components/astro/section-head/index.astro';
+
 import { getSlugDepth, getUriFromCollectionAndSlug } from '@/lib/url';
 
 import Listing from './listing.astro';
@@ -40,7 +42,7 @@ const listingDetails = listingByType.map((blog) => ({
 {
 	listingByType.length > 0 ? (
 		<>
-			<h2 class="mb-4 text-2xl">{heading}</h2>
+			<SectionHead title={heading} />
 			<Listing listings={listingDetails} />
 		</>
 	) : null
