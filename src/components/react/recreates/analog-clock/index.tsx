@@ -16,6 +16,7 @@ function ClockHand({ angle, width, height }: Props) {
 				width: `${width}px`,
 				transformOrigin: 'top center'
 			}}
+			suppressHydrationWarning
 		/>
 	);
 }
@@ -57,6 +58,7 @@ function AnalogClock() {
 					transform: 'rotate(180deg)'
 				}}
 				className="relative block aspect-square w-96 rounded-full border-4 border-ui-neutral-border"
+				suppressHydrationWarning
 			>
 				{/* Seconds Hand */}
 				<ClockHand width={2} angle={secondsProgress * 360} height={1} />
