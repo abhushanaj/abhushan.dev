@@ -9,3 +9,62 @@ publishedDate: 2024-04-12
 blogMeta:
   type: standalone
 ---
+
+If you've spent any decent amount of time working with JavaScript, you've likely noticed that it's not a perfect language.
+
+However, the most frustrating part of JavaScript for me is the **_inability to correctly identify the type of a value_**. For a language that is dynamically typed, any user of the language surely expects a robust utility or helper to assist with this.
+
+If you're thinking we have helpers in the form of the <InlineCode code="typeof"/> and <InlineCode code="instanceOf"/> operators, then you probably haven't used JavaScript enough to understand their pain points and shortcomings, because they are not the ideal solution.
+
+Well, if I'm being honest, I don't really think that as of today we have a perfect solution to achieve this. However, I can surely suggest an approach that I've learned and find to be the closest to the best answer.
+
+The answer? It's the <InlineCode code="Object.prototype.toString()"/> method available on the [object constructor](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/Object 'Read more about JavaScript Object constructor on MDN').
+
+But before reaching that conclusion, let's explore the issues with the common approaches of identifying types: <InlineCode code="typeof"/> and <InlineCode code="instanceOf"/>, with their shortcomings.
+
+## typeof operator
+
+It's the most common and widely used method. With the help of <InlineCode code="typeof"/> operator, one can get the type of a value with the following syntax <InlineCode code="typeof x"/>, where, **x** is the variable. It returns a **string** value denoting the type for the variable.
+
+```js title="./src/utils/getType.js"
+console.log(typeof 1); // 'number'
+console.log(typeof '1'); // 'string'
+console.log(typeof true); // 'boolean'
+console.log(typeof (() => {})); // 'function'
+console.log(typeof undefined); // 'undefined'
+console.log(typeof {}); // 'object'
+console.log(typeof Symbol('hi')); // 'symbol'
+console.log(typeof 10n); // 'bigint'
+```
+
+<br />
+There are 8 possible values for types using this method, each of which is highlighted above.
+
+But, there is an issue, one of which is a known legacy bug (typeof null returning an object) in JavaScript.
+
+You can read more about it on this [stackoverflow thread](https://stackoverflow.com/questions/18808226/why-is-typeof-null-object 'Stackoverflow thread for learning why typeof null returns an object').
+
+But besides that, the data values like <InlineCode code="Map"/>, <InlineCode code="Set"/> , <InlineCode code="Date"/> also return as object when used with the typeof operator.
+
+```js title="./src/utils/getType.js"  ins={9-16}
+console.log(typeof 1); // 'number'
+console.log(typeof '1'); // 'string'
+console.log(typeof true); // 'boolean'
+console.log(typeof (() => {})); // 'function'
+console.log(typeof undefined); // 'undefined'
+console.log(typeof {}); // 'object'
+console.log(typeof Symbol('hi')); // 'symbol'
+console.log(typeof 10n); // 'bigint'
+console.log(typeof null); // 'object'
+console.log(typeof []); // 'object'
+console.log(typeof new Date()); // 'object'
+console.log(typeof new Set()); // 'object'
+console.log(typeof new Map()); // 'object'
+console.log(typeof new RegExp()); // 'object'
+```
+
+<br />
+
+Shouldn't they have returned <InlineCode code="date"/>, <InlineCode code="map"/>, <InlineCode code="set"/> following the convention, and considering <InlineCode code="function"/> was also a possible type? Well the answer isn't so simple.
+
+Now, here'e the thing, outside of the classic **null** case, other values like <InlineCode code="Map"/>, <InlineCode code="Set"/> etc, are actually **built-in "objects"** into JavaScript. So the typeof operator returning object for them actually makes sense. But <InlineCode code="typeof (()=>{})"/> does not follow the same rules?
