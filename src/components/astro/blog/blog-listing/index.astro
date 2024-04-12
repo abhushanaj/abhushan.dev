@@ -35,12 +35,16 @@ type BlogListing = {
 	publishedDate: Date;
 };
 
-const listingDetails = listingByType.map((blog) => ({
-	title: blog.data.title,
-	publishedDate: blog.data.publishedDate,
-	uri: getUriFromCollectionAndSlug({ collection: blog.collection, slug: blog.slug }),
-	seriesLength: blog.data.blogMeta.type === 'series' ? blog.data.blogMeta.relatedBlogs.length : 0
-})) satisfies Array<BlogListing>;
+const listingDetails = listingByType
+	.sort((a, b) => {
+		return new Date(b.data.publishedDate).getTime() - new Date(a.data.publishedDate).getTime();
+	})
+	.map((blog) => ({
+		title: blog.data.title,
+		publishedDate: blog.data.publishedDate,
+		uri: getUriFromCollectionAndSlug({ collection: blog.collection, slug: blog.slug }),
+		seriesLength: blog.data.blogMeta.type === 'series' ? blog.data.blogMeta.relatedBlogs.length : 0
+	})) satisfies Array<BlogListing>;
 ---
 
 {
