@@ -64,7 +64,7 @@ console.log(Object.isSealed(input)); // yields false
 
 const output = deepSealObject(input);
 
-console.log(Object.isSealed(input)); // yields true
+console.log(Object.isSealed(output)); // yields true
 
 delete output.b.c; // no effect
 
