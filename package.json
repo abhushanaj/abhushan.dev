@@ -27,13 +27,13 @@
 		"astro": "^4.5.18",
 		"astro-expressive-code": "^0.33.5",
 		"lucide-react": "^0.367.0",
-		"react": "^18.2.0",
+		"react": "^18.3.1",
 		"react-dom": "^18.2.0"
 	},
 	"devDependencies": {
 		"@ianvs/prettier-plugin-sort-imports": "^4.2.1",
 		"@types/node": "^20.12.7",
-		"@types/react": "^18.2.75",
+		"@types/react": "^18.3.1",
 		"@types/react-dom": "^18.2.24",
 		"@typescript-eslint/eslint-plugin": "^7.6.0",
 		"@typescript-eslint/parser": "^7.6.0",
