@@ -3,6 +3,7 @@ import DefaultLayout from '@/layouts/default/index.astro';
 
 import ClosingConnectCta from '@/components/astro/closing-connect-cta/index.astro';
 import BreadcrumbJsonLdSchema from '@/components/astro/json-lds/breadcrumb.astro';
+import SectionHead from '@/components/astro/section-head/index.astro';
 import SeoMeta from '@/components/astro/seo-meta/index.astro';
 import { BackAction } from '@/components/react/back-action';
 import RecreatesWrapper from '@/components/react/recreates/demo-wrapper';
@@ -14,10 +15,10 @@ import { getUriFromSlug } from '@/lib/url';
 <DefaultLayout>
 	<SeoMeta
 		slot="head"
-		title="Analog Clock | Recreates by Abhushan"
-		description="Explore Abhushan's recreation of the analog clock, showcasing expertise in Frontend Development"
-		ogImage="/open-graph/recreates/analog-clock-recreates.webp"
-		ogImageAlt="Analog Clock recreates by Abhushan Adhikari Joshi"
+		title="Pausable Progress Bars | Recreates by Abhushan"
+		description="Explore Abhushan's recreation of the pausable progress bars with concurrency, showcasing expertise in Frontend Development"
+		ogImage="/open-graph/recreates/pausable-progress-bars-recreates.webp"
+		ogImageAlt="Pausable Progress Bars recreates by Abhushan Adhikari Joshi"
 	/>
 
 	<BreadcrumbJsonLdSchema
@@ -44,6 +45,17 @@ import { getUriFromSlug } from '@/lib/url';
 				<RecreatesWrapper>
 					<PausableProgress client:load />
 				</RecreatesWrapper>
+			</section>
+
+			<!-- Planning to add in future -->
+			<section class="mb-8">
+				<SectionHead title="Future improvements planned 💡" />
+				<ul class="flex list-inside list-disc flex-col gap-2 pl-4">
+					<li class="line-through">Start/Stop progress.</li>
+					<li class="line-through">Maximum concurrent bars.</li>
+					<li>Configure concurrency value.</li>
+					<li>Configure duration for transition.</li>
+				</ul>
 			</section>
 
 			<!-- Reach out listing -->
