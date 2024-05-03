@@ -22,11 +22,14 @@ function Button({ children, className, ...otherProps }: ComponentPropsWithoutRef
 }
 
 const INITIAL_PROGRESS = [0];
-const MAX_CONCURRENCY = 3;
 
 function PausableProgressBars() {
 	const [progress, setProgress] = React.useState(INITIAL_PROGRESS);
 	const [isRunning, setIsRunning] = React.useState(false);
+
+	const concurrencyCountRef = React.useRef(3);
+
+	const currencyLabelRef = React.useRef<HTMLLabelElement>(null);
 
 	const timerRef = React.useRef<null | ReturnType<typeof setTimeout>>(null);
 
@@ -52,7 +55,7 @@ function PausableProgressBars() {
 					return p.progress < 100;
 				});
 
-				const concurrentBars = filteredProgress.slice(0, MAX_CONCURRENCY);
+				const concurrentBars = filteredProgress.slice(0, concurrencyCountRef.current);
 
 				const updatedBars = prev.slice(0);
 
@@ -93,6 +96,39 @@ function PausableProgressBars() {
 				<Button onClick={addBar}>Add</Button>
 				<Button onClick={isRunning ? stop : start}>{isRunning ? 'Stop' : 'Start'}</Button>
 				<Button onClick={reset}>Reset</Button>
+			</div>
+
+			{/* Progress bars controls */}
+			<div className="flex gap-7">
+				<fieldset className="flex flex-1 flex-col items-center gap-2">
+					<label className="text-text-neutral-hc" htmlFor="concurrencyCount" ref={currencyLabelRef}>
+						Concurrency: {concurrencyCountRef.current}
+					</label>
+					<input
+						type="range"
+						name="concurrencyCount"
+						id="concurrencyCount"
+						min={1}
+						max={10}
+						step={1}
+						onChange={(e) => {
+							concurrencyCountRef.current = e.target.valueAsNumber;
+
+							if (currencyLabelRef.current) {
+								currencyLabelRef.current.textContent = `Concurrency: ${concurrencyCountRef.current}`;
+							}
+						}}
+					/>
+					<p>Range:(1-10) - Step of 1</p>
+				</fieldset>
+
+				<fieldset className="flex flex-1 flex-col items-center gap-2">
+					<label className="text-text-neutral-hc" htmlFor="durationCount">
+						Duration:
+					</label>
+					<input type="range" name="durationCount" id="durationCount" step={10} />
+					<span>Range:(10ms-100ms) - Step of 10ms</span>
+				</fieldset>
 			</div>
 
 			{/* Progress Bars Listing */}
