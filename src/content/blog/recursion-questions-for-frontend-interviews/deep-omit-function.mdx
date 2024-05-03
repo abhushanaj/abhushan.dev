@@ -1,0 +1,102 @@
+---
+seoMetaData:
+  title: 'Implement a deepOmit function'
+  description: 'Implement a deepOmit function using recursion'
+  ogImage: '/open-graph/blogs/implement-a-remove-cycle-function.webp'
+  ogImageAlt: 'Implement a deepOmit function using recursion'
+title: 'Implement a deepOmit function'
+publishedDate: 2024-05-03
+blogMeta:
+  type: 'series-part'
+  seriesParentSlug: 'recursion-questions-for-frontend-interviews'
+---
+
+An **omit** operation on an object is not formally defined in JavaScript, but in general it is widely understood as the process of removing or filtering out certain certain values based on a filter condition.
+
+<section>
+## 1. Basic implementation
+
+Implement the <InlineCode code="deepOmit()"/> utility, that removes specified keys and their corresponding values from an object, including nested objects or arrays.
+
+```js title="./src/deepOmit.js" mark="isPojo"
+import isPojo from './src/utils.js';
+
+function deepOmit(input, keys) {
+	if (Object.is(input, null)) {
+		return input;
+	}
+
+	// arrays
+	if (Array.isArray(input)) {
+		const outputArr = [];
+		input.forEach((item) => {
+			outputArr.push(deepOmit(item, keys));
+		});
+		return outputArr;
+	}
+
+	// objects
+	if (isPojo(input)) {
+		const resultObj = Object.create({});
+		for (const key in input) {
+			if (Object.hasOwn(input, key)) {
+				const value = input[key];
+
+				const isExcludedKey = keys.includes(key);
+
+				if (!isExcludedKey) {
+					if (typeof value !== 'object') {
+						resultObj[key] = value;
+					} else {
+						resultObj[key] = deepOmit(value, keys);
+					}
+				}
+			}
+		}
+
+		return resultObj;
+	}
+
+	return input;
+}
+
+// Usage
+const input = {
+	a: 1,
+	b: 2,
+	c: {
+		d: 4,
+		e: 5,
+		f: [7, 8, { g: 9, i: 10 }]
+	},
+	h: [1, 2, 3]
+};
+
+const output = deepOmit(input, ['d', 'g', 'h']);
+
+/** Yields:
+ * {
+    "a": 1,
+    "b": 2,
+    "c": {
+        "e": 5,
+        "f": [7, 8, { "i": 10 }]
+    }
+}
+*/
+console.log(output);
+```
+
+<br />
+
+In the above implementation , I have used a utility called <InlineCode code="isPojo()"/>, which essentially checks if the given value is a **_Plain Old JavaScript Object_** or not. You can learn more about it's implementation in the [deepEqual function implementation](/blog/recursion-questions-for-frontend-interviews/deep-equal-function/ 'Deep Equal utility implementation') question.
+
+</section>
+
+## Further Reading
+
+I strongly encourage you to explore and tackle additional questions in my [Recursion Questions for Frontend Interviews](/blog/recursion-questions-for-frontend-interviews/ 'Find more question on recursion in the recursion questions for frontend interviews blog series') blog series.
+
+By doing so, you can enhance your understanding and proficiency with recursion, preparing you to excel in your upcoming frontend interviews.
+
+**_Wishing you best. Happy Interviewing_** 🫡.
