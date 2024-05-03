@@ -23,6 +23,7 @@ function Button({ children, className, ...otherProps }: ComponentPropsWithoutRef
 
 const INITIAL_PROGRESS = [0];
 const INITIAL_CONCURRENCY_COUNT = 3;
+const INITIAL_DURATION = 1000;
 
 function PausableProgressBars() {
 	const [progress, setProgress] = React.useState(INITIAL_PROGRESS);
@@ -31,6 +32,7 @@ function PausableProgressBars() {
 	const timerRef = React.useRef<null | ReturnType<typeof setTimeout>>(null);
 
 	const concurrencyInputRef = useRef<HTMLInputElement>(null);
+	const durationInputRef = useRef<HTMLInputElement>(null);
 
 	const addBar = React.useCallback(() => {
 		setProgress((prev) => {
@@ -63,8 +65,16 @@ function PausableProgressBars() {
 
 				const updatedBars = prev.slice(0);
 
+				let duration = INITIAL_DURATION;
+
+				if (durationInputRef.current) {
+					duration = durationInputRef.current.valueAsNumber;
+				}
+
+				const incrementBy = (100 / duration) * 20;
+
 				for (const { index } of concurrentBars) {
-					updatedBars[index] = updatedBars[index]! + 0.5;
+					updatedBars[index] = updatedBars[index]! + incrementBy;
 				}
 
 				return updatedBars;
@@ -85,6 +95,10 @@ function PausableProgressBars() {
 		setProgress(INITIAL_PROGRESS);
 		if (concurrencyInputRef.current) {
 			concurrencyInputRef.current.value = INITIAL_CONCURRENCY_COUNT.toString();
+		}
+
+		if (durationInputRef.current) {
+			durationInputRef.current.value = INITIAL_DURATION.toString();
 		}
 	}, [stop]);
 
@@ -116,6 +130,7 @@ function PausableProgressBars() {
 						type="range"
 						name="concurrencyCount"
 						id="concurrencyCount"
+						defaultValue={INITIAL_CONCURRENCY_COUNT}
 						min={1}
 						max={10}
 						step={1}
@@ -127,8 +142,17 @@ function PausableProgressBars() {
 					<label className="text-text-neutral-hc" htmlFor="durationCount">
 						Duration:
 					</label>
-					<input type="range" name="durationCount" id="durationCount" step={10} />
-					<span>Range:(10ms-100ms) - Step of 10ms</span>
+					<input
+						ref={durationInputRef}
+						type="range"
+						name="durationCount"
+						id="durationCount"
+						defaultValue={INITIAL_DURATION}
+						min={500}
+						max={3000}
+						step={100}
+					/>
+					<span>Range:(500ms-3000ms) - Step of 100ms</span>
 				</fieldset>
 			</div>
 
