@@ -1,0 +1,84 @@
+---
+import { getCollection, getEntry } from 'astro:content';
+
+import type { GetStaticPaths } from 'astro';
+
+import DefaultLayout from '@/layouts/default/index.astro';
+
+import ClosingConnectCta from '@/components/astro/closing-connect-cta/index.astro';
+import BreadcrumbJsonLdSchema from '@/components/astro/json-lds/breadcrumb.astro';
+import SeoMeta from '@/components/astro/seo-meta/index.astro';
+import { BackAction } from '@/components/react/back-action';
+import RecreatesWrapper from '@/components/react/recreates/demo-wrapper';
+
+import { getUriFromCollectionAndSlug } from '@/lib/url';
+
+export const getStaticPaths = (async () => {
+	const allRecreates = await getCollection('recreates');
+
+	return allRecreates.map((recreate) => ({
+		params: {
+			slug: recreate.slug
+		}
+	}));
+}) satisfies GetStaticPaths;
+
+const { slug } = Astro.params;
+
+const recreation = await getEntry('recreates', slug);
+
+const {
+	data: { seoMetaData, title },
+	collection,
+	render
+} = recreation;
+
+const { Content } = await render();
+---
+
+<DefaultLayout>
+	<SeoMeta slot="head" {...seoMetaData} />
+
+	<BreadcrumbJsonLdSchema
+		slot="breadcrumb-ld"
+		breadcrumbTrial={[
+			{
+				name: 'Recreates',
+				uri: getUriFromCollectionAndSlug({
+					collection
+				})
+			},
+			{
+				name: 'Analog Clock',
+				uri: getUriFromCollectionAndSlug({
+					collection,
+					slug
+				})
+			}
+		]}
+	/>
+
+	<main>
+		<BackAction
+			href={getUriFromCollectionAndSlug({
+				collection
+			})}
+			title="back to recreates">back to recreates</BackAction
+		>
+
+		<article class="w-full">
+			<h1 class="mb-6 mt-2 text-2xl md:text-4xl">{title}</h1>
+
+			<section class="mb-8">
+				<RecreatesWrapper>
+					<Content />
+				</RecreatesWrapper>
+			</section>
+
+			<!-- Reach out listing -->
+			<section class="mb-8">
+				<ClosingConnectCta />
+			</section>
+		</article>
+	</main>
+</DefaultLayout>
