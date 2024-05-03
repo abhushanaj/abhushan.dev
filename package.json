@@ -3,7 +3,7 @@
 	"type": "module",
 	"version": "0.0.1",
 	"scripts": {
-		"dev": "pnpm run sync && astro dev",
+		"dev": "pnpm run sync && pnpm run lint && astro dev",
 		"start": "astro dev",
 		"build": "pnpm run sync && pnpm run lint:check && astro build",
 		"preview": "astro preview",
