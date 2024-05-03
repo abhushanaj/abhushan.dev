@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 
 import type { ComponentPropsWithoutRef } from 'react';
 
@@ -22,16 +22,16 @@ function Button({ children, className, ...otherProps }: ComponentPropsWithoutRef
 }
 
 const INITIAL_PROGRESS = [0];
+const INITIAL_CONCURRENCY_COUNT = 3;
 
 function PausableProgressBars() {
 	const [progress, setProgress] = React.useState(INITIAL_PROGRESS);
 	const [isRunning, setIsRunning] = React.useState(false);
 
-	const concurrencyCountRef = React.useRef(3);
-
-	const currencyLabelRef = React.useRef<HTMLLabelElement>(null);
-
 	const timerRef = React.useRef<null | ReturnType<typeof setTimeout>>(null);
+
+	const concurrencyCountRef = useRef(INITIAL_CONCURRENCY_COUNT);
+	const concurrencyInputRef = useRef<HTMLInputElement>(null);
 
 	const addBar = React.useCallback(() => {
 		setProgress((prev) => {
@@ -79,6 +79,10 @@ function PausableProgressBars() {
 	const reset = React.useCallback(() => {
 		stop();
 		setProgress(INITIAL_PROGRESS);
+		if (concurrencyInputRef.current) {
+			concurrencyInputRef.current.value = INITIAL_CONCURRENCY_COUNT.toString();
+			concurrencyCountRef.current = INITIAL_CONCURRENCY_COUNT;
+		}
 	}, [stop]);
 
 	React.useEffect(() => {
@@ -90,7 +94,7 @@ function PausableProgressBars() {
 	}, []);
 
 	return (
-		<div className="flex max-h-96 flex-col gap-5 overflow-auto">
+		<div className="flex  flex-col gap-5 ">
 			{/* Progress Controls */}
 			<div className="flex gap-4">
 				<Button onClick={addBar}>Add</Button>
@@ -101,10 +105,11 @@ function PausableProgressBars() {
 			{/* Progress bars controls */}
 			<div className="flex gap-7">
 				<fieldset className="flex flex-1 flex-col items-center gap-2">
-					<label className="text-text-neutral-hc" htmlFor="concurrencyCount" ref={currencyLabelRef}>
-						Concurrency: {concurrencyCountRef.current}
+					<label className="text-text-neutral-hc" htmlFor="concurrencyCount">
+						Concurrency
 					</label>
 					<input
+						ref={concurrencyInputRef}
 						type="range"
 						name="concurrencyCount"
 						id="concurrencyCount"
@@ -113,10 +118,6 @@ function PausableProgressBars() {
 						step={1}
 						onChange={(e) => {
 							concurrencyCountRef.current = e.target.valueAsNumber;
-
-							if (currencyLabelRef.current) {
-								currencyLabelRef.current.textContent = `Concurrency: ${concurrencyCountRef.current}`;
-							}
 						}}
 					/>
 					<p>Range:(1-10) - Step of 1</p>
@@ -132,10 +133,12 @@ function PausableProgressBars() {
 			</div>
 
 			{/* Progress Bars Listing */}
-			<div className="flex flex-col gap-4">
-				{progress.map((p, index) => (
-					<ProgressBar progress={p} key={index} />
-				))}
+			<div className="max-h-96 overflow-auto">
+				<div className="flex  flex-col gap-4 ">
+					{progress.map((p, index) => (
+						<ProgressBar progress={p} key={index} />
+					))}
+				</div>
 			</div>
 		</div>
 	);
