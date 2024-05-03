@@ -7,6 +7,7 @@ import DefaultLayout from '@/layouts/default/index.astro';
 
 import ClosingConnectCta from '@/components/astro/closing-connect-cta/index.astro';
 import BreadcrumbJsonLdSchema from '@/components/astro/json-lds/breadcrumb.astro';
+import SectionHead from '@/components/astro/section-head/index.astro';
 import SeoMeta from '@/components/astro/seo-meta/index.astro';
 import { BackAction } from '@/components/react/back-action';
 import RecreatesWrapper from '@/components/react/recreates/demo-wrapper';
@@ -28,7 +29,7 @@ const { slug } = Astro.params;
 const recreation = await getEntry('recreates', slug);
 
 const {
-	data: { seoMetaData, title },
+	data: { seoMetaData, title, todos },
 	collection,
 	render
 } = recreation;
@@ -74,6 +75,20 @@ const { Content } = await render();
 					<Content />
 				</RecreatesWrapper>
 			</section>
+
+			<!-- Planning to add in future -->
+			{
+				todos && todos.length > 0 && (
+					<section class="mb-8">
+						<SectionHead title="Future improvements planned 💡" />
+						<ul class="flex list-inside list-disc flex-col gap-2 pl-4">
+							{todos.map((todo) => (
+								<li class={todo.isDone ? 'line-through' : ''}>{todo.title}</li>
+							))}
+						</ul>
+					</section>
+				)
+			}
 
 			<!-- Reach out listing -->
 			<section class="mb-8">
