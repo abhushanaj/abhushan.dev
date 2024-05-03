@@ -2,7 +2,7 @@
 seoMetaData:
   title: 'Implement a deepOmit function'
   description: 'Implement a deepOmit function using recursion'
-  ogImage: '/open-graph/blogs/implement-a-remove-cycle-function.webp'
+  ogImage: '/open-graph/blogs/implement-a-deep-omit-function.webp'
   ogImageAlt: 'Implement a deepOmit function using recursion'
 title: 'Implement a deepOmit function'
 publishedDate: 2024-05-03
@@ -11,12 +11,12 @@ blogMeta:
   seriesParentSlug: 'recursion-questions-for-frontend-interviews'
 ---
 
-An **omit** operation on an object is not formally defined in JavaScript, but in general it is widely understood as the process of removing or filtering out certain certain values based on a filter condition.
+An **omit** operation on an object is not formally defined in JavaScript, but in general it is widely understood as the process of removing or filtering out certain values based on a condition.
 
 <section>
 ## 1. Basic implementation
 
-Implement the <InlineCode code="deepOmit()"/> utility, that removes specified keys and their corresponding values from an object, including nested objects or arrays.
+Implement the <InlineCode code="deepOmit()"/> utility, that removes specified keys and their corresponding values from an object, including nested objects or arrays. **Do not mutate the original input**.
 
 ```js title="./src/deepOmit.js" mark="isPojo"
 import isPojo from './src/utils.js';
