@@ -30,7 +30,6 @@ function PausableProgressBars() {
 
 	const timerRef = React.useRef<null | ReturnType<typeof setTimeout>>(null);
 
-	const concurrencyCountRef = useRef(INITIAL_CONCURRENCY_COUNT);
 	const concurrencyInputRef = useRef<HTMLInputElement>(null);
 
 	const addBar = React.useCallback(() => {
@@ -55,7 +54,12 @@ function PausableProgressBars() {
 					return p.progress < 100;
 				});
 
-				const concurrentBars = filteredProgress.slice(0, concurrencyCountRef.current);
+				let concurrencyCount = INITIAL_CONCURRENCY_COUNT;
+
+				if (concurrencyInputRef.current) {
+					concurrencyCount = concurrencyInputRef.current.valueAsNumber;
+				}
+				const concurrentBars = filteredProgress.slice(0, concurrencyCount);
 
 				const updatedBars = prev.slice(0);
 
@@ -81,7 +85,6 @@ function PausableProgressBars() {
 		setProgress(INITIAL_PROGRESS);
 		if (concurrencyInputRef.current) {
 			concurrencyInputRef.current.value = INITIAL_CONCURRENCY_COUNT.toString();
-			concurrencyCountRef.current = INITIAL_CONCURRENCY_COUNT;
 		}
 	}, [stop]);
 
@@ -116,9 +119,6 @@ function PausableProgressBars() {
 						min={1}
 						max={10}
 						step={1}
-						onChange={(e) => {
-							concurrencyCountRef.current = e.target.valueAsNumber;
-						}}
 					/>
 					<p>Range:(1-10) - Step of 1</p>
 				</fieldset>
