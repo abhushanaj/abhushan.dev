@@ -23,7 +23,7 @@ const sortedRecreates = allRecreates.sort((a, b) => {
 						collection: recreatesEntry.collection,
 						slug: recreatesEntry.slug
 					})}
-					title="View the recreation"
+					title={`View the recreation of ${recreatesEntry.data.title}`}
 					variant="highContrast"
 				>
 					{recreatesEntry.data.title}
