@@ -1,37 +1,36 @@
 ---
+import { getCollection } from 'astro:content';
+
 import { InternalLink } from '@/components/react/link/internal';
 
 import { formatPublishedDate } from '@/lib/date-time';
+import { getUriFromCollectionAndSlug } from '@/lib/url';
 
-const recreatesListing = [
-	{
-		title: 'Path Finder Algorithm Visualizer',
-		publishedDate: '2024-04-11',
-		href: '/recreates/path-finder-visualizer'
-	},
-	{
-		title: 'Analog Clock',
-		publishedDate: '2024-04-12',
-		href: '/recreates/analog-clock'
-	},
-	{
-		title: 'Pausable Progress Bars',
-		publishedDate: '2024-05-02',
-		href: '/recreates/pausable-progress-bars'
-	}
-];
+const allRecreates = await getCollection('recreates');
+const sortedRecreates = allRecreates.sort((a, b) => {
+	const dateA = new Date(a.data.publishedDate);
+	const dateB = new Date(b.data.publishedDate);
+	return dateA.getTime() - dateB.getTime();
+});
 ---
 
 <ul class="flex flex-col gap-5">
 	{
-		recreatesListing.map((listing) => (
+		sortedRecreates.map((recreatesEntry) => (
 			<li>
-				<InternalLink href={listing.href} title="View the recreation" variant="highContrast">
-					{listing.title}
+				<InternalLink
+					href={getUriFromCollectionAndSlug({
+						collection: recreatesEntry.collection,
+						slug: recreatesEntry.slug
+					})}
+					title="View the recreation"
+					variant="highContrast"
+				>
+					{recreatesEntry.data.title}
 				</InternalLink>
 				<p class="mt-1 flex flex-wrap items-center gap-2 text-sm">
-					<time datetime={new Date(listing.publishedDate).toISOString()}>
-						{formatPublishedDate(new Date(listing.publishedDate))}
+					<time datetime={new Date(recreatesEntry.data.publishedDate).toISOString()}>
+						{formatPublishedDate(new Date(recreatesEntry.data.publishedDate))}
 					</time>
 				</p>
 			</li>
