@@ -1,0 +1,85 @@
+---
+seoMetaData:
+  title: 'Implement a deepFlattenObject function'
+  description: 'Implement a deepFlattenObject function using recursion'
+  ogImage: '/open-graph/blogs/implement-a-deep-flatten-object-function.webp'
+  ogImageAlt: 'Implement a deepFlattenObject function using recursion'
+title: 'Implement a deepFlattenObject function'
+publishedDate: 2024-05-04
+blogMeta:
+  type: 'series-part'
+  seriesParentSlug: 'recursion-questions-for-frontend-interviews'
+---
+
+**Flattening an object** is not a standard defined in JavaScript, however, it is commonly understood as the process of flattening out all nested values within an object into a flat single-level key-value structure, where each key represents a unique path to the original nested value.
+
+<section>
+## 1. Basic implementation
+
+Implement a <InlineCode code="deepFlattenObject"/> function which can flatten out nested objects into a single level key value pair result.
+
+**Consider primitives values will be present**.
+
+```js title="./src/deepFlattenObject.js"
+function deepFlattenObject(input) {
+	let result = Object.create({});
+
+	for (const key in input) {
+		if (Object.hasOwn(input, key)) {
+			const value = input[key];
+
+			if (typeof value !== 'object' || Object.is(null, value)) {
+				result[key] = value;
+			} else {
+				result = {
+					...result,
+					...deepFlattenObject(value)
+				};
+			}
+		}
+	}
+
+	return result;
+}
+
+const input = {
+	a: 1,
+	b: 2,
+	c: 3,
+	d: {
+		e: 4,
+		f: {
+			g: null,
+			h: 7
+		}
+	}
+};
+const output = deepFlattenObject(input);
+
+/**
+ * Yields:
+ * {
+    "a": 1,
+    "b": 2,
+    "c": 3,
+    "e": 4,
+    "g": null,
+    "h": 7
+  }
+ */
+console.log(output);
+```
+
+</section>
+
+<br />
+
+You can also refer to the [Squash Object Keys](/blog/recursion-questions-for-frontend-interviews/squash-object-keys-function/ 'Implementaation of squashObjectKeys') implementation where there is a need to preserve the parent key when flattening the object.
+
+## Further Reading
+
+I strongly encourage you to explore and tackle additional questions in my [Recursion Questions for Frontend Interviews](/blog/recursion-questions-for-frontend-interviews/ 'Find more question on recursion in the recursion questions for frontend interviews blog series') blog series.
+
+By doing so, you can enhance your understanding and proficiency with recursion, preparing you to excel in your upcoming frontend interviews.
+
+**_Wishing you best. Happy Interviewing_** 🫡.
