@@ -35,7 +35,7 @@ const robotsConfig: Record<PossibleEnv, RobotsConfig> = {
 				allow: ['/']
 			}
 		},
-		additionalSitemaps: ['sitemap/blog.xml']
+		additionalSitemaps: ['sitemap/blog.xml', 'sitemap/recreates.xml']
 	}
 } as const;
 

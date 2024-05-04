@@ -5,12 +5,19 @@
 import { defineCollection } from 'astro:content';
 
 import { blogSchema } from '@/schemas/blog';
+import { recreatesSchema } from '@/schemas/recreates';
 
 const blogCollection = defineCollection({
 	type: 'content',
 	schema: blogSchema
 });
 
+const recreatesCollection = defineCollection({
+	type: 'content',
+	schema: recreatesSchema
+});
+
 export const collections = {
-	blog: blogCollection
+	blog: blogCollection,
+	recreates: recreatesCollection
 };

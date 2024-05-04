@@ -1,3 +1,4 @@
+import { collections } from '@/content/config';
 import { getCollection } from 'astro:content';
 
 import type { APIRoute, GetStaticPaths } from 'astro';
@@ -31,7 +32,7 @@ export const GET: APIRoute<Props, Params> = async ({ params }) => {
 };
 
 export const getStaticPaths = (() => {
-	const collectionsNames = ['blog'];
+	const collectionsNames = Object.keys(collections);
 
 	return collectionsNames.map((name) => ({
 		params: {
