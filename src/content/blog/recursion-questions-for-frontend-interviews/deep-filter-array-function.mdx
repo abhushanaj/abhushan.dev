@@ -110,6 +110,52 @@ console.log(JSON.stringify(output));
 
 </section>
 
+{/* ================ Variation: Count filtered elements ======= */}
+
+<section>
+<SubHeading>Variation: Counting filtered elements</SubHeading>
+
+## 2. Counting filtered elements implementation
+
+In both the variations above, we returned the new filtered array back. However, it might be asked to simply count and return the number of items which yields a turthy value for the callback function.
+
+The implementation for the same remain almost the same, so I will highlight only the new changes made.
+
+```js title="./src/deepFilterArray.js"  ins={10, 14}
+function deepFilterArray(arr, filterFn, ogArg = arr) {
+	let count = 0;
+
+	if (!arr.length) {
+		return count;
+	}
+
+	arr.forEach((item) => {
+		if (Array.isArray(item)) {
+			count += deepFilterArray(item, filterFn, ogArg);
+		} else {
+			const isTruthy = filterFn.call(ogArg, item);
+			if (isTruthy) {
+				count++;
+			}
+		}
+	});
+
+	return count;
+}
+
+// Usage
+const input = [1, [2, [3, [[4], { a: 1, b: 4 }], 4, 'hi'], ['hello', [['welcome', 10]], 11]]];
+
+const output = deepFilterArray(input, function (e) {
+	return typeof e === 'number' && e > this.length;
+});
+
+// yields 5
+console.log(output);
+```
+
+</section>
+
 ## Further Reading
 
 I strongly encourage you to explore and tackle additional questions in my [Recursion Questions for Frontend Interviews](/blog/recursion-questions-for-frontend-interviews/ 'Find more question on recursion in the recursion questions for frontend interviews blog series') blog series.
