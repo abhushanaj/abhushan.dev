@@ -119,7 +119,7 @@ console.log(JSON.stringify(output));
 
 In both the variations above, we returned the new filtered array back. However, it might be asked to simply count and return the number of items which yields a turthy value for the callback function.
 
-The implementation for the same remain almost the same, so I will highlight only the new changes made.
+The implementation for this version remains almost the same, so I will highlight only the new changes made.
 
 ```js title="./src/deepFilterArray.js"  ins={10, 14}
 function deepFilterArray(arr, filterFn, ogArg = arr) {
