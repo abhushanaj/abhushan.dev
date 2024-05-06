@@ -1,0 +1,119 @@
+---
+seoMetaData:
+  title: 'Implement a deepFilterArray function'
+  description: 'Implement a deepFilterArray function using recursion'
+  ogImage: '/open-graph/blogs/implement-a-deep-flatten-array-function.webp'
+  ogImageAlt: 'Implement a deepFilterArray function using recursion'
+title: 'Implement a deepFilterArray function'
+publishedDate: 2024-04-01
+blogMeta:
+  type: 'series-part'
+  seriesParentSlug: 'recursion-questions-for-frontend-interviews'
+---
+
+**Deep Flattening** is not a standard term defined in JavaScript, but it is commonly well understood as the process of perform filtering operation on each depth of a nested multi-dimensional array.
+
+<section>
+
+<SubHeading>Variation: Basic implementation</SubHeading>
+
+## 1. Basic implementation
+
+We have to implement a <InlineCode code="deepFilterArray()"/> utility function which takes a nested multi-dimensional array and a filter callback and returns a new array with element filtered. The depth of elements on array must be maintained.
+
+```js title="./src/deepFilterArray.js"
+function deepFilterArray(arr, filterFn) {
+	const result = [];
+
+	if (!arr.length) {
+		return result;
+	}
+
+	arr.forEach((item) => {
+		if (Array.isArray(item)) {
+			// recursively call the filter method when it's a nested array
+			result.push(deepFilterArray(item, filterFn));
+		} else {
+			const isTruthy = filterFn(item);
+			if (isTruthy) {
+				result.push(item);
+			}
+		}
+	});
+
+	return result;
+}
+
+// Usage
+const input = [1, [2, [3, [[4], { a: 1, b: 4 }], 4, 'hi'], ['hello', [['welcome', 10]], 11]]];
+
+const output = deepFilterArray(input, function (e) {
+	return typeof e === 'number' && e > 2;
+});
+
+/**
+ * Yields: [[[3,[[4]],4],[[[10]],11]]]
+ */
+console.log(JSON.stringify(output));
+```
+
+<br />
+
+</section>
+
+{/* ============== Variation: Custom this keyword ============ */}
+
+<section>
+<SubHeading>Variation: Custom this binding</SubHeading>
+
+## 2. Custom this binding implementation
+
+In the above implementation, we simply invoked the filter callback, without binding the <InlineCode code="this"/> keyword to any value. For this implementation, we need to bind the <InlineCode code="this"/> value to the original input array.
+
+Most of the implementation will remain the same, so I am highlighting only the new changes made to support the same.
+
+```js title="./src/deepFilterArray.js" mark="ogArg" ins={12, 27}
+function deepFilterArray(arr, filterFn, ogArg = arr) {
+	const result = [];
+
+	if (!arr.length) {
+		return result;
+	}
+
+	arr.forEach((item) => {
+		if (Array.isArray(item)) {
+			result.push(deepFilterArray(item, filterFn, ogArg));
+		} else {
+			const isTruthy = filterFn.call(ogArg, item);
+			if (isTruthy) {
+				result.push(item);
+			}
+		}
+	});
+
+	return result;
+}
+
+// Usage
+const input = [1, [2, [3, [[4], { a: 1, b: 4 }], 4, 'hi'], ['hello', [['welcome', 10]], 11]]];
+
+const output = deepFilterArray(input, function (e) {
+	// this refers to the original array, so this.length=2
+	return typeof e === 'number' && e > this.length;
+});
+
+/**
+ * Yields: [[[3,[[4]],4],[[[10]],11]]]
+ */
+console.log(JSON.stringify(output));
+```
+
+</section>
+
+## Further Reading
+
+I strongly encourage you to explore and tackle additional questions in my [Recursion Questions for Frontend Interviews](/blog/recursion-questions-for-frontend-interviews/ 'Find more question on recursion in the recursion questions for frontend interviews blog series') blog series.
+
+By doing so, you can enhance your understanding and proficiency with recursion, preparing you to excel in your upcoming frontend interviews.
+
+**_Wishing you best. Happy Interviewing_** 🫡.
