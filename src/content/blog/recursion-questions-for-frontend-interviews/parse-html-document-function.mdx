@@ -1,0 +1,127 @@
+---
+seoMetaData:
+  title: 'Implement a parseHtmlDocument function'
+  description: 'Solution for implementation of parseHtmlDocument utility function question using recursion asked in frontend interviews.'
+  ogImage: '/open-graph/blogs/implement-a-squash-object-keys-function.webp'
+  ogImageAlt: 'Implementation of a parseHtmlDocument function using recursion'
+title: 'Implement a parseHtmlDocument function'
+publishedDate: 2024-05-07
+blogMeta:
+  type: 'series-part'
+  seriesParentSlug: 'recursion-questions-for-frontend-interviews'
+---
+
+**HTML parsing**, is the process when you navigate through an HTML document and create an object representation of it, you're essentially creating a data structure that mirrors the structure of the HTML elements, attributes, and their relationships.
+
+For example, let's consider the following HTML document:
+
+```html title="./sampleDocument.html"
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="./src/index.css" />
+		<title>Document</title>
+	</head>
+
+	<body>
+		<div class="root-wrapper" id="root" data-id="root">
+			<p class="info-text">Hello World</p>
+			<div>
+				<button id="target-btn">Click me!</button>
+			</div>
+		</div>
+	</body>
+</html>
+```
+
+<br />
+
+The object tree representation for the document would be:
+
+```js title="./src/sampleTree.js"
+const tree = {
+	type: 'div',
+	props: {
+		id: 'root',
+		class: 'root-wrapper',
+		'data-id': 'root',
+		children: [
+			{
+				type: 'p',
+				props: {
+					class: 'info-text',
+					children: 'Hello World'
+				}
+			},
+			{
+				type: 'div',
+				props: {
+					children: [
+						{
+							type: 'button',
+							id: 'target-btn',
+							children: 'Click me!'
+						}
+					]
+				}
+			}
+		]
+	}
+};
+```
+
+<section>
+## 1. Basic implementation
+
+We have to implement a <InlineCode code="parseHtmlDocument()"/> function which takes a root element and generates the document tree as sampled above.
+
+```js title="./src/parseHtmlDocument.js"
+function parseHtmlDocument(rootEl) {
+	// when no rootEl is present
+	if (!rootEl) {
+		return {};
+	}
+
+	function traverse(el) {
+		const props = {};
+
+		// gather all attributes from element
+		el.getAttributeNames().forEach((attribute) => {
+			props[attribute] = el.getAttribute(attribute);
+		});
+
+		// if the el has no children
+		if (!el.children.length) {
+			props.children = el.textContent;
+		} else {
+			// else recursively go and collect the children
+			props.children = Array.from(el.children).map((child) => traverse(child));
+		}
+
+		return {
+			type: el.tagName.toLowerCase(),
+			props
+		};
+	}
+
+	return traverse(rootEl);
+}
+
+// Usage
+const rootEl = document.getElementById('root');
+
+const output = parseHtmlDocument(rootEl);
+
+console.log(output); // Yields the tree shown above
+```
+
+</section>
+
+## Further Reading
+
+I strongly encourage you to explore and tackle additional questions in my [Recursion Questions for Frontend Interviews](/blog/recursion-questions-for-frontend-interviews/ 'Find more question on recursion in the recursion questions for frontend interviews blog series') blog series.
+
+By doing so, you can enhance your understanding and proficiency with recursion, preparing you to excel in your upcoming frontend interviews.
+
+**_Wishing you best. Happy Interviewing_** 🫡.
