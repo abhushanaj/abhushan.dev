@@ -12,6 +12,9 @@ export const GET: APIRoute = () => {
 		},
 		{
 			url: getUrlFromUri(getUriFromSlug('blog'))
+		},
+		{
+			url: getUrlFromUri(getUriFromSlug('recreates'))
 		}
 	]);
 

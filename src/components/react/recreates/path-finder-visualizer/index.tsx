@@ -10,7 +10,7 @@ type Props = ComponentPropsWithoutRef<'button'>;
 function Button({ children, className, ...otherProps }: Props) {
 	return (
 		<button
-			className={`rounded-md bg-ui-neutral-bg px-2 py-2 text-text-neutral-hc hover:bg-ui-neutral-hovered-bg ${className}`}
+			className={`rounded-md bg-ui-neutral-bg px-2 py-2 text-text-neutral-hc hover:bg-ui-neutral-hovered-bg disabled:cursor-wait disabled:opacity-50 ${className}`}
 			{...otherProps}
 		>
 			{children}
@@ -29,6 +29,7 @@ const mazeCellBgColorMap: Record<MazeItem, string> = {
 
 function PathFinderVisualizer() {
 	const [maze, setMaze] = React.useState<Maze>(() => generateMaze(15, 20));
+	const [isRunning, setIsRunning] = React.useState(false);
 
 	const totalRows = maze.length;
 	const totalCols = maze[0]?.length || 0;
@@ -44,6 +45,7 @@ function PathFinderVisualizer() {
 	const randomizeMaze = React.useCallback(() => {
 		resetAllTimers();
 		setMaze(generateMaze(15, 20));
+		setIsRunning(false);
 	}, [resetAllTimers]);
 
 	const executePathFinder = (e: MouseEvent<HTMLButtonElement>) => {
@@ -57,8 +59,12 @@ function PathFinderVisualizer() {
 
 		resetAllTimers();
 
+		setIsRunning(true);
+
 		function traverse(point: CellPosition) {
 			const queue = [point];
+			const stack = [point];
+
 			const visited = new Set(`${point.rowIndex},${point.colIndex}`);
 
 			function visitCell(x: number, y: number) {
@@ -67,7 +73,7 @@ function PathFinderVisualizer() {
 				if (maze[x]![y] === 'target') {
 					maze[x]![y] = 'reached';
 					setMaze(structuredClone(maze));
-
+					setIsRunning(false);
 					return true;
 				}
 
@@ -79,11 +85,15 @@ function PathFinderVisualizer() {
 			}
 
 			function process() {
-				if (!queue.length) {
+				if (pathFinderAlgorithm === 'bfs' && !queue.length) {
 					return;
 				}
 
-				const toProcessPoint = queue.shift()!;
+				if (pathFinderAlgorithm === 'dfs' && !stack.length) {
+					return;
+				}
+
+				const toProcessPoint = pathFinderAlgorithm === 'bfs' ? queue.shift()! : stack.pop()!;
 
 				for (const { dx, dy } of PATH_DIRECTIONS) {
 					const nx = toProcessPoint.rowIndex + dx;
@@ -101,10 +111,17 @@ function PathFinderVisualizer() {
 								return;
 							}
 
-							queue.push({
-								rowIndex: nx,
-								colIndex: ny
-							});
+							if (pathFinderAlgorithm === 'bfs') {
+								queue.push({
+									rowIndex: nx,
+									colIndex: ny
+								});
+							} else {
+								stack.push({
+									rowIndex: nx,
+									colIndex: ny
+								});
+							}
 						}
 					}
 				}
@@ -129,9 +146,12 @@ function PathFinderVisualizer() {
 			<div className=" flex flex-col items-center justify-center gap-5 border-b border-ui-neutral-border pb-4">
 				{/* Actions */}
 				<div className="flex items-center justify-center gap-4">
-					<Button onClick={randomizeMaze}>Randomize Maze</Button>
-					<Button data-algorithm="bfs" onClick={executePathFinder}>
+					<Button onClick={randomizeMaze}>{isRunning ? 'Reset' : 'Randomize Maze'}</Button>
+					<Button data-algorithm="bfs" onClick={executePathFinder} disabled={isRunning}>
 						Run BFS
+					</Button>
+					<Button data-algorithm="dfs" onClick={executePathFinder} disabled={isRunning}>
+						Run DFS
 					</Button>
 				</div>
 

@@ -48,7 +48,7 @@ const parentBlogDetails = isPartOfSeries ? await getEntryBySlug('blog', blogMeta
 ---
 
 <DefaultLayout>
-	<SeoMeta slot="head" {...seoMetaData} />
+	<SeoMeta slot="head" {...seoMetaData} robots={isPartOfSeries ? 'noindex, follow' : seoMetaData.robots} />
 	<BreadcrumbJsonLdSchema
 		slot="breadcrumb-ld"
 		breadcrumbTrial={[

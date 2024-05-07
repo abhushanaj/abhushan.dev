@@ -1,0 +1,102 @@
+---
+seoMetaData:
+  title: 'Implement a deepMerge function'
+  description: 'Solution for implementation of deepMerge utility function question using recursion asked in frontend interviews.'
+  ogImage: '/open-graph/blogs/implement-a-deep-merge-function.webp'
+  ogImageAlt: 'Implementation of deepMerge function using recursion'
+title: 'Implement a deepMerge function'
+publishedDate: 2024-05-03
+blogMeta:
+  type: 'series-part'
+  seriesParentSlug: 'recursion-questions-for-frontend-interviews'
+---
+
+In JavaScript, **merging** typically refers to combining two or more objects or arrays into a single object or array. This process is commonly used when you want to consolidate data from multiple sources or update an object with new properties.
+
+<section>
+## 1. Basic implementation
+
+We have to implement a <InlineCode code="deepMerge()"/> utility function which can merge nested objects and arrays. If same keys exist on both objects and hold a primitive value, simply return the value from second object as the final result.
+
+```js title="./src/deepOmit.js" mark="isPojo"
+import isPojo from './src/utils.js';
+
+function deepMerge(valA, valB) {
+	// handling arrays
+	if (Array.isArray(valA) && Array.isArray(valB)) {
+		return [...valA, ...valB];
+	}
+
+	// objects
+	if (isPojo(valA) && isPojo(valB)) {
+		const mergedObj = { ...valA };
+		for (const key in valB) {
+			if (Object.hasOwn(valB, key)) {
+				if (key in valA) {
+					mergedObj[key] = deepMerge(valA[key], valB[key]);
+				} else {
+					mergedObj[key] = valB[key];
+				}
+			}
+		}
+		return mergedObj;
+	}
+
+	// other values
+	return valB;
+}
+
+// Usage
+const output1 = deepMerge({ a: 1 }, 2);
+/**
+ * Yields: 2
+ */
+console.log(output1);
+
+const output2 = deepMerge({ a: 1 }, { a: 2, b: 3 });
+/**
+ * Yields:
+ * {
+    "a": 2,
+    "b": 3
+	}
+ */
+console.log(output2);
+
+const output3 = deepMerge({ a: 1, b: [2, 3, 4] }, { a: 2, b: [5, 6], c: { d: [1, 2, 3] } });
+/**
+ * Yields:
+ * {
+    "a": 2,
+    "b": [
+        2,
+        3,
+        4,
+        5,
+        6
+    ],
+    "c": {
+        "d": [
+            1,
+            2,
+            3
+        ]
+    }
+}
+ */
+console.log(output3);
+```
+
+<br />
+
+In the above implementation , I have used a utility called <InlineCode code="isPojo()"/>, which essentially checks if the given value is a **_Plain Old JavaScript Object_** or not. You can learn more about it's implementation in the [deepEqual function](/blog/recursion-questions-for-frontend-interviews/deep-equal-function/ 'Deep Equal utility implementation') implementation from the [Recursion Questions for Frontend Interviews](/blog/recursion-questions-for-frontend-interviews/ 'Find more question on recursion in the recursion questions for frontend interviews blog series') blog series.
+
+</section>
+
+## Further Reading
+
+I strongly encourage you to explore and tackle additional questions in my [Recursion Questions for Frontend Interviews](/blog/recursion-questions-for-frontend-interviews/ 'Find more question on recursion in the recursion questions for frontend interviews blog series') blog series.
+
+By doing so, you can enhance your understanding and proficiency with recursion, preparing you to excel in your upcoming frontend interviews.
+
+**_Wishing you best. Happy Interviewing_** 🫡.
