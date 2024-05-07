@@ -1,0 +1,209 @@
+---
+seoMetaData:
+  title: 'Parody of JavaScript types'
+  description: 'A definite guide on finding the right type for variable in JavaScript, removing old classical bugs and achieving completeness.'
+  ogImage: '/open-graph/blogs/parody-of-javascript-types.webp'
+  ogImageAlt: 'Parody of JavaScript types'
+title: 'Parody of JavaScript types'
+publishedDate: 2024-05-08
+blogMeta:
+  type: standalone
+---
+
+If you've spent any decent amount of time working with JavaScript, you've likely noticed that it's not a perfect language.
+
+However, the most frustrating part of JavaScript for me is the **_inability to correctly identify the type of a value_**. For a language that is dynamically typed, any user of the language surely expects a robust utility or helper to assist with this.
+
+If you're thinking we have helpers in the form of the <InlineCode code="typeof"/> and <InlineCode code="instanceOf"/> operators, then you probably haven't used JavaScript enough to understand their pain points and shortcomings, because they are not the ideal solution.
+
+Well, if I'm being honest, I don't really think that as of today we have a perfect solution to achieve this. However, I can surely suggest an approach that I've learned and find to be the closest to the best answer.
+
+The answer? It's the <InlineCode code="Object.prototype.toString()"/> method available on the [object constructor](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/Object 'Read more about JavaScript Object constructor on MDN').
+
+But before reaching that conclusion, let's explore the issues with the common approaches of identifying types: <InlineCode code="typeof"/> and <InlineCode code="instanceOf"/>, with their shortcomings.
+
+## typeof operator
+
+It's the most common and widely used method. With the help of <InlineCode code="typeof"/> operator, one can get the type of a value with the following syntax <InlineCode code="typeof x"/>, where, **x** is the variable. It returns a **string** value denoting the type for the variable.
+
+```js title="./src/utils/getType.js"
+console.log(typeof 1); // 'number'
+console.log(typeof '1'); // 'string'
+console.log(typeof true); // 'boolean'
+console.log(typeof (() => {})); // 'function'
+console.log(typeof undefined); // 'undefined'
+console.log(typeof {}); // 'object'
+console.log(typeof Symbol('hi')); // 'symbol'
+console.log(typeof 10n); // 'bigint'
+```
+
+<br />
+There are 8 possible values for types using this method, each of which is highlighted above.
+
+But, there is an issue, one of which is a known legacy bug: **_typeof null returning an object_** in JavaScript.
+
+You can read more about it on this [stackoverflow thread](https://stackoverflow.com/questions/18808226/why-is-typeof-null-object 'Stackoverflow thread for learning why typeof null returns an object').
+
+But besides that, the data values like <InlineCode code="Map"/>, <InlineCode code="Set"/> , <InlineCode code="Date"/> also return as object when used with the typeof operator.
+
+```js title="./src/utils/getType.js"  ins={9-16}
+console.log(typeof 1); // 'number'
+console.log(typeof '1'); // 'string'
+console.log(typeof true); // 'boolean'
+console.log(typeof (() => {})); // 'function'
+console.log(typeof undefined); // 'undefined'
+console.log(typeof {}); // 'object'
+console.log(typeof Symbol('hi')); // 'symbol'
+console.log(typeof 10n); // 'bigint'
+console.log(typeof null); // 'object'
+console.log(typeof []); // 'object'
+console.log(typeof new Date()); // 'object'
+console.log(typeof new Set()); // 'object'
+console.log(typeof new Map()); // 'object'
+console.log(typeof new RegExp()); // 'object'
+```
+
+<br />
+
+Shouldn't they have returned <InlineCode code="date"/>, <InlineCode code="map"/>, <InlineCode code="set"/> following the convention, and considering <InlineCode code="function"/> was also a possible type? Well the answer isn't so simple.
+
+Now, here'e the thing, outside of the classic **null** case, other values like <InlineCode code="Map"/>, <InlineCode code="Set"/> etc, are actually **built-in "objects"** into JavaScript. So the typeof operator returning object for them actually makes sense. But <InlineCode code="typeof (()=>{})"/> does not follow the same rules?
+
+Yes 😅, since they are treated special in JavaScript and are also referred as **_callable action objects_**, i.e, we can not only call them but also treat them as objects.
+
+Considering these above shortcomings and irregular output of the <InlineCode code="typeof"/> operator, we can also reach out to the new <InlineCode code="instanceOf"/> operator for rescue which we'll discuss below.
+
+## instanceOf operator
+
+The <InlineCode code="instanceOf"/> operator tests to see if the prototype property of a constructor appears anywhere in the prototype chain of an object.
+
+If you have already not figured out from the definition, it comes with two straight shortcomings:
+
+1. <InlineCode code="instanceOf" /> does not work on any of the primitives types.
+
+```js title="./src/instanceOfUsage.js"
+console.log(3 instanceof Number); // false
+console.log('hello' instanceof String); // false
+console.log(true instanceof Boolean); // false
+console.log(10n instanceof BigInt); // false
+
+// We need to use boxing technique to get the correct result
+console.log(Number(3) instanceof Number); // true
+console.log(String('hello') instanceof String); // true
+// and so on ...
+```
+
+<br />
+
+Moreover, you cannot use <InlineCode code="instanceOf" /> with values like <InlineCode code="null" /> or <InlineCode code="undefined" /> as there are no constructor function available for them. 😅
+
+2. <InlineCode code="instanceOf" /> does not give us the actual type but rather, confirms if something is extended from any
+   base type (i.e, part of the prototype chain), so one still needs to run checks to determine the actual type for the value.
+
+Apart from these shortcomings, the <InlineCode code="instanceOf" /> operator works well to further understand if a given value belongs to any of the in-built object types (beyond just the "object") case of the typeof operator.
+
+```js title="./src/instanceOfUsage.js"
+console.log((() => {}) instanceof Function); // true
+console.log(null instanceof Object); // false
+console.log(new Date() instanceof Date); // true
+console.log(Promise.resolve(1) instanceof Promise); // true
+console.log({} instanceof Object); // true
+
+// since both Promise and function still have Object.prototype on their prototype chain
+console.log(Promise.resolve(1) instanceof Object); // true
+console.log((() => {}) instanceof Object); // true
+```
+
+<br />A more interesting problem here, is as the <InlineCode code="instanceOf" /> operator checks up the prototype
+chain, any changes made on this chain during runtime can yield in-correct result. Although this might be less likely,
+but still a good case to consider.
+
+```js title="./src/instanceOfUsage.js"
+const array = [];
+console.log(array instanceof Array); // true
+Object.setPrototypeOf(array, null);
+console.log(array instanceof Array); //false 😅
+```
+
+<br />
+
+Considering, the above cases now let's visit my most preferred solution using <InlineCode code="Object.prototype.toString()"/>
+
+## Object.prototype.toString()
+
+The <InlineCode code="toString()"/> method of Object instances returns a string representing this object. Funnily with a little effort it can actually be the most encompassing solution to correctly identify the type for the value.
+
+```js title="./src/toString.js"
+Object.prototype.toString.call({}); // "[object Object]"
+Object.prototype.toString.call(1); // "[object Number]"
+Object.prototype.toString.call('1'); // "[object String]"
+Object.prototype.toString.call(true); // "[object Boolean]"
+Object.prototype.toString.call(new String('string')); // "[object String]"
+Object.prototype.toString.call(function () {}); // "[object Function]"
+Object.prototype.toString.call(null); //"[object Null]"
+Object.prototype.toString.call(undefined); //"[object Undefined]"
+Object.prototype.toString.call(/test/g); //"[object RegExp]"
+Object.prototype.toString.call(new Date()); //"[object Date]"
+Object.prototype.toString.call([]); //"[object Array]"
+Object.prototype.toString.call(window); //"[object Window]
+```
+
+<br />
+
+If we create a small utility to transform the returned value, we can get the correct type for both primitives and non-primitive values.
+
+```js title="./src/getType.js"
+function getType(input) {
+	const type = Object.prototype.toString.call(input).replace(/^\[object (\S+)\]$/, '$1');
+	// lowercase the first character
+	return `${type[0].toLowerCase()}${type.slice(1)}`;
+}
+
+// Usage
+console.log(getType(1)); // 'number'
+console.log(getType('1')); // 'string'
+console.log(getType(true)); // 'boolean'
+console.log(getType(() => {})); // 'function'
+console.log(getType(undefined)); // 'undefined'
+console.log(getType({})); // 'object'
+console.log(getType(Symbol('hi'))); // 'symbol'
+console.log(getType(10n)); // 'bigint'
+console.log(getType(null)); // 'null'
+console.log(getType([])); // 'array'
+console.log(getType(new Date())); // 'date'
+console.log(getType(new Set())); // 'set'
+console.log(getType(new Map())); // 'map'
+console.log(getType(new RegExp())); // 'regExp'
+console.log(getType(window)); // window
+console.log(getType(document)); // document
+```
+
+<br />
+
+From the above usage we can see how it is an **_all-encompassing solution_**. However, as mentioned at the start of the blog, there exist no perfect solution to get the type for a value in JavaScript today.
+
+Since, the <InlineCode code="toString()"/> returns a string representing the object, we can also override this value at runtime and fool the result. This however is very unlikely to occur.
+
+```js
+// we force everything to be a number
+Object.prototype.toString = function (obj) {
+	return 'number'; // Oops! 😅
+};
+
+// or overide just for numbers
+Number.prototype.toString = function (obj) {
+	return 'string';
+};
+
+// and so on..
+```
+
+## Conclusion
+
+In conclusion, while there's no perfect solution for accurately determining the type of a value in JavaScript, exploring methods like the <InlineCode code="typeof"/> and <InlineCode code="instanceOf"/> operators sheds light on their strengths and limitations.
+
+The <InlineCode code="Object.prototype.toString()"/> method, although not flawless, emerges as a comprehensive approach to identifying types in JavaScript, covering both primitive and non-primitive values. Each method discussed has its pros and cons, and understanding their nuances can guide developers in choosing the most suitable approach for their specific needs.
+
+So the next time when you are sitting for a JavaScript interview and run into a situation where you want to identify the type of value you are working with, you can cases and possible solutions to consider now.
+
+Keep learning, stay curious, and enjoy the journey!
