@@ -102,17 +102,29 @@ console.log(documentString);
 
 <br />
 
+{/* =========== Variation ======= */}
+
+<section>
+<SubHeading>Variation: Rendering</SubHeading>
+
+## 2. Rendering serialized document
+
 In the above implementation we are only serializing the document, there can be further extension on the problem where we are expected to render the tree as well.
 
-The solution to that is also very straight forward, we can simply leverage the <InlineCode code="el.innerHTML()"/> API to write the serialized document on any given parent node.
+The solution to that is also very straight forward, we can simply leverage the <InlineCode code="el.innerHTML"/> API to write the serialized document on any given parent node.
 
-```js title="./src/renderSerializedHtmlDocument.js"
+```js title="./src/renderSerializedHtmlDocument.js" mark="documentString"
 function renderSerializedHtmlDocument(serializedDoc, rootEl) {
 	rootEl.innerHTML = serializedDoc;
 }
 // considering we need to write on root element as parent
 renderSerializedHtmlDocument(documentString, document.getElementById('root'));
 ```
+
+<br />
+where ***documentString*** is generated from above implementation.
+
+</section>
 
 ## Further Reading
 
