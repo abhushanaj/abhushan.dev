@@ -114,9 +114,9 @@ console.log(Promise.resolve(1) instanceof Object); // true
 console.log((() => {}) instanceof Object); // true
 ```
 
-<br />A more interesting problem here is as the instanceOf operator check up the prototype chain, any changes made to
-this chain during runtime and easily start inferring in-correct result. Although this might be less likely, but still a
-good case to consider.
+<br />A more interesting problem here, is as the <InlineCode code="instanceOf" /> operator checks up the prototype
+chain, any changes made on this chain during runtime can yield in-correct result. Although this might be less likely,
+but still a good case to consider.
 
 ```js title="./src/instanceOfUsage.js"
 const array = [];
@@ -150,24 +150,16 @@ Object.prototype.toString.call(window); //"[object Window]
 
 <br />
 
-If we create a small utility to transform the return value, we can get the correct type for both primitives and non-primitive values.
+If we create a small utility to transform the returned value, we can get the correct type for both primitives and non-primitive values.
 
 ```js title="./src/getType.js"
 function getType(input) {
 	const type = Object.prototype.toString.call(input).replace(/^\[object (\S+)\]$/, '$1');
-
 	// lowercase the first character
 	return `${type[0].toLowerCase()}${type.slice(1)}`;
 }
 
 // Usage
-function getType(input) {
-	const type = Object.prototype.toString.call(input).replace(/^\[object (\S+)\]$/, '$1');
-
-	// lowercase the first character
-	return `${type[0].toLowerCase()}${type.slice(1)}`;
-}
-
 console.log(getType(1)); // 'number'
 console.log(getType('1')); // 'string'
 console.log(getType(true)); // 'boolean'
@@ -188,7 +180,7 @@ console.log(getType(document)); // document
 
 <br />
 
-From the above usage we can see how it is an all-encompassing solution. However, as mentioned at the start of the blog, there exist no perfect solution to get the type for a value in JavaScript today.
+From the above usage we can see how it is an **_all-encompassing solution_**. However, as mentioned at the start of the blog, there exist no perfect solution to get the type for a value in JavaScript today.
 
 Since, the <InlineCode code="toString()"/> returns a string representing the object, we can also override this value at runtime and fool the result. This however is very unlikely to occur.
 
