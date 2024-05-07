@@ -1,0 +1,123 @@
+---
+seoMetaData:
+  title: 'Implement a serializeHtmlDocument function'
+  description: 'Solution for implementation of serializeHtmlDocument utility function question using recursion asked in frontend interviews.'
+  ogImage: '/open-graph/blogs/implement-a-parse-html-document-function.webp'
+  ogImageAlt: 'Implementation of a serializeHtmlDocument function using recursion'
+title: 'Implement a serializeHtmlDocument function'
+publishedDate: 2024-05-07
+blogMeta:
+  type: 'series-part'
+  seriesParentSlug: 'recursion-questions-for-frontend-interviews'
+---
+
+**HTML serialization**, is the process of generating an HTML document from an object tree or a structured representation of HTML elements. It involves converting the object-based representation back into a valid HTML string that represents the original document's structure and content.
+
+<section>
+<SubHeading>Variation: Serialization</SubHeading>
+
+## 1. Basic implementation
+
+We have to implement a html object tree to HTML document serializer function.
+
+```js title="./src/serializeHtmlDocument.js"
+function serializeHtmlDocument(treeObj) {
+	function traverse(node, depth) {
+		const elTagName = node.type;
+
+		// we indent the nodes by the depth of recursion (not neccesary just a nice addition)
+		const indent = `\t`.repeat(depth);
+
+		const attributeKeyValuePairs = Object.keys(node.props)
+			.filter((attribute) => attribute != 'children')
+			.map((attribute) => {
+				return `${attribute}="${node.props[attribute]}"`;
+			});
+
+		const serializedAttributes = attributeKeyValuePairs.join(' ');
+
+		const openingTag = `<${elTagName} ${serializedAttributes}>`;
+		const closingTag = `</${elTagName}>`;
+
+		// Check if the node is a text node
+		if (typeof node.props.children === 'string') {
+			return `${indent}${openingTag}${node.props.children}${closingTag}`;
+		}
+
+		const children = node.props.children.flatMap((child) => traverse(child, depth + 1));
+
+		return [`${indent}${openingTag}`, ...children, `${indent}${closingTag}`].join('\n');
+	}
+
+	return traverse(treeObj, 0);
+}
+
+// Usage
+const tree = {
+	type: 'div',
+	props: {
+		id: 'root',
+		class: 'root-wrapper',
+		'data-id': 'root',
+		children: [
+			{
+				type: 'p',
+				props: {
+					class: 'info-text',
+					children: 'Hello World'
+				}
+			},
+			{
+				type: 'div',
+				props: {
+					children: [
+						{
+							type: 'button',
+							id: 'target-btn',
+							props: {
+								children: 'Click me!'
+							}
+						}
+					]
+				}
+			}
+		]
+	}
+};
+const documentString = serializeHtmlDocument(tree);
+
+/**
+ * Yields: 
+ * <div id="root" class="root-wrapper" data-id="root">
+	  <p class="info-text">Hello World</p>
+	  <div >
+		  <button >Click me!</button>
+	  </div>
+  </div>
+ */
+console.log(documentString);
+```
+
+</section>
+
+<br />
+
+In the above implementation we are only serializing the document, there can be further extension on the problem where we are expected to render the tree as well.
+
+The solution to that is also very straight forward, we can simply leverage the <InlineCode code="el.innerHTML()"/> API to write the serialized document on any given parent node.
+
+```js title="./src/renderSerializedHtmlDocument.js"
+function renderSerializedHtmlDocument(serializedDoc, rootEl) {
+	rootEl.innerHTML = serializedDoc;
+}
+// considering we need to write on root element as parent
+renderSerializedHtmlDocument(documentString, document.getElementById('root'));
+```
+
+## Further Reading
+
+I strongly encourage you to explore and tackle additional questions in my [Recursion Questions for Frontend Interviews](/blog/recursion-questions-for-frontend-interviews/ 'Find more question on recursion in the recursion questions for frontend interviews blog series') blog series.
+
+By doing so, you can enhance your understanding and proficiency with recursion, preparing you to excel in your upcoming frontend interviews.
+
+**_Wishing you best. Happy Interviewing_** 🫡.
