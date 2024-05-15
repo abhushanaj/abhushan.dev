@@ -16,11 +16,11 @@ However, the most frustrating part of JavaScript for me is the **_inability to c
 
 If you're thinking we have helpers in the form of the <InlineCode code="typeof"/> and <InlineCode code="instanceOf"/> operators, then you probably haven't used JavaScript enough to understand their pain points and shortcomings, because they are not the ideal solution.
 
-Well, if I'm being honest, I don't really think that as of today we have a perfect solution to achieve this. However, I can surely suggest an approach that I've learned and find to be the closest to the best answer.
+Well, if I'm being honest, I don't really think that as of today we have a perfect solution to achieve this. However, I can surely suggest an approach that I've learned and find it to be the closest and most encompassing one.
 
-The answer? It's the <InlineCode code="Object.prototype.toString()"/> method available on the [object constructor](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/Object 'Read more about JavaScript Object constructor on MDN').
+**The answer?** It's the <InlineCode code="toString()"/> method available on the [object prototype](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/toString 'Read more about the toString() method on Object prototype.').
 
-But before reaching that conclusion, let's explore the issues with the common approaches of identifying types: <InlineCode code="typeof"/> and <InlineCode code="instanceOf"/>, with their shortcomings.
+But before reaching that conclusion, let's explore the issues with the common approaches of identifying types: <InlineCode code="typeof"/> and <InlineCode code="instanceOf"/>.
 
 ## typeof operator
 
@@ -38,13 +38,13 @@ console.log(typeof 10n); // 'bigint'
 ```
 
 <br />
-There are 8 possible values for types using this method, each of which is highlighted above.
+There are **8 possible** values for types using this method, each of which is highlighted above.
 
-But, there is an issue, one of which is a known legacy bug: **_typeof null returning an object_** in JavaScript.
+But, there is an issue, one of which is a known legacy bug: **typeof null** returning an object in JavaScript.
 
 You can read more about it on this [stackoverflow thread](https://stackoverflow.com/questions/18808226/why-is-typeof-null-object 'Stackoverflow thread for learning why typeof null returns an object').
 
-But besides that, the data values like <InlineCode code="Map"/>, <InlineCode code="Set"/> , <InlineCode code="Date"/> also return as object when used with the typeof operator.
+But ignoring that since it's been widely accepted, values like <InlineCode code="Map"/>, <InlineCode code="Set"/> , <InlineCode code="Date"/> also return a object when used with the typeof operator.
 
 ```js title="./src/utils/getType.js"  ins={9-16}
 console.log(typeof 1); // 'number'
@@ -204,6 +204,6 @@ In conclusion, while there's no perfect solution for accurately determining the 
 
 The <InlineCode code="Object.prototype.toString()"/> method, although not flawless, emerges as a comprehensive approach to identifying types in JavaScript, covering both primitive and non-primitive values. Each method discussed has its pros and cons, and understanding their nuances can guide developers in choosing the most suitable approach for their specific needs.
 
-So the next time when you are sitting for a JavaScript interview and run into a situation where you want to identify the type of value you are working with, you can cases and possible solutions to consider now.
+So the next time when you are sitting for a JavaScript interview and run into a situation where you want to identify the type of value you are working with, you have possible solutions to consider now.
 
 Keep learning, stay curious, and enjoy the journey!
