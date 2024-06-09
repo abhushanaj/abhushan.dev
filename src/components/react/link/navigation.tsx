@@ -17,7 +17,7 @@ export function NavLink({ title, children, href, active = false, ...otherProps }
 		<a
 			href={href}
 			title={title}
-			className={`ring-offset-app-bg underline-offset-4 outline-none hover:underline focus-visible:ring-2 focus-visible:ring-ui-neutral-focus-ring focus-visible:ring-offset-2 ${active ? activeClassName : inActiveClassName} `}
+			className={`underline-offset-4 outline-none ring-offset-app-bg hover:underline focus-visible:ring-2 focus-visible:ring-ui-neutral-focus-ring focus-visible:ring-offset-2 ${active ? activeClassName : inActiveClassName} `}
 			{...otherProps}
 		>
 			{children}

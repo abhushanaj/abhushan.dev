@@ -143,7 +143,7 @@ function PathFinderVisualizer() {
 
 	return (
 		<div>
-			<div className=" flex flex-col items-center justify-center gap-5 border-b border-ui-neutral-border pb-4">
+			<div className="flex flex-col items-center justify-center gap-5 border-b border-ui-neutral-border pb-4">
 				{/* Actions */}
 				<div className="flex items-center justify-center gap-4">
 					<Button onClick={randomizeMaze}>{isRunning ? 'Reset' : 'Randomize Maze'}</Button>

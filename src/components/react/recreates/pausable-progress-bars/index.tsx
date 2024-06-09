@@ -111,7 +111,7 @@ function PausableProgressBars() {
 	}, []);
 
 	return (
-		<div className="flex  flex-col gap-5 ">
+		<div className="flex flex-col gap-5">
 			{/* Progress Controls */}
 			<div className="flex gap-4">
 				<Button onClick={addBar}>Add</Button>
@@ -158,7 +158,7 @@ function PausableProgressBars() {
 
 			{/* Progress Bars Listing */}
 			<div className="max-h-96 overflow-auto">
-				<div className="flex  flex-col gap-4 ">
+				<div className="flex flex-col gap-4">
 					{progress.map((p, index) => (
 						<ProgressBar progress={p} key={index} />
 					))}
