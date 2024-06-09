@@ -77,7 +77,7 @@ function sum(...nums) {
 const result1 = sum(1)(2, 3, 4)(); // yields 10
 const result2 = sum(1, 2, 3)(4)(); // yields 10
 const result3 = sum(1, 2, 3, 4)(); // yields 10
-const result4 = sum(1, 2)(3, 4); // yields 10
+const result4 = sum(1, 2)(3, 4)(); // yields 10
 
 console.log(result1, result2, result3, result4);
 ```
