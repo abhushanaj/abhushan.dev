@@ -97,8 +97,9 @@ console.log(String('hello') instanceof String); // true
 
 Moreover, you cannot use <InlineCode code="instanceOf" /> with values like <InlineCode code="null" /> or <InlineCode code="undefined" /> as there are no constructor function available for them. 😅
 
-2. <InlineCode code="instanceOf" /> does not give us the actual type but rather, confirms if something is extended from any
-   base type (i.e, part of the prototype chain), so one still needs to run checks to determine the actual type for the value.
+2. <InlineCode code="instanceOf" /> does not give us the actual type but rather, confirms if something is extended from
+   any base type (i.e, part of the prototype chain), so one still needs to run checks to determine the actual type for
+   the value.
 
 Apart from these shortcomings, the <InlineCode code="instanceOf" /> operator works well to further understand if a given value belongs to any of the in-built object types (beyond just the "object") case of the typeof operator.
 
