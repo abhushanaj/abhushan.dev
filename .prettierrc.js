@@ -1,6 +1,5 @@
 /** @type {import("@ianvs/prettier-plugin-sort-imports").PrettierConfig} */
 export default {
-	// due to pnpm issues, plugin does not read from her for astro and needs to be passed as CLI option
 	plugins: ['@ianvs/prettier-plugin-sort-imports', 'prettier-plugin-astro', 'prettier-plugin-tailwindcss'],
 
 	// General
