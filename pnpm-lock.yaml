@@ -9,22 +9,22 @@ importers:
     dependencies:
       '@astrojs/check':
         specifier: ^0.7.0
-        version: 0.7.0(prettier-plugin-astro@0.13.0)(prettier@3.2.5)(typescript@5.4.3)
+        version: 0.7.0(prettier-plugin-astro@0.13.0)(prettier@3.3.1)(typescript@5.4.3)
       '@astrojs/mdx':
         specifier: ^3.1.0
-        version: 3.1.0(astro@4.10.1(@types/node@20.12.12)(typescript@5.4.3))
+        version: 3.1.0(astro@4.10.1(@types/node@20.14.2)(typescript@5.4.3))
       '@astrojs/react':
         specifier: ^3.5.0
-        version: 3.5.0(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.2.0(react@18.3.1))(react@18.3.1)(vite@5.2.13(@types/node@20.12.12))
+        version: 3.5.0(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.2.0(react@18.3.1))(react@18.3.1)(vite@5.2.13(@types/node@20.14.2))
       '@astrojs/tailwind':
         specifier: ^5.1.0
-        version: 5.1.0(astro@4.10.1(@types/node@20.12.12)(typescript@5.4.3))(tailwindcss@3.4.4)
+        version: 5.1.0(astro@4.10.1(@types/node@20.14.2)(typescript@5.4.3))(tailwindcss@3.4.4)
       astro:
         specifier: ^4.10.1
-        version: 4.10.1(@types/node@20.12.12)(typescript@5.4.3)
+        version: 4.10.1(@types/node@20.14.2)(typescript@5.4.3)
       astro-expressive-code:
         specifier: ^0.35.3
-        version: 0.35.3(astro@4.10.1(@types/node@20.12.12)(typescript@5.4.3))
+        version: 0.35.3(astro@4.10.1(@types/node@20.14.2)(typescript@5.4.3))
       lucide-react:
         specifier: ^0.390.0
         version: 0.390.0(react@18.3.1)
@@ -37,10 +37,10 @@ importers:
     devDependencies:
       '@ianvs/prettier-plugin-sort-imports':
         specifier: ^4.2.1
-        version: 4.2.1(prettier@3.2.5)
+        version: 4.2.1(prettier@3.3.1)
       '@types/node':
-        specifier: ^20.12.12
-        version: 20.12.12
+        specifier: ^20.14.2
+        version: 20.14.2
       '@types/react':
         specifier: ^18.3.3
         version: 18.3.3
@@ -75,14 +75,14 @@ importers:
         specifier: ^4.1.5
         version: 4.1.5
       prettier:
-        specifier: 3.2.5
-        version: 3.2.5
+        specifier: 3.3.1
+        version: 3.3.1
       prettier-plugin-astro:
         specifier: ^0.13.0
         version: 0.13.0
       prettier-plugin-tailwindcss:
-        specifier: ^0.5.14
-        version: 0.5.14(@ianvs/prettier-plugin-sort-imports@4.2.1(prettier@3.2.5))(prettier-plugin-astro@0.13.0)(prettier@3.2.5)
+        specifier: ^0.6.2
+        version: 0.6.2(@ianvs/prettier-plugin-sort-imports@4.2.1(prettier@3.3.1))(prettier-plugin-astro@0.13.0)(prettier@3.3.1)
       tailwindcss:
         specifier: ^3.4.4
         version: 3.4.4
@@ -1260,9 +1260,9 @@ packages:
     resolution:
       { integrity: sha512-vSYNSDe6Ix3q+6Z7ri9lyWqgGhJTmzRjZRqyq15N0Z/1/UnVsno9G/N40NBijoYx2seFDIl0+B2mgAb9mezUCA== }
 
-  '@types/node@20.12.12':
+  '@types/node@20.14.2':
     resolution:
-      { integrity: sha512-eWLDGF/FOSPtAvEqeRAQ4C8LSA7M1I7i0ky1I8U7kD1J5ITyW3AsRhQrKVoWf5pFKZ2kILsEGJhsI9r93PYnOw== }
+      { integrity: sha512-xyu6WAMVwv6AKFLB+e/7ySZVr/0zLCzOa7rSpq6jNwpqOrUbcACDWC+53d4n2QHOnDou0fbIsg8wZu/sxrnI4Q== }
 
   '@types/prop-types@15.7.12':
     resolution:
@@ -3635,9 +3635,9 @@ packages:
       { integrity: sha512-5HrJNnPmZqTUNoA97zn4gNQv9BgVhv+et03314WpQ9H9N8m2L9OSV798olwmG2YLXPl1iSstlJCR1zB3x5xG4g== }
     engines: { node: ^14.15.0 || >=16.0.0 }
 
-  prettier-plugin-tailwindcss@0.5.14:
+  prettier-plugin-tailwindcss@0.6.2:
     resolution:
-      { integrity: sha512-Puaz+wPUAhFp8Lo9HuciYKM2Y2XExESjeT+9NQoVFXZsPPnc9VYss2SpxdQ6vbatmt8/4+SN0oe0I1cPDABg9Q== }
+      { integrity: sha512-eFefm4cg+1c2B57+H274Qm//CTWBdtQN9ansl0YTP/8TC8x3bugCTQSS/e4FC5Ctl9djhTzsbcMrZ7x2/abIow== }
     engines: { node: '>=14.21.3' }
     peerDependencies:
       '@ianvs/prettier-plugin-sort-imports': '*'
@@ -3688,9 +3688,9 @@ packages:
       prettier-plugin-svelte:
         optional: true
 
-  prettier@3.2.5:
+  prettier@3.3.1:
     resolution:
-      { integrity: sha512-3/GWa9aOC0YeD7LUfvOG2NiDyhOWRvt1k+rcKhOuYnMY24iiCphgneUfJDyFXd6rZCAnuLBv6UeAULtrhT/F4A== }
+      { integrity: sha512-7CAwy5dRsxs8PHXT3twixW9/OEll8MLE0VRPCJyl7CkS6VHGPSlsVaWTiASPTyGyYRyApxlaWTzwUxVNrhcwDg== }
     engines: { node: '>=14' }
     hasBin: true
 
@@ -4733,9 +4733,9 @@ snapshots:
       '@jridgewell/gen-mapping': 0.3.5
       '@jridgewell/trace-mapping': 0.3.25
 
-  '@astrojs/check@0.7.0(prettier-plugin-astro@0.13.0)(prettier@3.2.5)(typescript@5.4.3)':
+  '@astrojs/check@0.7.0(prettier-plugin-astro@0.13.0)(prettier@3.3.1)(typescript@5.4.3)':
     dependencies:
-      '@astrojs/language-server': 2.10.0(prettier-plugin-astro@0.13.0)(prettier@3.2.5)(typescript@5.4.3)
+      '@astrojs/language-server': 2.10.0(prettier-plugin-astro@0.13.0)(prettier@3.3.1)(typescript@5.4.3)
       chokidar: 3.6.0
       fast-glob: 3.3.2
       kleur: 4.1.5
@@ -4751,7 +4751,7 @@ snapshots:
 
   '@astrojs/internal-helpers@0.4.0': {}
 
-  '@astrojs/language-server@2.10.0(prettier-plugin-astro@0.13.0)(prettier@3.2.5)(typescript@5.4.3)':
+  '@astrojs/language-server@2.10.0(prettier-plugin-astro@0.13.0)(prettier@3.3.1)(typescript@5.4.3)':
     dependencies:
       '@astrojs/compiler': 2.8.0
       '@jridgewell/sourcemap-codec': 1.4.15
@@ -4764,13 +4764,13 @@ snapshots:
       volar-service-css: 0.0.45(@volar/language-service@2.2.5)
       volar-service-emmet: 0.0.45(@volar/language-service@2.2.5)
       volar-service-html: 0.0.45(@volar/language-service@2.2.5)
-      volar-service-prettier: 0.0.45(@volar/language-service@2.2.5)(prettier@3.2.5)
+      volar-service-prettier: 0.0.45(@volar/language-service@2.2.5)(prettier@3.3.1)
       volar-service-typescript: 0.0.45(@volar/language-service@2.2.5)
       volar-service-typescript-twoslash-queries: 0.0.45(@volar/language-service@2.2.5)
       vscode-html-languageservice: 5.2.0
       vscode-uri: 3.0.8
     optionalDependencies:
-      prettier: 3.2.5
+      prettier: 3.3.1
       prettier-plugin-astro: 0.13.0
     transitivePeerDependencies:
       - typescript
@@ -4798,12 +4798,12 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@astrojs/mdx@3.1.0(astro@4.10.1(@types/node@20.12.12)(typescript@5.4.3))':
+  '@astrojs/mdx@3.1.0(astro@4.10.1(@types/node@20.14.2)(typescript@5.4.3))':
     dependencies:
       '@astrojs/markdown-remark': 5.1.0
       '@mdx-js/mdx': 3.0.1
       acorn: 8.11.3
-      astro: 4.10.1(@types/node@20.12.12)(typescript@5.4.3)
+      astro: 4.10.1(@types/node@20.14.2)(typescript@5.4.3)
       es-module-lexer: 1.5.3
       estree-util-visit: 2.0.0
       github-slugger: 2.0.0
@@ -4823,11 +4823,11 @@ snapshots:
     dependencies:
       prismjs: 1.29.0
 
-  '@astrojs/react@3.5.0(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.2.0(react@18.3.1))(react@18.3.1)(vite@5.2.13(@types/node@20.12.12))':
+  '@astrojs/react@3.5.0(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.2.0(react@18.3.1))(react@18.3.1)(vite@5.2.13(@types/node@20.14.2))':
     dependencies:
       '@types/react': 18.3.3
       '@types/react-dom': 18.3.0
-      '@vitejs/plugin-react': 4.3.0(vite@5.2.13(@types/node@20.12.12))
+      '@vitejs/plugin-react': 4.3.0(vite@5.2.13(@types/node@20.14.2))
       react: 18.3.1
       react-dom: 18.2.0(react@18.3.1)
       ultrahtml: 1.5.3
@@ -4835,9 +4835,9 @@ snapshots:
       - supports-color
       - vite
 
-  '@astrojs/tailwind@5.1.0(astro@4.10.1(@types/node@20.12.12)(typescript@5.4.3))(tailwindcss@3.4.4)':
+  '@astrojs/tailwind@5.1.0(astro@4.10.1(@types/node@20.14.2)(typescript@5.4.3))(tailwindcss@3.4.4)':
     dependencies:
-      astro: 4.10.1(@types/node@20.12.12)(typescript@5.4.3)
+      astro: 4.10.1(@types/node@20.14.2)(typescript@5.4.3)
       autoprefixer: 10.4.17(postcss@8.4.35)
       postcss: 8.4.35
       postcss-load-config: 4.0.2(postcss@8.4.35)
@@ -5411,14 +5411,14 @@ snapshots:
 
   '@humanwhocodes/object-schema@2.0.2': {}
 
-  '@ianvs/prettier-plugin-sort-imports@4.2.1(prettier@3.2.5)':
+  '@ianvs/prettier-plugin-sort-imports@4.2.1(prettier@3.3.1)':
     dependencies:
       '@babel/core': 7.24.3
       '@babel/generator': 7.24.1
       '@babel/parser': 7.24.1
       '@babel/traverse': 7.24.1
       '@babel/types': 7.24.0
-      prettier: 3.2.5
+      prettier: 3.3.1
       semver: 7.6.0
     transitivePeerDependencies:
       - supports-color
@@ -5689,7 +5689,7 @@ snapshots:
     dependencies:
       '@types/unist': 3.0.2
 
-  '@types/node@20.12.12':
+  '@types/node@20.14.2':
     dependencies:
       undici-types: 5.26.5
 
@@ -5798,14 +5798,14 @@ snapshots:
 
   '@ungap/structured-clone@1.2.0': {}
 
-  '@vitejs/plugin-react@4.3.0(vite@5.2.13(@types/node@20.12.12))':
+  '@vitejs/plugin-react@4.3.0(vite@5.2.13(@types/node@20.14.2))':
     dependencies:
       '@babel/core': 7.24.7
       '@babel/plugin-transform-react-jsx-self': 7.24.7(@babel/core@7.24.7)
       '@babel/plugin-transform-react-jsx-source': 7.24.7(@babel/core@7.24.7)
       '@types/babel__core': 7.20.5
       react-refresh: 0.14.2
-      vite: 5.2.13(@types/node@20.12.12)
+      vite: 5.2.13(@types/node@20.14.2)
     transitivePeerDependencies:
       - supports-color
 
@@ -5998,12 +5998,12 @@ snapshots:
 
   astring@1.8.6: {}
 
-  astro-expressive-code@0.35.3(astro@4.10.1(@types/node@20.12.12)(typescript@5.4.3)):
+  astro-expressive-code@0.35.3(astro@4.10.1(@types/node@20.14.2)(typescript@5.4.3)):
     dependencies:
-      astro: 4.10.1(@types/node@20.12.12)(typescript@5.4.3)
+      astro: 4.10.1(@types/node@20.14.2)(typescript@5.4.3)
       rehype-expressive-code: 0.35.3
 
-  astro@4.10.1(@types/node@20.12.12)(typescript@5.4.3):
+  astro@4.10.1(@types/node@20.14.2)(typescript@5.4.3):
     dependencies:
       '@astrojs/compiler': 2.8.0
       '@astrojs/internal-helpers': 0.4.0
@@ -6062,8 +6062,8 @@ snapshots:
       tsconfck: 3.1.0(typescript@5.4.3)
       unist-util-visit: 5.0.0
       vfile: 6.0.1
-      vite: 5.2.13(@types/node@20.12.12)
-      vitefu: 0.2.5(vite@5.2.13(@types/node@20.12.12))
+      vite: 5.2.13(@types/node@20.14.2)
+      vitefu: 0.2.5(vite@5.2.13(@types/node@20.14.2))
       which-pm: 2.2.0
       yargs-parser: 21.1.1
       zod: 3.23.8
@@ -8345,17 +8345,17 @@ snapshots:
   prettier-plugin-astro@0.13.0:
     dependencies:
       '@astrojs/compiler': 1.8.2
-      prettier: 3.2.5
+      prettier: 3.3.1
       sass-formatter: 0.7.9
 
-  prettier-plugin-tailwindcss@0.5.14(@ianvs/prettier-plugin-sort-imports@4.2.1(prettier@3.2.5))(prettier-plugin-astro@0.13.0)(prettier@3.2.5):
+  prettier-plugin-tailwindcss@0.6.2(@ianvs/prettier-plugin-sort-imports@4.2.1(prettier@3.3.1))(prettier-plugin-astro@0.13.0)(prettier@3.3.1):
     dependencies:
-      prettier: 3.2.5
+      prettier: 3.3.1
     optionalDependencies:
-      '@ianvs/prettier-plugin-sort-imports': 4.2.1(prettier@3.2.5)
+      '@ianvs/prettier-plugin-sort-imports': 4.2.1(prettier@3.3.1)
       prettier-plugin-astro: 0.13.0
 
-  prettier@3.2.5: {}
+  prettier@3.3.1: {}
 
   prismjs@1.29.0: {}
 
@@ -9200,18 +9200,18 @@ snapshots:
       unist-util-stringify-position: 4.0.0
       vfile-message: 4.0.2
 
-  vite@5.2.13(@types/node@20.12.12):
+  vite@5.2.13(@types/node@20.14.2):
     dependencies:
       esbuild: 0.20.2
       postcss: 8.4.38
       rollup: 4.18.0
     optionalDependencies:
-      '@types/node': 20.12.12
+      '@types/node': 20.14.2
       fsevents: 2.3.3
 
-  vitefu@0.2.5(vite@5.2.13(@types/node@20.12.12)):
+  vitefu@0.2.5(vite@5.2.13(@types/node@20.14.2)):
     optionalDependencies:
-      vite: 5.2.13(@types/node@20.12.12)
+      vite: 5.2.13(@types/node@20.14.2)
 
   volar-service-css@0.0.45(@volar/language-service@2.2.5):
     dependencies:
@@ -9237,12 +9237,12 @@ snapshots:
     optionalDependencies:
       '@volar/language-service': 2.2.5
 
-  volar-service-prettier@0.0.45(@volar/language-service@2.2.5)(prettier@3.2.5):
+  volar-service-prettier@0.0.45(@volar/language-service@2.2.5)(prettier@3.3.1):
     dependencies:
       vscode-uri: 3.0.8
     optionalDependencies:
       '@volar/language-service': 2.2.5
-      prettier: 3.2.5
+      prettier: 3.3.1
 
   volar-service-typescript-twoslash-queries@0.0.45(@volar/language-service@2.2.5):
     optionalDependencies:

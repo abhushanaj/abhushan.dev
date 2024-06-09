@@ -33,8 +33,8 @@ Let's define our atom (or individual state) through the basic properties of a ob
 
 1. <InlineCode code="get()" /> : a method to get the state value.
 1. <InlineCode code="set()" /> : a method to set/update with a new state value.
-1. <InlineCode code="subscribe()" /> : a method which takes a callback to subscribe to store changes and also returns a function
-   to clear the subscriptions created.
+1. <InlineCode code="subscribe()" /> : a method which takes a callback to subscribe to store changes and also returns a
+   function to clear the subscriptions created.
 
 ```ts title="./src/atom.ts"
 type SubscribeCallback<T> = (newValue: T) => void;
