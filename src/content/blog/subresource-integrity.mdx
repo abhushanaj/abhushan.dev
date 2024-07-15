@@ -1,0 +1,123 @@
+---
+seoMetaData:
+  title: 'Subresource Integrity on Web'
+  description: 'Learn how the Subresource Integrity (SRI) specification allows web developers to ensure the resources loaded from third-party server are secure.'
+  ogImage: '/open-graph/blogs/subresource-integrity.webp'
+  ogImageAlt: 'Subresource Integrity on Web'
+title: 'Subresource Integrity on Web'
+publishedDate: 2024-07-15
+blogMeta:
+  type: standalone
+---
+
+I absolutely love cryptography, especially when I can visualize it beyond just the mathematical equations and numbers. While it might seem that the most prominent usages of cryptography lie in blockchain or password security, there are other fascinating applications that often go unnoticed.
+
+One such application is [Subresource Integrity (SRI)](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity 'Learn more about SRI from MDN'), a feature that enhances the security of web applications in a surprisingly elegant way, which I love as a frontend engineer.
+
+**TL;DR:** It's based on hashing data for immutability checks, preventing any form of tampering on resources when you rely on a third-party domain you do not trust.
+
+## Introduction
+
+If you work on the web very often, you've likely loaded resources from an external CDN, such as jQuery or Bootstrap, and noticed the <InlineCode code="integrity"/> attribute in the script and link tags?.
+
+If not, go check out the docs of these popular tools and read the installation instructions before continuing further. It's not just specific for these packages but any resource loaded via CDN from any popular provider should have them.
+
+It must look familiar to the one mentioned below?
+
+```html title="index.html" mark="integrity"
+<!-- Bootstrap CSS CDN link -->
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+	crossorigin="anonymous"
+/>
+
+<!-- Bootstrap JS CDN link -->
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
+	integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
+	crossorigin="anonymous"
+></script>
+```
+
+<br />
+
+If you have ever wondered what does the <InlineCode code="integrity"/> attribute on these tags mean, then you have come to the right place.
+
+We'll explore and dive into the integrity attributes found in script and link tags, explain how to generate these attributes, and demonstrate their usage in SRI.
+
+## What is SRI?
+
+In a gist, it's a security feature that enables browsers to verify that resources they fetch are delivered without any unexpected manipulation (in transit or otherwise), i.e, data fetched and loaded must be **immutable** - unchanged from the original state which was agreed upon.
+
+Immutability is essential because it guarantees that the resources your web application relies on are exactly what you expect them to be, without any unauthorized modifications that could compromise security or functionality, and fundamentally it is quite easy to verify that through cryptographic hashing.
+
+**Hashing** of data simply mean generating fixed size output string for any input using a mathematical algorithm. For SRI, we need an hashing algorithm which has following properties:
+
+1. **Deterministic**: For the same input, it must always produces the same output hash value, ensuring consistency. Usually the size of the output hash depends on the algorithm function choosen.
+2. **Psuedo-random**: It is computationally infeasible to reverse the hash function to determine the original input from the hash value alone.
+3. **Collision Resistent**: It is highly improbable for two different inputs to produce the same hash value.
+
+For SRI, the most commonly used hashing functions are **SHA-256**, **SHA-384** and **SHA-512**, where 256, 384 and 512 represents the numbers of bits for the output hash.
+
+It can be expressed as <InlineCode code="outputHash = hashFn(input);"/>
+
+## Hashes for SRI
+
+The **integrity** attribute on the script or link tag is made up of two parts seperated by a hypen.
+
+1. Hashing Algorithm Name: left side of the hypen.
+2. Hash Output: right side of the hypen.
+
+For example, for [bootstrap's minified JS bundle (v5.3.3)](https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js 'JSDelivr CDN link for bootstraps js minified bundle v5.3.3'), it is: <InlineCode code="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"/>.
+
+Let's understand how these hash is generated using Node.js crypto module and fetch for getting the exact bootstrap's resource mentioned above.
+
+```js title="sri-hashing.js"
+import crypto from 'crypto';
+
+// URL of the resource
+const url = 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js';
+
+async function fetchAndGenerateSRI(algo = 'sha384') {
+	// Fetch the resource
+	const response = await fetch(url);
+
+	if (!response.ok) {
+		throw new Error(`HTTP error! Status: ${response.status}`);
+	}
+
+	// Read response data as text
+	const data = await response.text();
+
+	// Create a SHA-384 hash of the fetched content
+	const hash = crypto.createHash(algo).update(data).digest('base64');
+
+	// Output the integrity attribute value
+	return `${algo}-${hash}`;
+}
+
+// Call the function to fetch and generate SRI hash
+const integrityValue = await fetchAndGenerateSRI();
+
+// Yields: sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy
+console.log(integrityValue);
+```
+
+<br />
+
+You can use this script to generate the integrity value for SRI for any type of remote resource you want. These hash output will always match until the input has been altered or tampered with.
+
+For example the hash output for [Bootstrap's minified JS bundle (v5.3.2)](https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js 'JSDelivr CDN link for bootstraps js minified bundle v5.3.2') is <InlineCode code="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"/> since the input (in this case source file for v5.3.2) is different from v5.3.3.
+
+## Browsers and SRI
+
+Browsers handle SRI by doing the following:
+
+1. When a browser encounters a <InlineCode code="<script/>"/> or <InlineCode code="<link/>"/> element with an integrity attribute, before executing the script or before applying any stylesheet specified by the link element, the browser must first compare the script or stylesheet to the expected hash given in the integrity value.
+2. If the script or stylesheet doesn't match its associated integrity value, the browser must refuse to execute the script or apply the stylesheet, and must instead return a network error indicating that fetching of that script or stylesheet failed.
+
+In simple terms, when using SRI, the webpage holds the hash and the server holds the file (the .js file in this case). The browser downloads the file, then checks it, to make sure that it is a match with the hash in the integrity attribute. If it matches, the file is used, and if not, the file is blocked.
+
+While security is the most prominent usage of SRI, it also comes with an added advantage of version locking of external resources promoting reliability and ensuring consistency across deployments and reducing compatibility issues that may arise from unexpected updates or changes on the remote resource.
