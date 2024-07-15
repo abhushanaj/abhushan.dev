@@ -20,7 +20,7 @@ One such application is [Subresource Integrity (SRI)](https://developer.mozilla.
 
 If you work on the web very often, you've likely loaded resources from an external CDN, such as jQuery or Bootstrap, and noticed the <InlineCode code="integrity"/> attribute in the script and link tags?.
 
-If not, go check out the docs of these popular tools and read the installation intructions before continuing further. It's not just specific for these packages but any resource loaded via CDN from any popular provider should have them.
+If not, go check out the docs of these popular tools and read the installation instructions before continuing further. It's not just specific for these packages but any resource loaded via CDN from any popular provider should have them.
 
 It must look familiar to the one mentioned below?
 
@@ -43,15 +43,15 @@ It must look familiar to the one mentioned below?
 
 <br />
 
-If you have ever wondered what does the <InlineCode code="integrity"/> attribute on these tags mean? then you have come to the right place.
+If you have ever wondered what does the <InlineCode code="integrity"/> attribute on these tags mean, then you have come to the right place.
 
 We'll explore and dive into the integrity attributes found in script and link tags, explain how to generate these attributes, and demonstrate their usage in SRI.
 
 ## What is SRI?
 
-In a gist, it's a security feature that enables browsers to verify that resources they fetch are delivered without any unexpected manipulation (in transit or otherwise), i.e, data fetched and loaded must be **immutable** - unchanged from the original state which was argeed upon.
+In a gist, it's a security feature that enables browsers to verify that resources they fetch are delivered without any unexpected manipulation (in transit or otherwise), i.e, data fetched and loaded must be **immutable** - unchanged from the original state which was agreed upon.
 
-Immutability is essential because it guarantees that the resources your web application relies on are exactly what you expect them to be, without any unauthorized modifications that could compromise security or functionality, and funnily it is quite easy to verify that through cryptographic hashing.
+Immutability is essential because it guarantees that the resources your web application relies on are exactly what you expect them to be, without any unauthorized modifications that could compromise security or functionality, and fundamentally it is quite easy to verify that through cryptographic hashing.
 
 **Hashing** of data simply mean generating fixed size output string for any input using a mathematical algorithm. For SRI, we need an hashing algorithm which has following properties:
 
@@ -65,7 +65,7 @@ It can be expressed as <InlineCode code="outputHash = hashFn(input);"/>
 
 ## Hashes for SRI
 
-The **integrity** attribute on the script or link tag is made of of two parts seperated by a hypen.
+The **integrity** attribute on the script or link tag is made up of two parts seperated by a hypen.
 
 1. Hashing Algorithm Name: left side of the hypen.
 2. Hash Output: right side of the hypen.
@@ -107,7 +107,7 @@ console.log(integrityValue);
 
 <br />
 
-You can use this script to generate the integrity value for SRI for any type of remote resource you want. These hash ouput will always match until the input has been altered of tampered with.
+You can use this script to generate the integrity value for SRI for any type of remote resource you want. These hash output will always match until the input has been altered or tampered with.
 
 For example the hash output for [Bootstrap's minified JS bundle (v5.3.2)](https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js 'JSDelivr CDN link for bootstraps js minified bundle v5.3.2') is <InlineCode code="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"/> since the input (in this case source file for v5.3.2) is different from v5.3.3.
 
